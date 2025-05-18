@@ -1,9 +1,11 @@
+import ContinueSection from "../Components/ContinueSection";
 import HeroSection from "../Components/HeroSection";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="d-flex flex-column gap-4">
       <HeroSection />
+      <ContinueSection />
     </div>
   );
 };

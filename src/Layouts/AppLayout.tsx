@@ -14,11 +14,9 @@ interface Props {
 const Root = styled.div<{ theme: ThemeObj }>`
   background-color: ${({ theme }) => theme.bodyColor};
   color: ${({ theme }) => (theme.color === "#ffffff" ? "#000000" : "#ffffff")};
-  height: 100vh;
 `;
 
 const Children = styled.div`
-  height: 80vh;
   padding: 0 50px;
 `;
 
@@ -29,7 +27,7 @@ const AppLayout = ({ children }: Props) => {
   return (
     <Root theme={currentTheme}>
       <Sidebar />
-      <main id="main">
+      <main id="main" className="d-flex flex-column gap-3">
         <Header />
         <Children>{children}</Children>
         <Footer />
