@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
+import styled from "styled-components";
+
 import { GrHomeRounded } from "react-icons/gr";
 import { IoGameController } from "react-icons/io5";
 import { HiUserGroup } from "react-icons/hi2";
-import styled from "styled-components";
 
 const SidebarTag = styled.div`
   position: fixed;
@@ -15,32 +16,33 @@ const Links = styled.div`
   height: 400px;
 `;
 
+const Link = styled(NavLink)`
+  background: #202020;
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  &.active {
+    background: #4db1e5;
+    border: 1px solid black !important;
+  }
+
+  &:hover {
+    transform: scale(1.17);
+  }
+`;
+
 const Sidebar = () => {
   return (
     <SidebarTag className="p-4 d-flex flex-column justify-content-between">
       <div className="navbar-brand fw-bolder fs-3">GameX</div>
       <Links className="py-4 d-flex flex-column justify-content-around align-items-center align-center">
-        <NavLink
-          to="/"
-          className="p-3 border rounded-4"
-          style={{ background: "#303038" }}
-        >
+        <Link to="/" className="p-3 border rounded-4">
           <GrHomeRounded color="white" size={"24px"} />
-        </NavLink>
-        <NavLink
-          to="/explore"
-          className="p-3 border rounded-4"
-          style={{ background: "#303038" }}
-        >
+        </Link>
+        <Link to="/explore" className="p-3 border rounded-4">
           <IoGameController color="white" size={"25px"} />
-        </NavLink>
-        <NavLink
-          to="/community"
-          className="p-3 border rounded-4"
-          style={{ background: "#303038" }}
-        >
+        </Link>
+        <Link to="/community" className="p-3 border rounded-4">
           <HiUserGroup color="white" size={"25px"} />
-        </NavLink>
+        </Link>
       </Links>
       <div className="navbar-brand fw-bolder fs-3">GameX</div>
     </SidebarTag>
