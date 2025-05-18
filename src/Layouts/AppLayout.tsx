@@ -10,10 +10,12 @@ interface Props {
 const AppLayout = ({ children }: Props) => {
   return (
     <>
-      <Header />
       <Sidebar />
-      {children}
-      <Footer />
+      <main id="main">
+        <Header />
+        {children}
+        <Footer />
+      </main>
     </>
   );
 };
