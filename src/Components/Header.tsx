@@ -1,5 +1,13 @@
+import { useAppContext } from "../Context/AppContext";
+
 const Header = () => {
-  return <div>Header</div>;
+  const { toggleTheme } = useAppContext();
+  return (
+    <div>
+      Header
+      <button onClick={toggleTheme}>theme</button>
+    </div>
+  );
 };
 
 export default Header;

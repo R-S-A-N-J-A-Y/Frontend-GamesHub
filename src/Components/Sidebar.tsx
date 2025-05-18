@@ -4,12 +4,14 @@ import styled from "styled-components";
 import { GrHomeRounded } from "react-icons/gr";
 import { IoGameController } from "react-icons/io5";
 import { HiUserGroup } from "react-icons/hi2";
+import { useAppContext } from "../Context/AppContext";
 
-const SidebarTag = styled.div`
+const SidebarTag = styled.div<{ theme: "light" | "dark" }>`
   position: fixed;
   height: 100vh;
   width: 150px;
-  background-color: #000000;
+  background-color: ${({ theme }) =>
+    theme === "light" ? "#ffffff" : "#000000"};
 `;
 
 const Links = styled.div`
@@ -30,8 +32,12 @@ const Link = styled(NavLink)`
 `;
 
 const Sidebar = () => {
+  const { theme } = useAppContext();
   return (
-    <SidebarTag className="p-4 d-flex flex-column justify-content-between">
+    <SidebarTag
+      theme={theme}
+      className="p-4 d-flex flex-column justify-content-between"
+    >
       <div className="navbar-brand fw-bolder fs-3">GameX</div>
       <Links className="py-4 d-flex flex-column justify-content-around align-items-center align-center">
         <Link to="/" className="p-3 border rounded-4">
