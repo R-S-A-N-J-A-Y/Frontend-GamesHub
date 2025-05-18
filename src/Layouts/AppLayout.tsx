@@ -19,6 +19,7 @@ const Root = styled.div<{ theme: ThemeObj }>`
 
 const Children = styled.div`
   height: 80vh;
+  padding: 0 50px;
 `;
 
 const AppLayout = ({ children }: Props) => {
