@@ -37,6 +37,7 @@ const Sidebar = () => {
     <SidebarTag
       theme={currentTheme}
       className="p-4 d-flex flex-column justify-content-between"
+      style={{ zIndex: 1 }}
     >
       <div className="navbar-brand fw-bolder fs-3">GameX</div>
       <Links className="py-4 d-flex flex-column justify-content-around align-items-center align-center">
