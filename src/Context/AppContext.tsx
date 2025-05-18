@@ -26,7 +26,7 @@ export const AppContextProvider = ({ children }: Props) => {
     dark: {
       color: "#000000",
       bodyColor: "#2e2e2e",
-      boxColor: "#454545",
+      boxColor: "#4b4551",
       highLight: "#4db1e5",
     },
     light: {
