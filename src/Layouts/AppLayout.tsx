@@ -5,23 +5,24 @@ import Sidebar from "../Components/Sidebar";
 
 import styled from "styled-components";
 import { useAppContext } from "../Context/AppContext";
+import type { ThemeObj } from "../Context/AppContext";
 
 interface Props {
   children: ReactNode;
 }
 
-const Root = styled.div<{ theme: "light" | "dark" }>`
-  background-color: ${({ theme }) =>
-    theme === "light" ? "#ebebeb" : "#171717"};
-  color: ${({ theme }) => (theme === "light" ? "#000000" : "#ffffff")};
+const Root = styled.div<{ theme: ThemeObj }>`
+  background-color: ${({ theme }) => theme.bodyColor};
+  color: ${({ theme }) => (theme.color === "#ffffff" ? "#000000" : "#ffffff")};
   height: 100vh;
 `;
 
 const AppLayout = ({ children }: Props) => {
-  const { theme } = useAppContext();
+  const { theme, themeColor } = useAppContext();
+  const currentTheme = themeColor[theme];
 
   return (
-    <Root theme={theme}>
+    <Root theme={currentTheme}>
       <Sidebar />
       <main id="main">
         <Header />

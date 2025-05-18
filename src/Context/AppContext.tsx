@@ -1,7 +1,17 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
+type ThemeType = "dark" | "light";
+
+export interface ThemeObj {
+  color: string;
+  bodyColor: string;
+  boxColor: string;
+  highLight: string;
+}
+
 interface AppContextType {
-  theme: "dark" | "light";
+  themeColor: Record<ThemeType, ThemeObj>;
+  theme: ThemeType;
   toggleTheme: () => void;
 }
 
@@ -12,14 +22,28 @@ interface Props {
 }
 
 export const AppContextProvider = ({ children }: Props) => {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const themeColor = {
+    dark: {
+      color: "#000000",
+      bodyColor: "#2e2e2e",
+      boxColor: "#454545",
+      highLight: "#4db1e5",
+    },
+    light: {
+      color: "#ffffff",
+      bodyColor: "#ebebeb",
+      boxColor: "#c6c6c6",
+      highLight: "#ba9df1",
+    },
+  };
+  const [theme, setTheme] = useState<ThemeType>("dark");
 
   const toggleTheme = () => {
     setTheme((curr) => (curr === "dark" ? "light" : "dark"));
   };
 
   return (
-    <AppContext.Provider value={{ theme, toggleTheme }}>
+    <AppContext.Provider value={{ theme, themeColor, toggleTheme }}>
       {children}
     </AppContext.Provider>
   );
