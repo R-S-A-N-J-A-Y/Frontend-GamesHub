@@ -17,6 +17,10 @@ const Root = styled.div<{ theme: ThemeObj }>`
   height: 100vh;
 `;
 
+const Children = styled.div`
+  height: 80vh;
+`;
+
 const AppLayout = ({ children }: Props) => {
   const { theme, themeColor } = useAppContext();
   const currentTheme = themeColor[theme];
@@ -26,7 +30,7 @@ const AppLayout = ({ children }: Props) => {
       <Sidebar />
       <main id="main">
         <Header />
-        {children}
+        <Children>{children}</Children>
         <Footer />
       </main>
     </Root>
