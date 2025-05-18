@@ -7,7 +7,7 @@ const HeroCard = () => {
     <div
       className="card"
       style={{
-        height: "300px",
+        height: "250px",
         background: `${currTheme.boxColor}`,
       }}
     >
@@ -17,12 +17,7 @@ const HeroCard = () => {
         style={{ objectFit: "cover" }}
         alt="Preview"
       />
-      <div
-        className="card-img-overlay d-flex flex-column justify-content-between gap-2 flex-fill p-5 m-3"
-        style={{
-          color: currTheme.color === "#000000" ? "#ffffff" : "#000000",
-        }}
-      >
+      <div className="card-img-overlay d-flex flex-column justify-content-between gap-2 flex-fill p-5 m-3 text-white">
         <p className="border rounded-4 px-4 py-2 position-absolute top-0 end-0 mt-3 me-3">
           New
         </p>
