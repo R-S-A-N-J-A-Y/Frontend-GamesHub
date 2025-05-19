@@ -4,6 +4,7 @@ type ThemeType = "dark" | "light";
 
 export interface ThemeObj {
   color: string;
+  iconBgColor: string;
   bodyColor: string;
   boxColor: string;
   highLight: string;
@@ -25,15 +26,17 @@ export const AppContextProvider = ({ children }: Props) => {
   const themeColor = {
     dark: {
       color: "#000000",
+      iconBgColor: "#141419",
       bodyColor: "#2e2e2e",
       boxColor: "#4b4551",
       highLight: "#4db1e5",
     },
     light: {
       color: "#ffffff",
-      bodyColor: "#ebebeb",
-      boxColor: "#c6c6c6",
-      highLight: "#ba9df1",
+      iconBgColor: "#e5e5ea",
+      bodyColor: "#f5f5f7",
+      boxColor: "#ffffff",
+      highLight: "#8080ff",
     },
   };
   const [theme, setTheme] = useState<ThemeType>("dark");

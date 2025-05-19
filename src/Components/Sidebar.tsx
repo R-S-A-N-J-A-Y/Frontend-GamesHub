@@ -20,9 +20,15 @@ const Links = styled.div`
 
 const Link = styled(NavLink)<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
-  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  border: none;
+  box-shadow: ${({ theme }) =>
+    theme.color === "#ffffff"
+      ? "-5px -5px 10px #fafbff, 5px 5px 10px rgba(22, 24, 29, 0.2)"
+      : "inset -2px -2px 10px rgba(58, 57, 57, 0.86), inset 2px 2px 10px rgba(255, 255, 255, 0.7)"};
+  // box-shadow: ;
+  transition: all 0.2s ease;
   &.active {
-    background: ${({ theme }) => theme.highLight};
+    background: ${({ theme }) => theme.iconBgColor};
   }
 
   &:hover {

@@ -26,6 +26,10 @@ const Links = styled.div`
 const Link = styled(NavLink)<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
   transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  box-shadow: ${({ theme }) =>
+    theme.color === "#ffffff"
+      ? "-5px -5px 10px #fafbff, 5px 5px 10px rgba(22, 24, 29, 0.2)"
+      : ""};
   &.active {
     background: ${({ theme }) => theme.highLight};
   }
