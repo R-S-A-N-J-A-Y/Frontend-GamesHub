@@ -16,9 +16,8 @@ const ContinueSection = () => {
   }, []);
 
   return (
-    <div className="p-2">
-      <p className="fw-bold fs-2 mb-4">Continue Where you Left</p>
-      {/* <GameCard /> */}
+    <div>
+      <p className="fw-bold fs-2 m-0">Continue Where you Left</p>
       <motion.div
         ref={carouselRef}
         className="overflow-hidden position-relative"

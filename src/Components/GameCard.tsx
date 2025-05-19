@@ -57,8 +57,16 @@ const GameCard = () => {
             >
               Purchase
             </a>
-            <button className="btn d-flex align-items-center gap-1 border">
-              <MdAddToPhotos size={20} /> ADD
+            <button
+              className={`btn d-flex align-items-center gap-1 border text-${
+                theme === "dark" ? "white" : "black"
+              }`}
+            >
+              <MdAddToPhotos
+                size={20}
+                color={theme === "dark" ? "white" : "black"}
+              />{" "}
+              ADD
             </button>
           </div>
         </div>

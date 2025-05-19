@@ -46,7 +46,7 @@ const HeroCard = () => {
             }}
           >
             <MdAddToPhotos size={20} />
-            Add to cart
+            Add to Cart
           </button>
         </div>
       </div>
