@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { useAppContext } from "../Context/AppContext";
+import { MdAddToPhotos } from "react-icons/md";
+import { GoHeartFill } from "react-icons/go";
 
 const Card = styled.div`
   width: 300px;
   border: none;
-  border-radius: 18px;
+  border-radius: 10px;
   overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
 
@@ -23,7 +25,7 @@ const GameCard = () => {
       <img
         src="DaysGone.jpg"
         className="card-img-top"
-        style={{ borderRadius: "18px 18px 0 0" }}
+        style={{ borderRadius: "10px 10px 0 0" }}
         alt="..."
       />
       <div
@@ -31,21 +33,35 @@ const GameCard = () => {
         style={{
           background: `${curr.boxColor}`,
           color: `${curr.color === "#000000" ? "#ffffff" : "#000000"}`,
-          borderRadius: "0px 0px 18px 18px",
+          borderRadius: "0px 0px 10px 10px",
         }}
       >
-        <h5 className="card-title">Days Gone</h5>
-        <p className="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card’s content.
-        </p>
-        <a
-          href="#"
-          className="btn fw-bold"
-          style={{ background: `${curr.highLight}` }}
-        >
-          Purchase
-        </a>
+        <div className="d-flex flex-column gap-2">
+          <p className="fs-5 fw-bold m-0 p-0">Days Gone Remastered</p>
+          <div className="d-flex align-items-center gap-4">
+            <p className="m-0 p-0" style={{ fontSize: "20px" }}>
+              $78
+            </p>
+          </div>
+          <div className="d-flex gap-2">
+            <button
+              className="p-1"
+              style={{ border: "none", background: "none" }}
+            >
+              <GoHeartFill size={29} color="red" />{" "}
+            </button>
+            <a
+              href="#"
+              className="btn fw-bold w-100"
+              style={{ background: `${curr.highLight}` }}
+            >
+              Purchase
+            </a>
+            <button className="btn d-flex align-items-center gap-1 border">
+              <MdAddToPhotos size={20} /> ADD
+            </button>
+          </div>
+        </div>
       </div>
     </Card>
   );
