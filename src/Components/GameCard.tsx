@@ -1,17 +1,37 @@
+import styled from "styled-components";
 import { useAppContext } from "../Context/AppContext";
+
+const Card = styled.div`
+  width: 300px;
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease-in;
+
+  &:hover {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.29);
+    transform: scale(1.02);
+  }
+`;
 
 const GameCard = () => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
 
   return (
-    <div className="card" style={{ width: "300px" }}>
-      <img src="DaysGone.jpg" className="card-img-top" alt="..." />
+    <Card className="card">
+      <img
+        src="DaysGone.jpg"
+        className="card-img-top"
+        style={{ borderRadius: "18px 18px 0 0" }}
+        alt="..."
+      />
       <div
         className="card-body"
         style={{
           background: `${curr.boxColor}`,
           color: `${curr.color === "#000000" ? "#ffffff" : "#000000"}`,
+          borderRadius: "0px 0px 18px 18px",
         }}
       >
         <h5 className="card-title">Days Gone</h5>
@@ -27,7 +47,7 @@ const GameCard = () => {
           Purchase
         </a>
       </div>
-    </div>
+    </Card>
   );
 };
 

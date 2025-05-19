@@ -16,14 +16,15 @@ const ContinueSection = () => {
   }, []);
 
   return (
-    <div>
+    <div className="p-2">
       <p className="fw-bold fs-2 mb-4">Continue Where you Left</p>
-
+      {/* <GameCard /> */}
       <motion.div
         ref={carouselRef}
         className="overflow-hidden position-relative"
         style={{
           cursor: "grab",
+          padding: "20px",
           marginLeft: "-120px", // Start under sidebar
           marginRight: "-50px",
           paddingLeft: "120px", // Room for first card
