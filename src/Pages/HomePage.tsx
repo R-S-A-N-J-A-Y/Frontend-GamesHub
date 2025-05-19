@@ -1,4 +1,5 @@
 import ContinueSection from "../Components/ContinueSection";
+import LibrarySection from "../Components/LibrarySection";
 import HeroSection from "../Components/HeroSection";
 
 const HomePage = () => {
@@ -6,6 +7,10 @@ const HomePage = () => {
     <div className="d-flex flex-column gap-5">
       <HeroSection />
       <ContinueSection />
+      <div className="d-flex gap-2">
+        <div className="p-5 bg-dark">jh</div>
+        <LibrarySection />
+      </div>
     </div>
   );
 };
