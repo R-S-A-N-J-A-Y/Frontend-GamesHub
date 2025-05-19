@@ -1,16 +1,22 @@
-import { useAppContext } from "../Context/AppContext";
+import styled from "styled-components";
+import { useAppContext, type ThemeObj } from "../Context/AppContext";
+import { MdAddToPhotos } from "react-icons/md";
+
+const Card = styled.div<{ theme: ThemeObj }>`
+  height: 250px;
+  background: ${({ theme }) => theme.boxColor};
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
 
 const HeroCard = () => {
   const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
   return (
-    <div
-      className="card"
-      style={{
-        height: "250px",
-        background: `${currTheme.boxColor}`,
-      }}
-    >
+    <Card className="card" style={{}}>
       <img
         src="DaysGone.jpg"
         className="card-img h-100"
@@ -33,17 +39,18 @@ const HeroCard = () => {
             Purchase
           </button>
           <button
-            className="btn"
+            className="btn d-flex align-items-center gap-1 border"
             style={{
               background: `${currTheme.boxColor}`,
               color: currTheme.color === "#000000" ? "#ffffff" : "#000000",
             }}
           >
+            <MdAddToPhotos size={20} />
             Add to cart
           </button>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
