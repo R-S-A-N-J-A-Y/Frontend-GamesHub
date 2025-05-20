@@ -5,7 +5,7 @@ import AccessoriedSection from "../Components/AccessoriedSection";
 
 const HomePage = () => {
   return (
-    <div className="d-flex flex-column gap-3">
+    <div className="d-flex flex-column gap-5">
       <HeroSection />
       <ContinueSection />
       <div className="d-flex gap-5">

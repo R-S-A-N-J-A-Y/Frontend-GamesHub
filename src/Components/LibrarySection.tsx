@@ -22,7 +22,10 @@ const LibrarySection = () => {
   const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
   return (
-    <Wrapper className="flex-fill  border rounded-4 px-5 py-4 d-flex flex-column gap-3">
+    <Wrapper
+      theme={currTheme}
+      className="flex-fill  border rounded-4 px-5 py-4 d-flex flex-column gap-3"
+    >
       <div className="d-flex justify-content-between align-items-center pe-2">
         <p className="fw-bold fs-4 m-0">Library</p>
         <ArrowIcon size={25} color={`${currTheme.highLight}`} />

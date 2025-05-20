@@ -7,7 +7,7 @@ const Wrapper = styled.div<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
   height: 300px;
   width: 100%;
-  maxwidth: 300px;
+  max-width: 300px;
   ${CardHoverAnimation}
 `;
 
@@ -17,12 +17,7 @@ const AccessoriedSection = () => {
   return (
     <Wrapper
       className="border rounded-4 p-4 d-flex flex-column gap-2"
-      style={{
-        background: `${currTheme.boxColor}`,
-        height: "300px",
-        width: "100%",
-        maxWidth: "300px",
-      }}
+      theme={currTheme}
     >
       <div className="d-flex justify-content-between align-items-center pe-2">
         <p className="fw-bold fs-4 m-0">Accessories</p>

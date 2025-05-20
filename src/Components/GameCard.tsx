@@ -17,7 +17,8 @@ const Card = styled.div`
   border: none;
   border-radius: 10px;
   overflow: hidden;
-  ${CardHoverAnimation}
+  padding: 1px;
+  ${CardHoverAnimation};
 `;
 
 const GameCard = () => {
