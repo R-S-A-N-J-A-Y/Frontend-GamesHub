@@ -12,7 +12,7 @@ const LibrarySection = () => {
     >
       <div className="d-flex justify-content-between align-items-center pe-2">
         <p className="fw-bold fs-4 m-0">Library</p>
-        <FaArrowRightLong size={25} color={`${currTheme.iconBgColor}`} />
+        <FaArrowRightLong size={25} color={`${currTheme.bodyColor}`} />
       </div>
 
       <div className="d-flex flex-column gap-4">

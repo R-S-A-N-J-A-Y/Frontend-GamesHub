@@ -3,6 +3,7 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 type ThemeType = "dark" | "light";
 
 export interface ThemeObj {
+  name: string;
   color: string;
   iconBgColor: string;
   bodyColor: string;
@@ -25,13 +26,15 @@ interface Props {
 export const AppContextProvider = ({ children }: Props) => {
   const themeColor = {
     dark: {
-      color: "#000000",
-      iconBgColor: "#141419",
-      bodyColor: "#2e2e2e",
-      boxColor: "#4b4551",
-      highLight: "#4db1e5",
+      name: "dark",
+      color: "#1a1b1f",
+      iconBgColor: "#393b47",
+      bodyColor: "#1a1b1f",
+      boxColor: "#22222c",
+      highLight: "#0a82ed",
     },
     light: {
+      name: "light",
       color: "#ffffff",
       iconBgColor: "#e5e5ea",
       bodyColor: "#f5f5f7",

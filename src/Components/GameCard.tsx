@@ -11,7 +11,7 @@ const Card = styled.div`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
 
   &:hover {
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.29);
+    box-shadow: 2px 2px 10px rgba(117, 112, 112, 0.53);
     transform: scale(1.02);
   }
 `;
@@ -32,7 +32,7 @@ const GameCard = () => {
         className="card-body"
         style={{
           background: `${curr.boxColor}`,
-          color: `${curr.color === "#000000" ? "#ffffff" : "#000000"}`,
+          color: `${curr.name === "dark" ? "#ffffff" : "#000000"}`,
           borderRadius: "0px 0px 10px 10px",
         }}
       >

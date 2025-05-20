@@ -42,7 +42,7 @@ const HeroCard = () => {
             className="btn d-flex align-items-center gap-1 border"
             style={{
               background: `${currTheme.boxColor}`,
-              color: currTheme.color === "#000000" ? "#ffffff" : "#000000",
+              color: currTheme.name === "dark" ? "#ffffff" : "#000000",
             }}
           >
             <MdAddToPhotos size={20} />

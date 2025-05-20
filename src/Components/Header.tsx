@@ -12,9 +12,12 @@ const SearchBar = styled.input<{ theme: ThemeObj }>`
   border: none;
   outline: none;
 
+  box-shadow: ${({ theme }) =>
+    theme.name === "light"
+      ? "-5px -5px 10px #fafbff, 5px 5px 10px rgba(22, 24, 29, 0.2)"
+      : "inset -2px -2px 10px rgba(0, 0, 0, 0.61), inset 2px 2px 10px rgba(187, 179, 179, 0.66)"};
   &::placeholder {
-    color: ${({ theme }) =>
-      theme.color === "#000000" ? "#ffffff" : "#000000"};
+    color: ${({ theme }) => (theme.name === "dark" ? "#ffffff" : "#000000")};
     opacity: 1;
   }
 `;
@@ -26,10 +29,12 @@ const Links = styled.div`
 const Link = styled(NavLink)<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
   transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+
   box-shadow: ${({ theme }) =>
-    theme.color === "#ffffff"
+    theme.name === "light"
       ? "-5px -5px 10px #fafbff, 5px 5px 10px rgba(22, 24, 29, 0.2)"
-      : ""};
+      : "-2px -2px 5px rgba(0, 0, 0, 0.49), 2px 2px 5px rgba(255, 255, 255, 0.58)"};
+
   &.active {
     background: ${({ theme }) => theme.highLight};
   }
