@@ -27,7 +27,7 @@ const AppLayout = ({ children }: Props) => {
   return (
     <Root theme={currentTheme}>
       <Sidebar />
-      <main id="main" className="d-flex flex-column gap-3">
+      <main id="main" className="d-flex flex-column gap-2">
         <Header />
         <Children>{children}</Children>
         <Footer />

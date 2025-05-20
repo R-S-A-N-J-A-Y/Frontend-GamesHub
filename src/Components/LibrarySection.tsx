@@ -1,6 +1,16 @@
 import LibraryCard from "./LibraryCard";
 import { useAppContext } from "../Context/AppContext";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { MdDoubleArrow } from "react-icons/md";
+import styled from "styled-components";
+
+const ArrowIcon = styled(MdDoubleArrow)`
+  transition: transform 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateX(6px); /* move 4px to the right */
+  }
+`;
 
 const LibrarySection = () => {
   const { theme, themeColor } = useAppContext();
@@ -12,7 +22,7 @@ const LibrarySection = () => {
     >
       <div className="d-flex justify-content-between align-items-center pe-2">
         <p className="fw-bold fs-4 m-0">Library</p>
-        <FaArrowRightLong size={25} color={`${currTheme.bodyColor}`} />
+        <ArrowIcon size={25} color={`${currTheme.highLight}`} />
       </div>
 
       <div className="d-flex flex-column gap-4">

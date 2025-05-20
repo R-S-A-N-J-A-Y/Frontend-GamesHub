@@ -6,6 +6,7 @@ import { IoGameController } from "react-icons/io5";
 import { HiUserGroup } from "react-icons/hi2";
 import { useAppContext } from "../Context/AppContext";
 import type { ThemeObj } from "../Context/AppContext";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 
 const SidebarTag = styled.div<{ theme: ThemeObj }>`
   position: fixed;
@@ -35,13 +36,22 @@ const Link = styled(NavLink)<{ theme: ThemeObj }>`
   }
 `;
 
+const LogoutAnimation = styled(FaArrowRightFromBracket)`
+  transition: transform 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateX(6px); /* move 4px to the right */
+  }
+`;
+
 const Sidebar = () => {
   const { theme, themeColor } = useAppContext();
   const currentTheme = themeColor[theme];
   return (
     <SidebarTag
       theme={currentTheme}
-      className="p-4 d-flex flex-column justify-content-between"
+      className="p-4 pb-5 d-flex flex-column justify-content-between align-items-center"
       style={{ zIndex: 1 }}
     >
       <div className="navbar-brand fw-bolder fs-3">GameX</div>
@@ -65,7 +75,9 @@ const Sidebar = () => {
           />
         </Link>
       </Links>
-      <div className="navbar-brand fw-bolder fs-3">GameX</div>
+      <div className="navbar-brand fw-bolder fs-3">
+        <LogoutAnimation />
+      </div>
     </SidebarTag>
   );
 };

@@ -4,7 +4,7 @@ import HeroSection from "../Components/HeroSection";
 
 const HomePage = () => {
   return (
-    <div className="d-flex flex-column gap-5">
+    <div className="d-flex flex-column gap-3">
       <HeroSection />
       <ContinueSection />
       <div className="d-flex gap-2">

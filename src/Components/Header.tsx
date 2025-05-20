@@ -8,7 +8,7 @@ import { MdAccountCircle } from "react-icons/md";
 
 const SearchBar = styled.input<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
-  color: white;
+  color: ${({ theme }) => (theme.name === "dark" ? "white" : "black")};
   border: none;
   outline: none;
 
