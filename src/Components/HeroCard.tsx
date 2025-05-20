@@ -1,15 +1,12 @@
 import styled from "styled-components";
 import { useAppContext, type ThemeObj } from "../Context/AppContext";
 import { MdAddToPhotos } from "react-icons/md";
+import { CardHoverAnimation } from "./GameCard";
 
 const Card = styled.div<{ theme: ThemeObj }>`
   height: 250px;
   background: ${({ theme }) => theme.boxColor};
-  transition: transform 0.3s ease-in-out;
-
-  &:hover {
-    transform: scale(1.02);
-  }
+  ${CardHoverAnimation}
 `;
 
 const HeroCard = () => {

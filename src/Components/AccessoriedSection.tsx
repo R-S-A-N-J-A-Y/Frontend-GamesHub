@@ -1,11 +1,21 @@
-import { useAppContext } from "../Context/AppContext";
+import styled from "styled-components";
+import { useAppContext, type ThemeObj } from "../Context/AppContext";
 import { ArrowIcon } from "./LibrarySection";
+import { CardHoverAnimation } from "./GameCard";
+
+const Wrapper = styled.div<{ theme: ThemeObj }>`
+  background: ${({ theme }) => theme.boxColor};
+  height: 300px;
+  width: 100%;
+  maxwidth: 300px;
+  ${CardHoverAnimation}
+`;
 
 const AccessoriedSection = () => {
   const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
   return (
-    <div
+    <Wrapper
       className="border rounded-4 p-4 d-flex flex-column gap-2"
       style={{
         background: `${currTheme.boxColor}`,
@@ -33,7 +43,7 @@ const AccessoriedSection = () => {
           }}
         />
       </div>
-    </div>
+    </Wrapper>
   );
 };
 

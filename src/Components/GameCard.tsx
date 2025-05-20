@@ -1,19 +1,23 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useAppContext } from "../Context/AppContext";
 import { MdAddToPhotos } from "react-icons/md";
 import { GoHeartFill } from "react-icons/go";
 
-const Card = styled.div`
-  width: 300px;
-  border: none;
-  border-radius: 10px;
-  overflow: hidden;
+export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
 
   &:hover {
     box-shadow: 2px 2px 10px rgba(117, 112, 112, 0.53);
     transform: scale(1.02);
   }
+`;
+
+const Card = styled.div`
+  width: 300px;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  ${CardHoverAnimation}
 `;
 
 const GameCard = () => {
