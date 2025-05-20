@@ -3,7 +3,7 @@ import { useAppContext } from "../Context/AppContext";
 import { MdDoubleArrow } from "react-icons/md";
 import styled from "styled-components";
 
-const ArrowIcon = styled(MdDoubleArrow)`
+export const ArrowIcon = styled(MdDoubleArrow)`
   transition: transform 0.2s ease;
   cursor: pointer;
 
@@ -17,7 +17,7 @@ const LibrarySection = () => {
   const currTheme = themeColor[theme];
   return (
     <div
-      className="border rounded-3 p-3 w-50 d-flex flex-column gap-3"
+      className="flex-fill  border rounded-4 px-5 py-4 d-flex flex-column gap-3"
       style={{ background: `${currTheme.boxColor}` }}
     >
       <div className="d-flex justify-content-between align-items-center pe-2">
