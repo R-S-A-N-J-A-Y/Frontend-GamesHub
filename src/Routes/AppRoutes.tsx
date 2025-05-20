@@ -14,7 +14,9 @@ const AppRoutes = () => {
         <AppLayout>
           <Routes>
             <Route index element={<HomePage />} />
-            <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/explore" element={<ExplorePage />}>
+              <Route path="platform" element={<Cartpage />} />
+            </Route>
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/cart" element={<Cartpage />} />

@@ -1,5 +1,9 @@
-/* Main Page  */
+body {
+  padding-bottom: 1000px;
+  background-color: black;
+}
 
+/* Main Page  */
 #main {
   margin-left: 150px;
 }

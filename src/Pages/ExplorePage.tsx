@@ -1,5 +1,11 @@
+import { Outlet } from "react-router-dom";
+
 const ExplorePage = () => {
-  return <div>ExplorePage</div>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 export default ExplorePage;

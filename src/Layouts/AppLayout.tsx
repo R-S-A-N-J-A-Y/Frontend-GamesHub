@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import Sidebar from "../Components/Sidebar";
@@ -6,6 +6,8 @@ import Sidebar from "../Components/Sidebar";
 import styled from "styled-components";
 import { useAppContext } from "../Context/AppContext";
 import type { ThemeObj } from "../Context/AppContext";
+import { useLocation } from "react-router-dom";
+import ExploreSidebar from "../Components/ExploreSidebar";
 
 interface Props {
   children: ReactNode;
@@ -21,12 +23,20 @@ const Children = styled.div`
 `;
 
 const AppLayout = ({ children }: Props) => {
+  const location = useLocation();
+  const [url, setUrl] = useState("/");
   const { theme, themeColor } = useAppContext();
   const currentTheme = themeColor[theme];
 
+  useEffect(() => {
+    setUrl(location.pathname);
+    console.log(location);
+  }, [location]);
+
   return (
     <Root theme={currentTheme}>
-      <Sidebar />
+      {url === "/" && <Sidebar />}
+      {url.includes("/explore") && <ExploreSidebar />}
       <main id="main" className="d-flex flex-column gap-2">
         <Header />
         <Children>{children}</Children>
