@@ -60,13 +60,17 @@ const ExploreSidebar = () => {
         GameX
       </NavLink>
       <Links className="py-4 d-flex flex-column justify-content-around align-items-center align-center">
-        <Link to="/explore/platform" className="rounded-4 p-3">
+        <Link
+          theme={currentTheme}
+          to="/explore/genres"
+          className="rounded-4 p-3"
+        >
           <TfiTarget size={28} color={theme === "dark" ? "white" : "black"} />
         </Link>
 
         <Link
           theme={currentTheme}
-          to="/explore/platform"
+          to="/explore/platforms"
           className="p-3 rounded-4"
         >
           <FaGamepad
@@ -74,16 +78,12 @@ const ExploreSidebar = () => {
             size={"28px"}
           />
         </Link>
-        <Link
-          theme={currentTheme}
-          to="/explore/platform"
-          className="p-3 rounded-4"
-        >
+        <Link theme={currentTheme} to="/explore/tags" className="p-3 rounded-4">
           <FaTags color={theme === "dark" ? "white" : "black"} size={"27px"} />
         </Link>
         <Link
           theme={currentTheme}
-          to="/explore/platform"
+          to="/explore/stores"
           className="p-3 rounded-4"
         >
           <IoIosApps
@@ -93,7 +93,7 @@ const ExploreSidebar = () => {
         </Link>
         <Link
           theme={currentTheme}
-          to="/explore/platform"
+          to="/explore/studios"
           className="p-3 rounded-4"
         >
           <TbAppsFilled
