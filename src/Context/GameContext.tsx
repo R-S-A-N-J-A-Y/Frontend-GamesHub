@@ -27,6 +27,7 @@ interface GameContextType {
     studios: GenralDatatype[];
     game: GenralDatatype[];
   };
+  FetchGenre: ({ data }: { data: GenralDatatype[] }) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -43,8 +44,14 @@ export const GameContextProvider = ({ children }: Props) => {
     game: [],
   });
 
+  const FetchGenre = ({ data }: { data: GenralDatatype[] }) => {
+    dispatch({ type: "Genre", payload: { data } });
+  };
+
   return (
-    <GameContext.Provider value={{ state }}>{children}</GameContext.Provider>
+    <GameContext.Provider value={{ state, FetchGenre }}>
+      {children}
+    </GameContext.Provider>
   );
 };
 
