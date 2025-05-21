@@ -3,16 +3,13 @@ import { CardHoverAnimation } from "./GameCard";
 
 const Card = styled.div`
   height: 280px;
-  width: 300px;
+  // width: 300px;
   ${CardHoverAnimation}
 `;
 
 const GenreCard = () => {
   return (
-    <Card
-      className="card text-bg-dark d-flex align-items-center justify-content-center border border-2 rounded-4"
-      style={{ height: "280px", width: "300px" }}
-    >
+    <Card className="card text-bg-dark d-flex align-items-center justify-content-center border border-2 rounded-4">
       <img
         src="/DaysGone.jpg"
         className="card-img rounded-4"
