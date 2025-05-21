@@ -30,7 +30,7 @@ const AppLayout = ({ children }: Props) => {
 
   useEffect(() => {
     setUrl(location.pathname);
-    console.log(location);
+    // console.log(location);
   }, [location]);
 
   return (
