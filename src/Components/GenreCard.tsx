@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { CardHoverAnimation } from "./GameCard";
+import type { GenralDatatype } from "../Context/GameContext";
 
 const Card = styled.div`
   height: 280px;
@@ -7,7 +8,11 @@ const Card = styled.div`
   ${CardHoverAnimation}
 `;
 
-const GenreCard = () => {
+interface Props {
+  data: GenralDatatype;
+}
+
+const GenreCard = ({ data }: Props) => {
   return (
     <Card className="card text-bg-dark d-flex align-items-center justify-content-center border border-2 rounded-4">
       <img
@@ -26,7 +31,7 @@ const GenreCard = () => {
       >
         <h5 className="card-title fw-bold fs-2">
           <span className="border border-top-0 border-start-0 border-end-0  d-inline-block p-2">
-            PC
+            {data.name}
           </span>
         </h5>
 
@@ -45,15 +50,15 @@ const GenreCard = () => {
         <div className="d-flex flex-column gap-2">
           <div className="d-flex justify-content-between px-2 py-1 border-bottom fw-bold">
             <p className="card-text p-0 m-0 fw-bold">Total Game: </p>
-            <p className="card-text p-0 m-0 fw-bold">3000 </p>
+            <p className="card-text p-0 m-0 fw-bold">{data.gameCount} </p>
           </div>
           <div className="d-flex justify-content-between px-2">
-            <p className="card-text p-0 m-0">RDR2</p>
-            <p className="card-text p-0 m-0">3000 </p>
+            <p className="card-text p-0 m-0">{data.popularGame[0].gameName}</p>
+            <p className="card-text p-0 m-0">{data.popularGame[0].likes}</p>
           </div>
           <div className="d-flex justify-content-between px-2">
-            <p className="card-text p-0 m-0">The Last of US</p>
-            <p className="card-text p-0 m-0">3000 </p>
+            <p className="card-text p-0 m-0">{data.popularGame[1].gameName}</p>
+            <p className="card-text p-0 m-0">{data.popularGame[1].likes}</p>
           </div>
         </div>
       </div>
