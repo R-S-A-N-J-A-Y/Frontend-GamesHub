@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { GrHomeRounded } from "react-icons/gr";
 import { IoGameController } from "react-icons/io5";
@@ -19,13 +19,18 @@ const Links = styled.div`
   height: 400px;
 `;
 
-const Link = styled(NavLink)<{ theme: ThemeObj }>`
-  background: ${({ theme }) => theme.boxColor};
-  border: none;
+export const SidebarIconShadowEffect = css<{ theme: ThemeObj }>`
   box-shadow: ${({ theme }) =>
     theme.name === "light"
       ? "-5px -5px 10px #fafbff, 5px 5px 10px rgba(22, 24, 29, 0.2)"
       : "inset -2px -2px 10px rgba(58, 57, 57, 0.86), inset 2px 2px 10px rgba(255, 255, 255, 0.7)"};
+`;
+
+const Link = styled(NavLink)<{ theme: ThemeObj }>`
+  background: ${({ theme }) => theme.boxColor};
+  border: none;
+  ${SidebarIconShadowEffect}
+
   transition: all 0.2s ease;
   &.active {
     background: ${({ theme }) => theme.iconBgColor};

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useAppContext, type ThemeObj } from "../Context/AppContext";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { IoNotifications } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
@@ -26,14 +26,17 @@ const Links = styled.div`
   width: 400px;
 `;
 
-const Link = styled(NavLink)<{ theme: ThemeObj }>`
-  background: ${({ theme }) => theme.boxColor};
-  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
-
+export const HeaderIconShadowEffect = css<{ theme: ThemeObj }>`
   box-shadow: ${({ theme }) =>
     theme.name === "light"
       ? "-5px -5px 10px #fafbff, 5px 5px 10px rgba(22, 24, 29, 0.2)"
       : "-2px -2px 5px rgba(0, 0, 0, 0.49), 2px 2px 5px rgba(255, 255, 255, 0.58)"};
+`;
+
+const Link = styled(NavLink)<{ theme: ThemeObj }>`
+  background: ${({ theme }) => theme.boxColor};
+  transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+  ${HeaderIconShadowEffect}
 
   &.active {
     background: ${({ theme }) => theme.highLight};
