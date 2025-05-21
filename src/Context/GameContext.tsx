@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useReducer, type ReactNode } from "react";
+
+import gameReducer from "../Reducers/GameReducer";
 
 interface Props {
   children: ReactNode;
@@ -17,8 +19,14 @@ export interface GenralDatatype {
 }
 
 interface GameContextType {
-  genres: GenralDatatype[];
-  onClickGenre: () => void;
+  state: {
+    genres: GenralDatatype[];
+    platforms: GenralDatatype[];
+    tags: GenralDatatype[];
+    stores: GenralDatatype[];
+    studios: GenralDatatype[];
+    game: GenralDatatype[];
+  };
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -26,36 +34,17 @@ export const GameContext = createContext<GameContextType | undefined>(
 );
 
 export const GameContextProvider = ({ children }: Props) => {
-  const [genres, setGenres] = useState<GenralDatatype[]>([
-    {
-      _id: "",
-      name: "",
-      gameCount: 0,
-      popularGame: [
-        { gameName: "", likes: 0 },
-        { gameName: "", likes: 0 },
-      ],
-    },
-  ]);
-
-  const onClickGenre = () => {
-    setGenres([
-      {
-        _id: "",
-        name: "",
-        gameCount: 0,
-        popularGame: [
-          { gameName: "", likes: 0 },
-          { gameName: "", likes: 0 },
-        ],
-      },
-    ]);
-  };
+  const [state, dispatch] = useReducer(gameReducer, {
+    genres: [],
+    platforms: [],
+    tags: [],
+    stores: [],
+    studios: [],
+    game: [],
+  });
 
   return (
-    <GameContext.Provider value={{ genres, onClickGenre }}>
-      {children}
-    </GameContext.Provider>
+    <GameContext.Provider value={{ state }}>{children}</GameContext.Provider>
   );
 };
 
