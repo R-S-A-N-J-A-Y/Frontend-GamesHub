@@ -1,6 +1,15 @@
+import styled from "styled-components";
+import { CardHoverAnimation } from "./GameCard";
+
+const Card = styled.div`
+  height: 280px;
+  width: 300px;
+  ${CardHoverAnimation}
+`;
+
 const GenreCard = () => {
   return (
-    <div
+    <Card
       className="card text-bg-dark d-flex align-items-center justify-content-center border border-2 rounded-4"
       style={{ height: "280px", width: "300px" }}
     >
@@ -51,7 +60,7 @@ const GenreCard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
