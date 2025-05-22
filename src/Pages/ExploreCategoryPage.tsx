@@ -7,11 +7,21 @@ import { useEffect, useState } from "react";
 
 const ExploreCategoryPage = () => {
   const { type } = useParams<{ type: string }>();
-  const { state, FetchGenre } = useGameContext();
+  const { state, FetchGenre, changeType } = useGameContext();
   const [currPage, setCurrPage] = useState(0);
   const [startPage, setStartPage] = useState(0);
 
+  //To reset the pages to initial for every different category.
   useEffect(() => {
+    setCurrPage(0);
+    setStartPage(0);
+    changeType(type || "");
+  }, [changeType, type]);
+
+  useEffect(() => {
+    // To avoid the Fetching data for the left-over page value
+    if (type !== state.category.type) return;
+
     const fetchData = async () => {
       try {
         // Call To Backend .
@@ -32,24 +42,23 @@ const ExploreCategoryPage = () => {
         }));
 
         // Updating the GameContext
-        FetchGenre(UpdatedData);
+        FetchGenre(type || "", UpdatedData);
       } catch (err) {
         alert(err);
       }
     };
-    fetchData();
-  }, [type, currPage, FetchGenre]);
 
-  // console.log(startPage, currPage);
+    fetchData();
+  }, [FetchGenre, currPage, state.category.type, type]);
 
   return (
     <div>
       <p className="fw-bold fs-2">Available {type}</p>
-      {state.category.length === 0 ? (
+      {state.category.data.length === 0 ? (
         <p className="mb-5">No data to Show</p>
       ) : (
         <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
-          {state.category.map((data, key) => (
+          {state.category.data.map((data, key) => (
             <div className="col" key={key}>
               <GenreCard data={data} />
             </div>
@@ -113,7 +122,7 @@ const ExploreCategoryPage = () => {
           </li>
           <li
             className={`page-item ${
-              state.category.length === 0 ? "disabled" : ""
+              state.category.data.length === 0 ? "disabled" : ""
             }`}
           >
             <h1
