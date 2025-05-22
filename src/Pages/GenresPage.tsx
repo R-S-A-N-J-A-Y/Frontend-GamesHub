@@ -38,7 +38,7 @@ const GenresPage = () => {
     fetchData();
   }, [currPage, FetchGenre]);
 
-  // console.log(state.genres);
+  console.log(startPage, currPage);
 
   return (
     <div>
@@ -55,22 +55,26 @@ const GenresPage = () => {
         </div>
       )}
 
-      <nav aria-label="Page navigation example m-5 p-5">
+      <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-center">
-          <li className={`page-item ${startPage === 0 ? "disabled" : ""}`}>
+          <li className={`page-item ${currPage === 0 ? "disabled" : ""}`}>
             <h1
               className="page-link"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                const newPage = startPage - 1;
-                setStartPage((start) => start - 1);
-                setCurrPage(newPage); // triggers fetching
+                const newPage = currPage - 1;
+                setCurrPage(newPage);
+                if (currPage !== 1) {
+                  setStartPage(currPage - 2);
+                }
               }}
             >
               Previous
             </h1>
           </li>
-          <li className="page-item">
+          <li
+            className={`page-item ${startPage === currPage ? "disabled" : ""}`}
+          >
             <h1
               className="page-link"
               onClick={() => setCurrPage(startPage)}
@@ -79,7 +83,11 @@ const GenresPage = () => {
               {startPage + 1}
             </h1>
           </li>
-          <li className="page-item">
+          <li
+            className={`page-item ${
+              startPage + 1 === currPage ? "disabled" : ""
+            }`}
+          >
             <h1
               className="page-link"
               onClick={() => setCurrPage(startPage + 1)}
@@ -88,7 +96,11 @@ const GenresPage = () => {
               {startPage + 2}
             </h1>
           </li>
-          <li className="page-item">
+          <li
+            className={`page-item ${
+              startPage + 2 === currPage ? "disabled" : ""
+            }`}
+          >
             <h1
               className="page-link"
               onClick={() => setCurrPage(startPage + 2)}
@@ -106,8 +118,8 @@ const GenresPage = () => {
               className="page-link"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                const newPage = startPage + 3;
-                setStartPage((start) => start + 1);
+                const newPage = currPage + 1;
+                setStartPage(newPage - 1);
                 setCurrPage(newPage);
               }}
             >
