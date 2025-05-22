@@ -7,16 +7,16 @@ import { useEffect, useState } from "react";
 
 const ExploreCategoryPage = () => {
   const { type } = useParams<{ type: string }>();
-  const { state, FetchGenre, changeType } = useGameContext();
+  const { state, updateCategory, updateCategoryType } = useGameContext();
   const [currPage, setCurrPage] = useState(0);
   const [startPage, setStartPage] = useState(0);
 
   //To reset the pages to initial for every different category.
   useEffect(() => {
     setCurrPage(0);
-    setStartPage(0);
-    changeType(type || "");
-  }, [changeType, type]);
+    setStartPage(0); //To reset the pages to initial for every different category.
+    updateCategoryType(type || ""); //Sets the Type first To avoid the Rendering of the leftOver page by previous Type.
+  }, [updateCategoryType, type]);
 
   useEffect(() => {
     // To avoid the Fetching data for the left-over page value
@@ -42,14 +42,14 @@ const ExploreCategoryPage = () => {
         }));
 
         // Updating the GameContext
-        FetchGenre(type || "", UpdatedData);
+        updateCategory(type || "", UpdatedData);
       } catch (err) {
         alert(err);
       }
     };
 
     fetchData();
-  }, [FetchGenre, currPage, state.category.type, type]);
+  }, [updateCategory, currPage, state.category.type, type]);
 
   return (
     <div>

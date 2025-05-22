@@ -29,8 +29,8 @@ interface GameContextType {
     category: { type: string; data: GenralDatatype[] };
     game: GenralDatatype[];
   };
-  FetchGenre: (type: string, data: GenralDatatype[]) => void;
-  changeType: (type: string) => void;
+  updateCategory: (type: string, data: GenralDatatype[]) => void;
+  updateCategoryType: (type: string) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -45,17 +45,17 @@ export const GameContextProvider = ({ children }: Props) => {
 
   // Use Callback function to Memoize the Function and get Reference for it
   // Normal functions recreated at every Render so it cause the functions Reinitialized which create an rendering in the GenrePage useEffect
-  const FetchGenre = useCallback((type: string, data: GenralDatatype[]) => {
+  const updateCategory = useCallback((type: string, data: GenralDatatype[]) => {
     dispatch({ type: "SET_CATEGORY_TYPE_DATA", payload: { type, data } });
   }, []);
 
   // Update the Type of Category to first, to avoid the fetching the leftOver page for previous category
-  const changeType = useCallback((type: string) => {
+  const updateCategoryType = useCallback((type: string) => {
     dispatch({ type: "SET_CATEGORY_TYPE", payload: { type } });
   }, []);
 
   return (
-    <GameContext.Provider value={{ state, FetchGenre, changeType }}>
+    <GameContext.Provider value={{ state, updateCategory, updateCategoryType }}>
       {children}
     </GameContext.Provider>
   );
