@@ -1,26 +1,22 @@
 import type { GenralDatatype } from "../Context/GameContext";
 
 type GameState = {
-  genres: GenralDatatype[];
-  platforms: GenralDatatype[];
-  tags: GenralDatatype[];
-  stores: GenralDatatype[];
-  studios: GenralDatatype[];
+  category: GenralDatatype[];
   game: GenralDatatype[];
 };
 
 type GameAction = {
-  type: "Genre";
+  type: string;
   payload: {
     data: GenralDatatype[];
   };
 };
 
 const gameReducer = (state: GameState, action: GameAction) => {
-  if (action.type === "Genre") {
+  if (action.type === "Category") {
     return {
       ...state,
-      genres: action.payload.data,
+      category: action.payload.data,
     };
   }
 

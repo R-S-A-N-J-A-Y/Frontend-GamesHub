@@ -26,11 +26,7 @@ export interface GenralDatatype {
 
 interface GameContextType {
   state: {
-    genres: GenralDatatype[];
-    platforms: GenralDatatype[];
-    tags: GenralDatatype[];
-    stores: GenralDatatype[];
-    studios: GenralDatatype[];
+    category: GenralDatatype[];
     game: GenralDatatype[];
   };
   FetchGenre: (data: GenralDatatype[]) => void;
@@ -42,18 +38,14 @@ export const GameContext = createContext<GameContextType | undefined>(
 
 export const GameContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(gameReducer, {
-    genres: [],
-    platforms: [],
-    tags: [],
-    stores: [],
-    studios: [],
+    category: [],
     game: [],
   });
 
   // Use Callback function to Memoize the Function and get Reference for it
   // Normal functions recreated at every Render so it cause the functions Reinitialized which create an rendering in the GenrePage useEffect
   const FetchGenre = useCallback((data: GenralDatatype[]) => {
-    dispatch({ type: "Genre", payload: { data } });
+    dispatch({ type: "Category", payload: { data } });
   }, []);
 
   return (

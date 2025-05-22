@@ -1,10 +1,12 @@
+import { useParams } from "react-router-dom";
 import GenreCard from "../Components/GenreCard";
 import { useGameContext } from "../Context/GameContext";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const GenresPage = () => {
+const ExploreCategoryPage = () => {
+  const { type } = useParams<{ type: string }>();
   const { state, FetchGenre } = useGameContext();
   const [currPage, setCurrPage] = useState(0);
   const [startPage, setStartPage] = useState(0);
@@ -13,7 +15,7 @@ const GenresPage = () => {
     const fetchData = async () => {
       try {
         // Call To Backend .
-        const res = await axios.get("http://localhost:3000/user/genres/", {
+        const res = await axios.get(`http://localhost:3000/user/${type}/`, {
           params: { page: currPage, limit: 20 },
         });
 
@@ -36,18 +38,18 @@ const GenresPage = () => {
       }
     };
     fetchData();
-  }, [currPage, FetchGenre]);
+  }, [type, currPage, FetchGenre]);
 
-  console.log(startPage, currPage);
+  // console.log(startPage, currPage);
 
   return (
     <div>
-      <p className="fw-bold fs-2">Available Genres</p>
-      {state.genres.length === 0 ? (
+      <p className="fw-bold fs-2">Available {type}</p>
+      {state.category.length === 0 ? (
         <p className="mb-5">No data to Show</p>
       ) : (
         <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
-          {state.genres.map((data, key) => (
+          {state.category.map((data, key) => (
             <div className="col" key={key}>
               <GenreCard data={data} />
             </div>
@@ -111,7 +113,7 @@ const GenresPage = () => {
           </li>
           <li
             className={`page-item ${
-              state.genres.length === 0 ? "disabled" : ""
+              state.category.length === 0 ? "disabled" : ""
             }`}
           >
             <h1
@@ -132,4 +134,4 @@ const GenresPage = () => {
   );
 };
 
-export default GenresPage;
+export default ExploreCategoryPage;

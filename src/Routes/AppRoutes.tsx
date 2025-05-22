@@ -6,11 +6,7 @@ import CommunityPage from "../Pages/CommunityPage";
 import NotificationPage from "../Pages/NotificationPage";
 import Cartpage from "../Pages/Cartpage";
 import ProfilePage from "../Pages/ProfilePage";
-import PlatformsPage from "../Pages/PlatformsPage";
-import GenresPage from "../Pages/GenresPage";
-import TagsPage from "../Pages/TagsPage";
-import StoresPage from "../Pages/StoresPage";
-import StudiosPage from "../Pages/StudiosPage";
+import ExploreCategoryPage from "../Pages/ExploreCategoryPage";
 
 const AppRoutes = () => {
   return (
@@ -19,13 +15,8 @@ const AppRoutes = () => {
         <AppLayout>
           <Routes>
             <Route index element={<HomePage />} />
-            <Route path="/explore" element={<ExplorePage />}>
-              <Route path="genres" element={<GenresPage />} />
-              <Route path="platforms" element={<PlatformsPage />} />
-              <Route path="tags" element={<TagsPage />} />
-              <Route path="stores" element={<StoresPage />} />
-              <Route path="studios" element={<StudiosPage />} />
-            </Route>
+            <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/explore/:type" element={<ExploreCategoryPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/cart" element={<Cartpage />} />
