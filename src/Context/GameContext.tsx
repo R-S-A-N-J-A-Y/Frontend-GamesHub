@@ -1,4 +1,10 @@
-import { createContext, useContext, useReducer, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useReducer,
+  type ReactNode,
+} from "react";
 
 import gameReducer from "../Reducers/GameReducer";
 
@@ -44,9 +50,11 @@ export const GameContextProvider = ({ children }: Props) => {
     game: [],
   });
 
-  const FetchGenre = (data: GenralDatatype[]) => {
+  // Use Callback function to Memoize the Function and get Reference for it
+  // Normal functions recreated at every Render so it cause the functions Reinitialized which create an rendering in the GenrePage useEffect
+  const FetchGenre = useCallback((data: GenralDatatype[]) => {
     dispatch({ type: "Genre", payload: { data } });
-  };
+  }, []);
 
   return (
     <GameContext.Provider value={{ state, FetchGenre }}>
