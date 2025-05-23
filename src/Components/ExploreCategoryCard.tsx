@@ -1,20 +1,31 @@
 import styled from "styled-components";
 import { CardHoverAnimation } from "./GameCard";
-import type { GenralDatatype } from "../Context/GameContext";
+import type { ExploreCategoryItem } from "../Context/GameContext";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`
   height: 280px;
-  // width: 300px;
+  cursor: pointer;
   ${CardHoverAnimation}
 `;
 
 interface Props {
-  data: GenralDatatype;
+  data: ExploreCategoryItem;
+  type: string;
 }
 
-const ExploreCategoryCard = ({ data }: Props) => {
+const ExploreCategoryCard = ({ data, type }: Props) => {
+  const Navigate = useNavigate();
+
+  const onCategoryCardClick = (id: string) => {
+    Navigate(`/explore/${type}/${id}`);
+  };
+
   return (
-    <Card className="card text-bg-dark d-flex align-items-center justify-content-center border border-2 rounded-4">
+    <Card
+      className="card text-bg-dark d-flex align-items-center justify-content-center border border-2 rounded-4"
+      onClick={() => onCategoryCardClick(data._id)}
+    >
       <img
         src="/DaysGone.jpg"
         className="card-img rounded-4"

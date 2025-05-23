@@ -65,7 +65,7 @@ const ExploreCategoryPage = () => {
         <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
           {state.category.data.map((data, key) => (
             <div className="col" key={key}>
-              <ExploreCategoryCard data={data} />
+              <ExploreCategoryCard type={type || ""} data={data} />
             </div>
           ))}
         </div>

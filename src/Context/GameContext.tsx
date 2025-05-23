@@ -17,19 +17,35 @@ interface popularGame {
   likes: number;
 }
 
-export interface GenralDatatype {
+export interface ExploreCategoryItem {
+  //Explore Section - genre, platform and so on.
   _id: string;
   name: string;
   gameCount: number;
   popularGame: [popularGame, popularGame];
 }
 
+interface CategoryGamedata {
+  _id: string;
+  name: string;
+  coverImageUrl: string;
+  peopleAdded: number;
+  ratings: number;
+  likes: number;
+}
+
+export interface SelectedCategory {
+  _id: string;
+  name: string;
+  games: CategoryGamedata[];
+}
+
 interface GameContextType {
   state: {
-    category: { type: string; data: GenralDatatype[] };
-    game: GenralDatatype[];
+    category: { type: string; data: ExploreCategoryItem[] };
+    game: ExploreCategoryItem[];
   };
-  updateCategory: (type: string, data: GenralDatatype[]) => void;
+  updateCategory: (type: string, data: ExploreCategoryItem[]) => void;
   updateCategoryType: (type: string) => void;
 }
 
@@ -45,9 +61,12 @@ export const GameContextProvider = ({ children }: Props) => {
 
   // Use Callback function to Memoize the Function and get Reference for it
   // Normal functions recreated at every Render so it cause the functions Reinitialized which create an rendering in the GenrePage useEffect
-  const updateCategory = useCallback((type: string, data: GenralDatatype[]) => {
-    dispatch({ type: "SET_CATEGORY_TYPE_DATA", payload: { type, data } });
-  }, []);
+  const updateCategory = useCallback(
+    (type: string, data: ExploreCategoryItem[]) => {
+      dispatch({ type: "SET_CATEGORY_TYPE_DATA", payload: { type, data } });
+    },
+    []
+  );
 
   // Update the Type of Category to first, to avoid the fetching the leftOver page for previous category
   const updateCategoryType = useCallback((type: string) => {

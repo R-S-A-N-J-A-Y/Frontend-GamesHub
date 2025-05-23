@@ -7,6 +7,7 @@ import NotificationPage from "../Pages/NotificationPage";
 import Cartpage from "../Pages/Cartpage";
 import ProfilePage from "../Pages/ProfilePage";
 import ExploreCategoryPage from "../Pages/ExploreCategoryPage";
+import GameList from "../Components/GameList";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
             <Route index element={<HomePage />} />
             <Route path="/explore" element={<ExplorePage />} />
             <Route path="/explore/:type" element={<ExploreCategoryPage />} />
+            <Route path="/explore/:type/:id" element={<GameList />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/cart" element={<Cartpage />} />

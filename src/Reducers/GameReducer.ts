@@ -1,8 +1,8 @@
-import type { GenralDatatype } from "../Context/GameContext";
+import type { ExploreCategoryItem } from "../Context/GameContext";
 
 type GameState = {
-  category: { type: string; data: GenralDatatype[] };
-  game: GenralDatatype[];
+  category: { type: string; data: ExploreCategoryItem[] };
+  game: ExploreCategoryItem[];
 };
 
 type GameAction =
@@ -10,7 +10,7 @@ type GameAction =
       type: "SET_CATEGORY_TYPE_DATA";
       payload: {
         type: string;
-        data: GenralDatatype[];
+        data: ExploreCategoryItem[];
       };
     }
   | {
