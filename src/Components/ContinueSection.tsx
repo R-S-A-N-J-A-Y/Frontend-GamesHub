@@ -15,6 +15,16 @@ const ContinueSection = () => {
     }
   }, []);
 
+  const SampleGameData = {
+    _id: "6824d8a8c772e77e31f943c5",
+    name: "Days Gone",
+    coverImageUrl:
+      "https://ik.imagekit.io/sanjayvault/GamesHub/Game%20Previews/Days%20Gone/Preview/DaysGone.png",
+    peopleAdded: 0,
+    ratings: 0,
+    likes: 0,
+  };
+
   return (
     <div>
       <p className="fw-bold fs-2 m-0">Continue Where you Left</p>
@@ -37,7 +47,7 @@ const ContinueSection = () => {
         >
           {[...Array(5)].map((_, i) => (
             <motion.div key={i} style={{ flex: "0 0 auto" }}>
-              <GameCard />
+              <GameCard game={SampleGameData} />
             </motion.div>
           ))}
           <div style={{ flex: "0 0 auto", width: "10px" }} />

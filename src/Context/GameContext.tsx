@@ -25,7 +25,7 @@ export interface ExploreCategoryItem {
   popularGame: [popularGame, popularGame];
 }
 
-interface CategoryGamedata {
+export interface CategoryGamedata {
   _id: string;
   name: string;
   coverImageUrl: string;
@@ -37,16 +37,17 @@ interface CategoryGamedata {
 export interface SelectedCategory {
   _id: string;
   name: string;
-  games: CategoryGamedata[];
+  gamesId: CategoryGamedata[];
 }
 
 interface GameContextType {
   state: {
     category: { type: string; data: ExploreCategoryItem[] };
-    game: ExploreCategoryItem[];
+    game: SelectedCategory;
   };
   updateCategory: (type: string, data: ExploreCategoryItem[]) => void;
   updateCategoryType: (type: string) => void;
+  updateSelectedCategory: (categoryData: SelectedCategory) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -56,7 +57,11 @@ export const GameContext = createContext<GameContextType | undefined>(
 export const GameContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(gameReducer, {
     category: { type: "", data: [] },
-    game: [],
+    game: {
+      _id: "",
+      name: "",
+      gamesId: [],
+    },
   });
 
   // Use Callback function to Memoize the Function and get Reference for it
@@ -73,8 +78,26 @@ export const GameContextProvider = ({ children }: Props) => {
     dispatch({ type: "SET_CATEGORY_TYPE", payload: { type } });
   }, []);
 
+  // Update the Selected Category Data
+  const updateSelectedCategory = useCallback(
+    (categoryData: SelectedCategory) => {
+      dispatch({
+        type: "SET_SELECTED_CATEGORY_DATA",
+        payload: { categoryData },
+      });
+    },
+    []
+  );
+
   return (
-    <GameContext.Provider value={{ state, updateCategory, updateCategoryType }}>
+    <GameContext.Provider
+      value={{
+        state,
+        updateCategory,
+        updateCategoryType,
+        updateSelectedCategory,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );
