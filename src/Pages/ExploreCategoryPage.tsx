@@ -4,6 +4,7 @@ import { useGameContext } from "../Context/GameContext";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ExploreCategorySkeletonCard from "../Components/ExploreCategoryCardSkeleton";
 
 type DataFromFetch = {
   _id: string;
@@ -11,6 +12,8 @@ type DataFromFetch = {
 };
 
 const ExploreCategoryPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { type } = useParams<{ type: string }>();
   const { state, updateCategory, updateCategoryType } = useGameContext();
   const [currPage, setCurrPage] = useState(0);
@@ -26,7 +29,7 @@ const ExploreCategoryPage = () => {
   useEffect(() => {
     // To avoid the Fetching data for the left-over page value
     if (type !== state.category.type) return;
-
+    setIsLoading(true);
     const fetchData = async () => {
       try {
         // Call To Backend .
@@ -51,12 +54,29 @@ const ExploreCategoryPage = () => {
         updateCategory(type || "", UpdatedData);
       } catch (err) {
         alert(err);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       }
     };
 
     fetchData();
   }, [updateCategory, currPage, state.category.type, type]);
 
+  if (isLoading)
+    return (
+      <div>
+        <p className="fw-bold fs-2">Available {type}</p>
+        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
+          {[...Array(8)].map((key) => (
+            <div className="col" key={key}>
+              <ExploreCategorySkeletonCard />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   return (
     <div>
       <p className="fw-bold fs-2">Available {type}</p>
