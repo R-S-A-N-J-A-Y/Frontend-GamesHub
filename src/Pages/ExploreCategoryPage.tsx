@@ -5,6 +5,11 @@ import { useGameContext } from "../Context/GameContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+type DataFromFetch = {
+  _id: string;
+  name: string;
+};
+
 const ExploreCategoryPage = () => {
   const { type } = useParams<{ type: string }>();
   const { state, updateCategory, updateCategoryType } = useGameContext();
@@ -32,7 +37,7 @@ const ExploreCategoryPage = () => {
         // Data Retrival from result.
         const data = res.data.data || [];
 
-        const UpdatedData = data.map((d) => ({
+        const UpdatedData = data.map((d: DataFromFetch) => ({
           ...d,
           gameCount: 0,
           popularGame: [
@@ -66,6 +71,7 @@ const ExploreCategoryPage = () => {
         </div>
       )}
 
+      {/* Pagination  */}
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-center">
           <li className={`page-item ${currPage === 0 ? "disabled" : ""}`}>
