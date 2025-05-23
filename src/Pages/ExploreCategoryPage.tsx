@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import GenreCard from "../Components/GenreCard";
+import ExploreCategoryCard from "../Components/ExploreCategoryCard";
 import { useGameContext } from "../Context/GameContext";
 
 import axios from "axios";
@@ -65,7 +65,7 @@ const ExploreCategoryPage = () => {
         <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
           {state.category.data.map((data, key) => (
             <div className="col" key={key}>
-              <GenreCard data={data} />
+              <ExploreCategoryCard data={data} />
             </div>
           ))}
         </div>

@@ -12,7 +12,7 @@ interface Props {
   data: GenralDatatype;
 }
 
-const GenreCard = ({ data }: Props) => {
+const ExploreCategoryCard = ({ data }: Props) => {
   return (
     <Card className="card text-bg-dark d-flex align-items-center justify-content-center border border-2 rounded-4">
       <img
@@ -66,4 +66,4 @@ const GenreCard = ({ data }: Props) => {
   );
 };
 
-export default GenreCard;
+export default ExploreCategoryCard;
