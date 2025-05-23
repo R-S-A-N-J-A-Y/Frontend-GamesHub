@@ -61,7 +61,7 @@ const ExploreCategoryCard = ({ data, type }: Props) => {
         <div className="d-flex flex-column gap-2">
           <div className="d-flex justify-content-between px-2 py-1 border-bottom fw-bold">
             <p className="card-text p-0 m-0 fw-bold">Total Game: </p>
-            <p className="card-text p-0 m-0 fw-bold">{data.gameCount} </p>
+            <p className="card-text p-0 m-0 fw-bold">{data.totalGames} </p>
           </div>
           <div className="d-flex justify-content-between px-2">
             <p className="card-text p-0 m-0">{data.popularGame[0].gameName}</p>

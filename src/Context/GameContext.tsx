@@ -21,7 +21,7 @@ export interface ExploreCategoryItem {
   //Explore Section - genre, platform and so on.
   _id: string;
   name: string;
-  gameCount: number;
+  totalGames: number;
   popularGame: [popularGame, popularGame];
 }
 

@@ -14,7 +14,9 @@ const GameList = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/user/${type}/${id}`);
+        let url = type;
+        if (type === "platforms") url = "platformsv";
+        const res = await axios.get(`http://localhost:3000/user/${url}/${id}`);
         updateSelectedCategory(res.data.data);
       } catch (err) {
         alert(err);

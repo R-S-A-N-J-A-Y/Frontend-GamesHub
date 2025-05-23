@@ -30,7 +30,9 @@ const ExploreCategoryPage = () => {
     const fetchData = async () => {
       try {
         // Call To Backend .
-        const res = await axios.get(`http://localhost:3000/user/${type}/`, {
+        let url = type;
+        if (type === "platforms") url = "platformsv";
+        const res = await axios.get(`http://localhost:3000/user/${url}/`, {
           params: { page: currPage, limit: 20 },
         });
 
@@ -39,7 +41,6 @@ const ExploreCategoryPage = () => {
 
         const UpdatedData = data.map((d: DataFromFetch) => ({
           ...d,
-          gameCount: 0,
           popularGame: [
             { gameName: "The LAst of US", likes: 0 },
             { gameName: "The LAst of US", likes: 0 },
