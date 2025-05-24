@@ -2,11 +2,19 @@ import { createContext, useContext, useReducer } from "react";
 import type { Props } from "./AppContext";
 import AuthReducer from "../Reducers/AuthReducer";
 
+export interface RegisterData {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  dob: string;
+  gender: string;
+}
+
 export interface AuthContextType {
   state: {
     isLogged: boolean;
     role: string;
-    name: string;
     profile: {
       name: string;
       email: string;
@@ -15,6 +23,7 @@ export interface AuthContextType {
       gender: string;
     };
   };
+  Register: (userData: RegisterData) => void;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -25,7 +34,6 @@ export const AuthProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(AuthReducer, {
     isLogged: false,
     role: "",
-    name: "",
     profile: {
       name: "",
       email: "",
@@ -35,8 +43,14 @@ export const AuthProvider = ({ children }: Props) => {
     },
   });
 
+  const Register = (userData: RegisterData) => {
+    dispatch({ type: "CREATE_USER", payload: { userData } });
+  };
+
   return (
-    <AuthContext.Provider value={{ state }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ state, Register }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

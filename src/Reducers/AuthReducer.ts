@@ -1,7 +1,8 @@
+import type { RegisterData } from "../Context/AuthContext";
+
 type StateData = {
   isLogged: boolean;
   role: string;
-  name: string;
   profile: {
     name: string;
     email: string;
@@ -11,8 +12,18 @@ type StateData = {
   };
 };
 
-const AuthReducer = (state: StateData, action: string) => {
-  console.log(state, action);
+type actionData = {
+  type: "CREATE_USER";
+  payload: {
+    userData: RegisterData;
+  };
+};
+
+const AuthReducer = (state: StateData, action: actionData) => {
+  if (action.type === "CREATE_USER") {
+    const { password, ...user } = action.payload.userData;
+    return { ...state, isLogged: true, role: "user", profile: user };
+  }
   return state;
 };
 

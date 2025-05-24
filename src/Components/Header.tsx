@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAppContext, type ThemeObj } from "../Context/AppContext";
 import styled, { css } from "styled-components";
 
@@ -53,13 +53,23 @@ const Header = () => {
   const { theme, themeColor, toggleTheme } = useAppContext();
   const currentTheme = themeColor[theme];
 
+  const Navigate = useNavigate();
+
   // Handling Navigation for Header when Logged and not Logged
   const HandleNavigate = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     if (!state.isLogged) {
       e.preventDefault();
-      alert("Please log in first!");
+
+      const target = e.currentTarget as HTMLElement;
+      const name = target.getAttribute("data-name");
+
+      if (name === "profile") {
+        Navigate("/auth");
+      } else {
+        alert("Please log in first!");
+      }
     }
   };
 
@@ -78,6 +88,7 @@ const Header = () => {
         <Link
           theme={currentTheme}
           to="/notifications"
+          data-name="notifications"
           className="p-2 rounded-3"
           onClick={HandleNavigate}
         >
@@ -89,6 +100,7 @@ const Header = () => {
         <Link
           theme={currentTheme}
           to="/cart"
+          data-name="cart"
           className="p-2 rounded-3"
           onClick={HandleNavigate}
         >
@@ -100,6 +112,7 @@ const Header = () => {
         <Link
           theme={currentTheme}
           to="/profile"
+          data-name="profile"
           className="p-2 rounded-3"
           onClick={HandleNavigate}
         >
