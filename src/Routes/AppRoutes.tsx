@@ -8,13 +8,16 @@ import Cartpage from "../Pages/Cartpage";
 import ProfilePage from "../Pages/ProfilePage";
 import ExploreCategoryPage from "../Pages/ExploreCategoryPage";
 import GameList from "../Components/GameList";
+import AuthLayout from "../Layouts/AuthLayout";
+import LoginForm from "../Components/LoginForm";
 
 const AppRoutes = () => {
   return (
     <>
       <Router>
-        <AppLayout>
-          <Routes>
+        <Routes>
+          {/* AppLayout Routes  */}
+          <Route element={<AppLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/explore" element={<ExplorePage />} />
             <Route path="/explore/:type" element={<ExploreCategoryPage />} />
@@ -23,8 +26,13 @@ const AppRoutes = () => {
             <Route path="/notifications" element={<NotificationPage />} />
             <Route path="/cart" element={<Cartpage />} />
             <Route path="/profile" element={<ProfilePage />} />
-          </Routes>
-        </AppLayout>
+          </Route>
+
+          {/* AuthLayout Routes  */}
+          <Route path="/auth" element={<AuthLayout />}>
+            <Route index element={<LoginForm />} />
+          </Route>
+        </Routes>
       </Router>
     </>
   );
