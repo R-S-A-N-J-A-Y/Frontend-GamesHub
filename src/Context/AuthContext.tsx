@@ -15,6 +15,7 @@ export interface AuthContextType {
   state: {
     isLogged: boolean;
     role: string;
+    id: string;
     profile: {
       name: string;
       email: string;
@@ -24,6 +25,7 @@ export interface AuthContextType {
     };
   };
   Register: (userData: RegisterData) => void;
+  Login: (user: { email: string; name: string; _id: string }) => void;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -34,6 +36,7 @@ export const AuthProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(AuthReducer, {
     isLogged: false,
     role: "",
+    id: "",
     profile: {
       name: "",
       email: "",
@@ -47,8 +50,12 @@ export const AuthProvider = ({ children }: Props) => {
     dispatch({ type: "CREATE_USER", payload: { userData } });
   };
 
+  const Login = (user: { email: string; name: string; _id: string }) => {
+    dispatch({ type: "LOGIN_USER", payload: { user } });
+  };
+
   return (
-    <AuthContext.Provider value={{ state, Register }}>
+    <AuthContext.Provider value={{ state, Register, Login }}>
       {children}
     </AuthContext.Provider>
   );
