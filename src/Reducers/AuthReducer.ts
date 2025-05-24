@@ -38,6 +38,7 @@ const AuthReducer = (state: StateData, action: actionData) => {
       isLogged: true,
       role: "user",
       id: action.payload.user._id,
+      profile: { ...state.profile, name: action.payload.user.name },
     };
   }
   return state;
