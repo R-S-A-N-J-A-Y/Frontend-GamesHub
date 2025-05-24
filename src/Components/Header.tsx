@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import { IoNotifications } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
+import { useAuth } from "../Context/AuthContext";
 
 const SearchBar = styled.input<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
@@ -48,8 +49,20 @@ const Link = styled(NavLink)<{ theme: ThemeObj }>`
 `;
 
 const Header = () => {
+  const { state } = useAuth();
   const { theme, themeColor, toggleTheme } = useAppContext();
   const currentTheme = themeColor[theme];
+
+  // Handling Navigation for Header when Logged and not Logged
+  const HandleNavigate = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    if (!state.isLogged) {
+      e.preventDefault();
+      alert("Please log in first!");
+    }
+  };
+
   return (
     <div className="d-flex justify-content-between align-items-center px-5 py-4">
       <div className="w-50">
@@ -66,19 +79,30 @@ const Header = () => {
           theme={currentTheme}
           to="/notifications"
           className="p-2 rounded-3"
+          onClick={HandleNavigate}
         >
           <IoNotifications
             color={theme === "dark" ? "white" : "black"}
             size={"24px"}
           />
         </Link>
-        <Link theme={currentTheme} to="/cart" className="p-2 rounded-3">
+        <Link
+          theme={currentTheme}
+          to="/cart"
+          className="p-2 rounded-3"
+          onClick={HandleNavigate}
+        >
           <FaShoppingCart
             color={theme === "dark" ? "white" : "black"}
             size={"24px"}
           />
         </Link>
-        <Link theme={currentTheme} to="/profile" className="p-2 rounded-3">
+        <Link
+          theme={currentTheme}
+          to="/profile"
+          className="p-2 rounded-3"
+          onClick={HandleNavigate}
+        >
           <MdAccountCircle
             color={theme === "dark" ? "white" : "black"}
             size={"25px"}
