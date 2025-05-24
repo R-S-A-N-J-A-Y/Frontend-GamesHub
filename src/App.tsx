@@ -1,14 +1,17 @@
 import { AppContextProvider } from "./Context/AppContext";
+import { AuthProvider } from "./Context/AuthContext";
 import { GameContextProvider } from "./Context/GameContext";
 import AppRoutes from "./Routes/AppRoutes";
 
 const App = () => {
   return (
-    <GameContextProvider>
-      <AppContextProvider>
-        <AppRoutes />
-      </AppContextProvider>
-    </GameContextProvider>
+    <AuthProvider>
+      <GameContextProvider>
+        <AppContextProvider>
+          <AppRoutes />
+        </AppContextProvider>
+      </GameContextProvider>
+    </AuthProvider>
   );
 };
 

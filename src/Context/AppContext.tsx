@@ -19,7 +19,7 @@ interface AppContextType {
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
-interface Props {
+export interface Props {
   children: ReactNode;
 }
 
