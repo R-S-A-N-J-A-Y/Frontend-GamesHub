@@ -1,45 +1,55 @@
 import axios from "axios";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+import { useForm, type FieldValues } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const Schema = z.object({
+  name: z
+    .string()
+    .min(3, { message: "*The Name must have atleast 3 Characters." }),
+  email: z.string().email(),
+  password: z
+    .string()
+    .min(6, { message: "*The Password must be atleast 6 Characters Long." }),
+  phone: z
+    .string()
+    .regex(/^\d{10}$/, { message: "*Phone must be a 10-digit number." }),
+  gender: z
+    .string()
+    .min(2, { message: "*The Password must be atleast 2 Characters Long." }),
+  dob: z.string().refine((val) => !isNaN(new Date(val).getTime()), {
+    message: "*Invalid date.",
+  }),
+});
+
+type FormData = z.infer<typeof Schema>;
 
 const RegisterForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(Schema),
+  });
   const Navigate = useNavigate();
   const { Register } = useAuth();
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    phone: "",
-    dob: "",
-    gender: "",
-  });
 
-  const HandleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserData((currData) => ({
-      ...currData,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const Validate = () => {
-    return true;
-  };
-
-  const HandleSubmit = async () => {
-    if (!Validate()) return;
-    const res = await CallBackend();
+  const onSubmit = async (data: FieldValues) => {
+    const res = await CallBackend(data);
     if (res) {
       Navigate("/");
-      Register(userData);
+      Register(data);
     }
   };
 
-  const CallBackend = async () => {
+  const CallBackend = async (data: FieldValues) => {
     try {
       const res = await axios.post("http://localhost:3000/auth/register", {
         countryCode: "IN",
-        ...userData,
+        ...data,
       });
       return res.data.success;
     } catch (err) {
@@ -48,63 +58,81 @@ const RegisterForm = () => {
   };
 
   return (
-    <div
+    <form
       className="text-white border p-5 rounded-4"
+      onSubmit={handleSubmit(onSubmit)}
       style={{ width: "600px", margin: "0 auto", marginTop: "100px" }}
     >
       <h3 className="mb-4">Register</h3>
       <input
+        {...register("name")}
         type="text"
         className="form-control mb-3"
         placeholder="name"
         name="name"
-        value={userData.name}
-        onChange={(e) => HandleChange(e)}
       />
+      {errors.name && (
+        <p className="text-danger fw-bold">{errors.name.message}</p>
+      )}
       <input
-        type="text"
+        {...register("email")}
+        type="email"
         className="form-control mb-3"
         placeholder="email"
         name="email"
-        value={userData.email}
-        onChange={(e) => HandleChange(e)}
       />
+      {errors.email && (
+        <p className="text-danger fw-bold">{errors.email.message}</p>
+      )}
+
       <input
+        {...register("password")}
         type="text"
         className="form-control mb-3"
         placeholder="password"
         name="password"
-        value={userData.password}
-        onChange={(e) => HandleChange(e)}
       />
+      {errors.password && (
+        <p className="text-danger fw-bold">{errors.password.message}</p>
+      )}
+
       <input
+        {...register("phone")}
         type="text"
         className="form-control mb-3"
         placeholder="phone"
         name="phone"
-        value={userData.phone}
-        onChange={(e) => HandleChange(e)}
       />
+      {errors.phone && (
+        <p className="text-danger fw-bold">{errors.phone.message}</p>
+      )}
+
       <input
-        type="text"
+        {...register("dob")}
+        type="date"
         className="form-control mb-3"
         placeholder="dob"
         name="dob"
-        value={userData.dob}
-        onChange={(e) => HandleChange(e)}
       />
+      {errors.dob && (
+        <p className="text-danger fw-bold">{errors.dob.message}</p>
+      )}
+
       <input
+        {...register("gender")}
         type="text"
         className="form-control mb-3"
         placeholder="gender"
         name="gender"
-        value={userData.gender}
-        onChange={(e) => HandleChange(e)}
       />
-      <button className="btn btn-primary" onClick={HandleSubmit}>
+      {errors.gender && (
+        <p className="text-danger fw-bold">{errors.gender.message}</p>
+      )}
+
+      <button type="submit" className="btn btn-primary">
         Register
       </button>
-    </div>
+    </form>
   );
 };
 
