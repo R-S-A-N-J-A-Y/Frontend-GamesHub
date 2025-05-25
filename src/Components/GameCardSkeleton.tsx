@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { useAppContext } from "../Context/AppContext";
 
 const Card = styled.div`
-  height: 320px;
+  border-radius: 10px;
+  width: 300px;
   overflow: hidden;
-  padding: 1px;
 `;
 
 const GameCardSkeleton = () => {
@@ -12,10 +12,10 @@ const GameCardSkeleton = () => {
   const curr = themeColor[theme];
 
   return (
-    <Card className="card border rounded-4" aria-hidden="true">
+    <Card className="card border" aria-hidden="true">
       <div
         className="card-img-top bg-secondary"
-        style={{ borderRadius: "10px 10px 0 0", height: "170px" }}
+        style={{ height: "170px" }}
       ></div>
       <div
         className="card-body placeholder-glow"

@@ -25,7 +25,7 @@ export interface ExploreCategoryItem {
   popularGame: [popularGame, popularGame];
 }
 
-export interface CategoryGamedata {
+export interface Gamedata {
   _id: string;
   name: string;
   coverImageUrl: string;
@@ -37,18 +37,19 @@ export interface CategoryGamedata {
 export interface SelectedCategory {
   _id: string;
   name: string;
-  gamesId: CategoryGamedata[];
+  gamesId: Gamedata[];
 }
 
 interface GameContextType {
   state: {
     category: { type: string; data: ExploreCategoryItem[] };
     game: SelectedCategory;
-    genralGames: CategoryGamedata[];
+    genralGames: Gamedata[];
   };
   updateCategory: (type: string, data: ExploreCategoryItem[]) => void;
   updateCategoryType: (type: string) => void;
   updateSelectedCategory: (categoryData: SelectedCategory) => void;
+  UpdateGenralGames: (games: Gamedata[]) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -91,6 +92,10 @@ export const GameContextProvider = ({ children }: Props) => {
     []
   );
 
+  const UpdateGenralGames = useCallback((games: Gamedata[]) => {
+    dispatch({ type: "SET_GENRAL_GAME_DATA", payload: { games } });
+  }, []);
+
   return (
     <GameContext.Provider
       value={{
@@ -98,6 +103,7 @@ export const GameContextProvider = ({ children }: Props) => {
         updateCategory,
         updateCategoryType,
         updateSelectedCategory,
+        UpdateGenralGames,
       }}
     >
       {children}

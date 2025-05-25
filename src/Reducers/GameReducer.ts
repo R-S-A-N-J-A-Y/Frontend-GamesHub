@@ -1,5 +1,5 @@
 import type {
-  CategoryGamedata,
+  Gamedata,
   ExploreCategoryItem,
   SelectedCategory,
 } from "../Context/GameContext";
@@ -7,7 +7,7 @@ import type {
 type GameState = {
   category: { type: string; data: ExploreCategoryItem[] };
   game: SelectedCategory;
-  genralGames: CategoryGamedata[];
+  genralGames: Gamedata[];
 };
 
 type GameAction =
@@ -28,6 +28,12 @@ type GameAction =
       type: "SET_SELECTED_CATEGORY_DATA";
       payload: {
         categoryData: SelectedCategory;
+      };
+    }
+  | {
+      type: "SET_GENRAL_GAME_DATA";
+      payload: {
+        games: Gamedata[];
       };
     };
 
@@ -54,6 +60,11 @@ const gameReducer = (state: GameState, action: GameAction) => {
       game: {
         ...action.payload.categoryData,
       },
+    };
+  } else if (action.type === "SET_GENRAL_GAME_DATA") {
+    return {
+      ...state,
+      genralGames: action.payload.games,
     };
   }
 

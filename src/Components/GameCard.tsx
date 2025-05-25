@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { useAppContext } from "../Context/AppContext";
 import { MdAddToPhotos } from "react-icons/md";
 import { GoHeartFill } from "react-icons/go";
-import type { CategoryGamedata } from "../Context/GameContext";
+import type { Gamedata } from "../Context/GameContext";
 
 export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
@@ -22,7 +22,7 @@ const Card = styled.div`
   ${CardHoverAnimation};
 `;
 
-const GameCard = ({ game }: { game: CategoryGamedata }) => {
+const GameCard = ({ game }: { game: Gamedata }) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
 
