@@ -10,7 +10,7 @@ import ExploreCategoryPage from "../Pages/ExploreCategoryPage";
 import GameList from "../Components/GameList";
 import AuthLayout from "../Layouts/AuthLayout";
 import RegisterForm from "../Components/RegisterForm";
-import LoginForm from "../Components/LoginForm";
+import LoginPage from "../Pages/LoginPage";
 
 const AppRoutes = () => {
   return (
@@ -32,7 +32,7 @@ const AppRoutes = () => {
           {/* AuthLayout Routes  */}
           <Route path="/auth/*" element={<AuthLayout />}>
             <Route index element={<RegisterForm />} />
-            <Route path="login" element={<LoginForm />} />
+            <Route path="login" element={<LoginPage />} />
           </Route>
         </Routes>
       </Router>

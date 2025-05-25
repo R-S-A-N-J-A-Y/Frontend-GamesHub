@@ -5,13 +5,13 @@ import AppRoutes from "./Routes/AppRoutes";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <GameContextProvider>
-        <AppContextProvider>
+    <AppContextProvider>
+      <AuthProvider>
+        <GameContextProvider>
           <AppRoutes />
-        </AppContextProvider>
-      </GameContextProvider>
-    </AuthProvider>
+        </GameContextProvider>
+      </AuthProvider>
+    </AppContextProvider>
   );
 };
 

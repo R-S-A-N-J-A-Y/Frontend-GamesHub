@@ -51,52 +51,63 @@ const LoginForm = () => {
   };
 
   return (
-    <form
-      className="text-white border p-5 rounded-4"
-      style={{ width: "600px", margin: "0 auto", marginTop: "100px" }}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <h3 className="mb-4">Login</h3>
-      <input
-        {...register("email")}
-        type="email"
-        className="form-control mb-3"
-        placeholder="email"
-        name="email"
-      />
-      {errors.email && (
-        <p className="text-danger fw-bold">{errors.email.message}</p>
-      )}
-
-      <div className="input-group mb-3">
+    <div className="border rounded-4 p-5 w-50">
+      <form
+        className="text-white rounded-4 mb-3"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h3 className="mb-4 fw-bold">Login Form</h3>
         <input
-          {...register("password", { required: true, minLength: 6 })}
-          type={`${showPassword ? "text" : "password"}`}
-          className="form-control"
-          placeholder="password"
-          name="password"
+          {...register("email")}
+          type="email"
+          className="form-control mb-3"
+          placeholder="email"
+          name="email"
         />
-        {errors.password && (
-          <p className="text-danger fw-bold">{errors.password.message}</p>
+        {errors.email && (
+          <p className="text-danger fw-bold">{errors.email.message}</p>
         )}
 
+        <div className="input-group mb-3">
+          <input
+            {...register("password", { required: true, minLength: 6 })}
+            type={`${showPassword ? "text" : "password"}`}
+            className="form-control"
+            placeholder="password"
+            name="password"
+          />
+          {errors.password && (
+            <p className="text-danger fw-bold">{errors.password.message}</p>
+          )}
+
+          <span
+            className="input-group-text"
+            id="basic-addon2"
+            onClick={() => setShowPassword((val) => !val)}
+            style={{ cursor: "pointer" }}
+          >
+            {!showPassword ? <GoEye /> : <GoEyeClosed />}
+          </span>
+        </div>
+
+        <button
+          type="submit"
+          className={`btn btn-primary ${isValid ? "" : "disabled"}`}
+        >
+          Login
+        </button>
+      </form>
+      <p className="fw-bold">
+        Don't have an Account. Try{" "}
         <span
-          className="input-group-text"
-          id="basic-addon2"
-          onClick={() => setShowPassword((val) => !val)}
+          className="text-primary"
+          onClick={() => Navigate("/auth")}
           style={{ cursor: "pointer" }}
         >
-          {!showPassword ? <GoEye /> : <GoEyeClosed />}
+          Registering
         </span>
-      </div>
-
-      <button
-        type="submit"
-        className={`btn btn-primary ${isValid ? "" : "disabled"}`}
-      >
-        Login
-      </button>
-    </form>
+      </p>
+    </div>
   );
 };
 
