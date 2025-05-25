@@ -9,8 +9,8 @@ import ProfilePage from "../Pages/ProfilePage";
 import ExploreCategoryPage from "../Pages/ExploreCategoryPage";
 import GameList from "../Components/GameList";
 import AuthLayout from "../Layouts/AuthLayout";
-import RegisterForm from "../Components/RegisterForm";
 import LoginPage from "../Pages/LoginPage";
+import RegisterPage from "../Pages/RegisterPage";
 
 const AppRoutes = () => {
   return (
@@ -31,7 +31,7 @@ const AppRoutes = () => {
 
           {/* AuthLayout Routes  */}
           <Route path="/auth/*" element={<AuthLayout />}>
-            <Route index element={<RegisterForm />} />
+            <Route index element={<RegisterPage />} />
             <Route path="login" element={<LoginPage />} />
           </Route>
         </Routes>
