@@ -1,6 +1,6 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import type { Props } from "./AppContext";
-import AuthReducer from "../Reducers/AuthReducer";
+import AuthReducer, { type StateData } from "../Reducers/AuthReducer";
 
 export interface RegisterData {
   name: string;
@@ -32,8 +32,10 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
 
-export const AuthProvider = ({ children }: Props) => {
-  const [state, dispatch] = useReducer(AuthReducer, {
+const getInitialState = (): StateData => {
+  const storedData = localStorage.getItem("authState");
+  if (storedData) return JSON.parse(storedData);
+  return {
     isLogged: false,
     role: "",
     id: "",
@@ -44,15 +46,23 @@ export const AuthProvider = ({ children }: Props) => {
       dob: "",
       gender: "",
     },
-  });
+  };
+};
 
-  const Register = (userData: { email: string; name: string; _id: string }) => {
-    dispatch({ type: "CREATE_USER", payload: { userData } });
+export const AuthProvider = ({ children }: Props) => {
+  const [state, dispatch] = useReducer(AuthReducer, getInitialState());
+
+  const Register = (user: { email: string; name: string; _id: string }) => {
+    dispatch({ type: "CREATE_USER", payload: { user } });
   };
 
   const Login = (user: { email: string; name: string; _id: string }) => {
     dispatch({ type: "LOGIN_USER", payload: { user } });
   };
+
+  useEffect(() => {
+    localStorage.setItem("authState", JSON.stringify(state));
+  }, [state]);
 
   return (
     <AuthContext.Provider value={{ state, Register, Login }}>

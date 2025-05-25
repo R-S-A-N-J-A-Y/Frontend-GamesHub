@@ -1,4 +1,4 @@
-type StateData = {
+export type StateData = {
   isLogged: boolean;
   role: string;
   id: string;
@@ -15,7 +15,7 @@ type actionData =
   | {
       type: "CREATE_USER";
       payload: {
-        userData: { email: string; name: string; _id: string };
+        user: { email: string; name: string; _id: string };
       };
     }
   | {
@@ -31,8 +31,12 @@ const AuthReducer = (state: StateData, action: actionData) => {
       ...state,
       isLogged: true,
       role: "user",
-      id: action.payload.userData._id,
-      profile: { ...state.profile, name: action.payload.userData.name },
+      id: action.payload.user._id,
+      profile: {
+        ...state.profile,
+        name: action.payload.user.name,
+        email: action.payload.user.email,
+      },
     };
   } else if (action.type === "LOGIN_USER") {
     return {
@@ -40,7 +44,11 @@ const AuthReducer = (state: StateData, action: actionData) => {
       isLogged: true,
       role: "user",
       id: action.payload.user._id,
-      profile: { ...state.profile, name: action.payload.user.name },
+      profile: {
+        ...state.profile,
+        name: action.payload.user.name,
+        email: action.payload.user.email,
+      },
     };
   }
   return state;
