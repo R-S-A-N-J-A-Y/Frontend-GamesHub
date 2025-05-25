@@ -6,10 +6,13 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, type FormData } from "../Validation/RegisterForm";
 import { useAppContext } from "../Context/AppContext";
+import { useState } from "react";
 
 const RegisterForm = () => {
   const { theme, themeColor, toggleTheme } = useAppContext();
   const currTheme = themeColor[theme];
+
+  const [serverError, setServerError] = useState<string>("");
 
   const Navigate = useNavigate();
   const { Register } = useAuth();
@@ -18,27 +21,36 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(Schema),
   });
 
   const onSubmit = async (data: FieldValues) => {
     const res = await CallBackend(data);
-    if (res) {
+    if (res?.success) {
       Navigate("/");
       Register(data);
+    } else {
+      setServerError(res.data.message);
     }
   };
 
   const CallBackend = async (data: FieldValues) => {
     try {
+      const { confirmPassword, ...user } = data;
+      console.log(confirmPassword);
       const res = await axios.post("http://localhost:3000/auth/register", {
         countryCode: "IN",
-        ...data,
+        ...user,
       });
-      return res.data.success;
+      return res.data;
     } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          return err.response;
+        }
+      }
       alert(err);
     }
   };
@@ -57,76 +69,117 @@ const RegisterForm = () => {
           Theme
         </button>
       </div>
+      {serverError && (
+        <p className="text-danger fw-bold fs-6 mb-4">*{serverError}</p>
+      )}
       <form
-        className="text-white rounded-4 mb-3 d-flex flex-column gap-4"
+        className="text-white rounded-4 mb-3 d-flex flex-column gap-3"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <input
-          {...register("name")}
-          type="text"
-          className="form-control"
-          placeholder="name"
-          name="name"
-        />
-        {errors.name && (
-          <p className="text-danger fw-bold">{errors.name.message}</p>
-        )}
-        <input
-          {...register("email")}
-          type="email"
-          className="form-control"
-          placeholder="email"
-          name="email"
-        />
-        {errors.email && (
-          <p className="text-danger fw-bold">{errors.email.message}</p>
-        )}
-
-        <input
-          {...register("password")}
-          type="text"
-          className="form-control"
-          placeholder="password"
-          name="password"
-        />
-        {errors.password && (
-          <p className="text-danger fw-bold">{errors.password.message}</p>
-        )}
-
-        <input
-          {...register("phone")}
-          type="text"
-          className="form-control"
-          placeholder="phone"
-          name="phone"
-        />
-        {errors.phone && (
-          <p className="text-danger fw-bold">{errors.phone.message}</p>
-        )}
-
-        <input
-          {...register("dob")}
-          type="date"
-          className="form-control"
-          placeholder="dob"
-          name="dob"
-        />
-        {errors.dob && (
-          <p className="text-danger fw-bold">{errors.dob.message}</p>
-        )}
-
-        <input
-          {...register("gender")}
-          type="text"
-          className="form-control"
-          placeholder="gender"
-          name="gender"
-        />
-        {errors.gender && (
-          <p className="text-danger fw-bold">{errors.gender.message}</p>
-        )}
         <div>
-          <button type="submit" className="btn btn-primary">
+          <input
+            {...register("name")}
+            type="text"
+            className="form-control"
+            placeholder="name"
+            name="name"
+          />
+          {errors.name && (
+            <p className="m-0 p-0 text-danger fw-bold">
+              *{errors.name.message}
+            </p>
+          )}
+        </div>
+        <div>
+          <input
+            {...register("email")}
+            type="email"
+            className="form-control"
+            placeholder="email"
+            name="email"
+          />
+          {errors.email && (
+            <p className="m-0 p-0 text-danger fw-bold">
+              *{errors.email.message}
+            </p>
+          )}
+        </div>
+        <div className="d-flex gap-3">
+          <div className="flex-fill">
+            <input
+              {...register("password")}
+              type="text"
+              className="form-control"
+              placeholder="password"
+              name="password"
+            />
+            {errors.password && (
+              <p className="m-0 p-0 text-danger fw-bold">
+                *{errors.password.message}
+              </p>
+            )}
+          </div>
+          <div className="flex-fill">
+            <input
+              {...register("confirmPassword")}
+              type="text"
+              className="form-control"
+              placeholder="confirmPassword"
+              name="confirmPassword"
+            />
+            {errors.confirmPassword && (
+              <p className="m-0 p-0 text-danger fw-bold">
+                *{errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+        </div>
+        <div>
+          <input
+            {...register("phone")}
+            type="text"
+            className="form-control"
+            placeholder="phone"
+            name="phone"
+          />
+          {errors.phone && (
+            <p className="m-0 p-0 text-danger fw-bold">
+              *{errors.phone.message}
+            </p>
+          )}
+        </div>
+        <div>
+          <input
+            {...register("dob")}
+            type="date"
+            className="form-control"
+            placeholder="dob"
+            name="dob"
+          />
+          {errors.dob && (
+            <p className="m-0 p-0 text-danger fw-bold">*{errors.dob.message}</p>
+          )}
+        </div>
+        <div>
+          <input
+            {...register("gender")}
+            type="text"
+            className="form-control"
+            placeholder="gender"
+            name="gender"
+          />
+          {errors.gender && (
+            <p className="m-0 p-0 text-danger fw-bold">
+              *{errors.gender.message}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            className={`btn btn-primary ${isValid ? "" : "disabled"}`}
+          >
             Register
           </button>
         </div>
