@@ -5,7 +5,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import GameCardSkeleton from "./GameCardSkeleton";
 
-const GameList = () => {
+const CategoryGameList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const {
     state: { game },
@@ -60,4 +60,4 @@ const GameList = () => {
   );
 };
 
-export default GameList;
+export default CategoryGameList;

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import GameList from "../Components/GameList";
 
 const ExplorePage = () => {
   const location = useLocation();
@@ -10,11 +9,7 @@ const ExplorePage = () => {
     setUrl(location.pathname);
   }, [location]);
   if (url !== "/explore") return <Outlet />;
-  return (
-    <div>
-      <GameList />
-    </div>
-  );
+  return <div>hi</div>;
 };
 
 export default ExplorePage;
