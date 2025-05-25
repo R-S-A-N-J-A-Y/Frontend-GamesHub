@@ -8,11 +8,17 @@ import { useState } from "react";
 import { useForm, type FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type FormData, Schema } from "../Validation/LoginForm";
+import { useAppContext } from "../Context/AppContext";
 
 const LoginForm = () => {
+  const { theme, themeColor, toggleTheme } = useAppContext();
+  const currTheme = themeColor[theme];
+
   const Navigate = useNavigate();
   const { Login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     register,
@@ -22,9 +28,11 @@ const LoginForm = () => {
 
   const onSubmit = async (data: FieldValues) => {
     const res = await CallBackend(data);
-    if (res.success) {
+    if (res?.success) {
       Navigate("/");
       Login(res.data);
+    } else {
+      setServerError(res);
     }
   };
 
@@ -39,29 +47,48 @@ const LoginForm = () => {
       console.log(res);
       return res.data;
     } catch (err) {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.data) {
+          return err.response.data;
+        }
+      }
       alert(err);
     }
   };
 
   return (
-    <div className="border rounded-4 p-5 w-50">
+    <>
+      <div className="d-flex justify-content-between mb-4">
+        <h3 className="fw-bold">Login Form</h3>
+        <button
+          className={` rounded-4 px-3 py-1 
+            bg-${currTheme.name === "dark" ? "light" : "dark"} 
+            text-${currTheme.name}`}
+          onClick={toggleTheme}
+          style={{ top: "50px", right: "50px" }}
+        >
+          Theme
+        </button>
+      </div>
+      {serverError && (
+        <p className="text-danger fw-bold fs-5 mb-4">*{serverError}</p>
+      )}
       <form
-        className="text-white rounded-4 mb-3"
+        className="text-white rounded-4 mb-3 d-flex flex-column gap-4"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h3 className="mb-4 fw-bold">Login Form</h3>
         <input
           {...register("email")}
           type="email"
-          className="form-control mb-3"
+          className="form-control"
           placeholder="email"
           name="email"
         />
         {errors.email && (
-          <p className="text-danger fw-bold">{errors.email.message}</p>
+          <p className="text-danger fw-bold">*{errors.email.message}</p>
         )}
 
-        <div className="input-group mb-3">
+        <div className="input-group">
           <input
             {...register("password", { required: true, minLength: 6 })}
             type={`${showPassword ? "text" : "password"}`}
@@ -69,10 +96,6 @@ const LoginForm = () => {
             placeholder="password"
             name="password"
           />
-          {errors.password && (
-            <p className="text-danger fw-bold">{errors.password.message}</p>
-          )}
-
           <span
             className="input-group-text"
             id="basic-addon2"
@@ -82,13 +105,18 @@ const LoginForm = () => {
             {!showPassword ? <GoEye /> : <GoEyeClosed />}
           </span>
         </div>
+        {errors.password && (
+          <p className="text-danger fw-bold">*{errors.password.message}</p>
+        )}
 
-        <button
-          type="submit"
-          className={`btn btn-primary ${isValid ? "" : "disabled"}`}
-        >
-          Login
-        </button>
+        <div>
+          <button
+            type="submit"
+            className={`btn btn-primary ${isValid ? "" : "disabled"}`}
+          >
+            Login
+          </button>
+        </div>
       </form>
       <p className="fw-bold">
         Don't have an Account. Try{" "}
@@ -100,7 +128,7 @@ const LoginForm = () => {
           Registering
         </span>
       </p>
-    </div>
+    </>
   );
 };
 
