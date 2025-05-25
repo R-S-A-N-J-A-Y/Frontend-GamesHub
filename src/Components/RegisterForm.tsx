@@ -27,13 +27,12 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (data: FieldValues) => {
-    const res = await CallBackend(data);
-    if (res?.success) {
+    const { result, token } = await CallBackend(data);
+    if (result?.success) {
       Navigate("/");
-      console.log(res.data);
-      Register(res.data);
+      Register({ ...result.data, token });
     } else {
-      setServerError(res.data.message);
+      setServerError(result.data.message);
     }
   };
 
@@ -45,15 +44,21 @@ const RegisterForm = () => {
         countryCode: "IN",
         ...user,
       });
-      console.log(res);
-      return res.data;
+      const token = res.headers["x-auth-token"];
+      return { result: res.data, token };
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response) {
-          return err.response;
+          return { result: err.response };
         }
       }
       alert(err);
+      return {
+        result: {
+          success: false,
+          data: { message: "Unexpected error occurred" },
+        },
+      };
     }
   };
 

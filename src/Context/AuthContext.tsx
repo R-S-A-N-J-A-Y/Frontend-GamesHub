@@ -2,6 +2,13 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import type { Props } from "./AppContext";
 import AuthReducer, { type StateData } from "../Reducers/AuthReducer";
 
+export interface BackendProps {
+  _id: string;
+  name: string;
+  email: string;
+  token: string;
+}
+
 export interface RegisterData {
   name: string;
   email: string;
@@ -14,6 +21,7 @@ export interface RegisterData {
 export interface AuthContextType {
   state: {
     isLogged: boolean;
+    token: string;
     role: string;
     id: string;
     profile: {
@@ -24,8 +32,8 @@ export interface AuthContextType {
       gender: string;
     };
   };
-  Register: (userData: { email: string; name: string; _id: string }) => void;
-  Login: (user: { email: string; name: string; _id: string }) => void;
+  Register: (userData: BackendProps) => void;
+  Login: (user: BackendProps) => void;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -37,6 +45,7 @@ const getInitialState = (): StateData => {
   if (storedData) return JSON.parse(storedData);
   return {
     isLogged: false,
+    token: "",
     role: "",
     id: "",
     profile: {
@@ -52,11 +61,11 @@ const getInitialState = (): StateData => {
 export const AuthProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(AuthReducer, getInitialState());
 
-  const Register = (user: { email: string; name: string; _id: string }) => {
+  const Register = (user: BackendProps) => {
     dispatch({ type: "CREATE_USER", payload: { user } });
   };
 
-  const Login = (user: { email: string; name: string; _id: string }) => {
+  const Login = (user: BackendProps) => {
     dispatch({ type: "LOGIN_USER", payload: { user } });
   };
 

@@ -27,12 +27,12 @@ const LoginForm = () => {
   } = useForm<FormData>({ resolver: zodResolver(Schema) });
 
   const onSubmit = async (data: FieldValues) => {
-    const res = await CallBackend(data);
-    if (res?.success) {
+    const { result, token } = await CallBackend(data);
+    if (result?.success) {
       Navigate("/");
-      Login(res.data);
+      Login({ ...result.data, token });
     } else {
-      setServerError(res);
+      setServerError(result.message);
     }
   };
 
@@ -43,16 +43,15 @@ const LoginForm = () => {
         ...userData,
       });
       const token = res.headers["x-auth-token"];
-      console.log(token);
-      console.log(res);
-      return res.data;
+      return { result: res.data, token };
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.data) {
-          return err.response.data;
+          return { result: err.response.data };
         }
       }
       alert(err);
+      return { result: { message: "Unknown Error Acquired..." } };
     }
   };
 

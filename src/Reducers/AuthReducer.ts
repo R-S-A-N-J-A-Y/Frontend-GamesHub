@@ -1,5 +1,8 @@
+import type { BackendProps } from "../Context/AuthContext";
+
 export type StateData = {
   isLogged: boolean;
+  token: string;
   role: string;
   id: string;
   profile: {
@@ -15,13 +18,13 @@ type actionData =
   | {
       type: "CREATE_USER";
       payload: {
-        user: { email: string; name: string; _id: string };
+        user: BackendProps;
       };
     }
   | {
       type: "LOGIN_USER";
       payload: {
-        user: { email: string; name: string; _id: string };
+        user: BackendProps;
       };
     };
 
@@ -30,6 +33,7 @@ const AuthReducer = (state: StateData, action: actionData) => {
     return {
       ...state,
       isLogged: true,
+      token: action.payload.user.token,
       role: "user",
       id: action.payload.user._id,
       profile: {
@@ -42,6 +46,7 @@ const AuthReducer = (state: StateData, action: actionData) => {
     return {
       ...state,
       isLogged: true,
+      token: action.payload.user.token,
       role: "user",
       id: action.payload.user._id,
       profile: {
