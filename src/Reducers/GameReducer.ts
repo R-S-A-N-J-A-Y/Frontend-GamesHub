@@ -1,4 +1,5 @@
 import type {
+  CategoryGamedata,
   ExploreCategoryItem,
   SelectedCategory,
 } from "../Context/GameContext";
@@ -6,6 +7,7 @@ import type {
 type GameState = {
   category: { type: string; data: ExploreCategoryItem[] };
   game: SelectedCategory;
+  genralGames: CategoryGamedata[];
 };
 
 type GameAction =

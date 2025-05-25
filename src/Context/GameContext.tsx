@@ -44,6 +44,7 @@ interface GameContextType {
   state: {
     category: { type: string; data: ExploreCategoryItem[] };
     game: SelectedCategory;
+    genralGames: CategoryGamedata[];
   };
   updateCategory: (type: string, data: ExploreCategoryItem[]) => void;
   updateCategoryType: (type: string) => void;
@@ -62,6 +63,7 @@ export const GameContextProvider = ({ children }: Props) => {
       name: "",
       gamesId: [],
     },
+    genralGames: [],
   });
 
   // Use Callback function to Memoize the Function and get Reference for it
