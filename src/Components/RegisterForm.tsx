@@ -30,7 +30,8 @@ const RegisterForm = () => {
     const res = await CallBackend(data);
     if (res?.success) {
       Navigate("/");
-      Register(data);
+      console.log(res.data);
+      Register(res.data);
     } else {
       setServerError(res.data.message);
     }
@@ -44,6 +45,7 @@ const RegisterForm = () => {
         countryCode: "IN",
         ...user,
       });
+      console.log(res);
       return res.data;
     } catch (err) {
       if (axios.isAxiosError(err)) {

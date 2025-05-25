@@ -1,7 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 import type { Props } from "./AppContext";
 import AuthReducer from "../Reducers/AuthReducer";
-import type { FieldValues } from "react-hook-form";
 
 export interface RegisterData {
   name: string;
@@ -25,7 +24,7 @@ export interface AuthContextType {
       gender: string;
     };
   };
-  Register: (userData: FieldValues) => void;
+  Register: (userData: { email: string; name: string; _id: string }) => void;
   Login: (user: { email: string; name: string; _id: string }) => void;
 }
 
@@ -47,8 +46,7 @@ export const AuthProvider = ({ children }: Props) => {
     },
   });
 
-  const Register = (user: FieldValues) => {
-    const userData = user as RegisterData;
+  const Register = (userData: { email: string; name: string; _id: string }) => {
     dispatch({ type: "CREATE_USER", payload: { userData } });
   };
 
