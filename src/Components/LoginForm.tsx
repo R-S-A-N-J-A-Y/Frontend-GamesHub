@@ -1,20 +1,13 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../Context/AuthContext";
-import { useForm, type FieldValues } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 
-const Schema = z.object({
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(6, { message: "*The Password must be atleast 6 Characters Long." }),
-});
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
+import { useState } from "react";
 
-type FormData = z.infer<typeof Schema>;
+import { useForm, type FieldValues } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { type FormData, Schema } from "../Validation/LoginForm";
 
 const LoginForm = () => {
   const Navigate = useNavigate();

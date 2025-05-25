@@ -1,32 +1,16 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+
 import { useForm, type FieldValues } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const Schema = z.object({
-  name: z
-    .string()
-    .min(3, { message: "*The Name must have atleast 3 Characters." }),
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(6, { message: "*The Password must be atleast 6 Characters Long." }),
-  phone: z
-    .string()
-    .regex(/^\d{10}$/, { message: "*Phone must be a 10-digit number." }),
-  gender: z
-    .string()
-    .min(2, { message: "*The Password must be atleast 2 Characters Long." }),
-  dob: z.string().refine((val) => !isNaN(new Date(val).getTime()), {
-    message: "*Invalid date.",
-  }),
-});
-
-type FormData = z.infer<typeof Schema>;
+import { Schema, type FormData } from "../Validation/RegisterForm";
 
 const RegisterForm = () => {
+  const Navigate = useNavigate();
+  const { Register } = useAuth();
+
+  // Form Data
   const {
     register,
     handleSubmit,
@@ -34,8 +18,6 @@ const RegisterForm = () => {
   } = useForm<FormData>({
     resolver: zodResolver(Schema),
   });
-  const Navigate = useNavigate();
-  const { Register } = useAuth();
 
   const onSubmit = async (data: FieldValues) => {
     const res = await CallBackend(data);
