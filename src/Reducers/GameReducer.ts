@@ -35,6 +35,12 @@ type GameAction =
       payload: {
         games: Gamedata[];
       };
+    }
+  | {
+      type: "TOGGLE_LIKE";
+      payload: {
+        id: string;
+      };
     };
 
 const gameReducer = (state: GameState, action: GameAction) => {
@@ -65,6 +71,13 @@ const gameReducer = (state: GameState, action: GameAction) => {
     return {
       ...state,
       genralGames: action.payload.games,
+    };
+  } else if (action.type === "TOGGLE_LIKE") {
+    return {
+      ...state,
+      genralGames: state.genralGames.map((game) =>
+        game._id === action.payload.id ? { ...game, liked: !game.liked } : game
+      ),
     };
   }
 

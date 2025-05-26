@@ -7,6 +7,8 @@ import {
 } from "react";
 
 import gameReducer from "../Reducers/GameReducer";
+import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 interface Props {
   children: ReactNode;
@@ -32,8 +34,8 @@ export interface Gamedata {
   peopleAdded: number;
   ratings: number;
   likes: number;
-  liked?: boolean; //Only Available when User Logged In
-  watched?: boolean;
+  liked: boolean; //Only Available when User Logged In
+  watched: boolean;
 }
 
 export interface SelectedCategory {
@@ -52,6 +54,7 @@ interface GameContextType {
   updateCategoryType: (type: string) => void;
   updateSelectedCategory: (categoryData: SelectedCategory) => void;
   UpdateGenralGames: (games: Gamedata[]) => void;
+  ToggleLike: (id: string, currStatus: boolean) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -59,6 +62,9 @@ export const GameContext = createContext<GameContextType | undefined>(
 );
 
 export const GameContextProvider = ({ children }: Props) => {
+  const {
+    state: { token },
+  } = useAuth();
   const [state, dispatch] = useReducer(gameReducer, {
     category: { type: "", data: [] },
     game: {
@@ -98,6 +104,21 @@ export const GameContextProvider = ({ children }: Props) => {
     dispatch({ type: "SET_GENRAL_GAME_DATA", payload: { games } });
   }, []);
 
+  const ToggleLike = async (id: string, currStatus: boolean) => {
+    dispatch({ type: "TOGGLE_LIKE", payload: { id } });
+
+    try {
+      const config = { headers: { "x-auth-token": token } };
+      await axios.patch(
+        "http://localhost:3000/user/toggleLike",
+        { gameId: id, liked: !currStatus },
+        config
+      );
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -106,6 +127,7 @@ export const GameContextProvider = ({ children }: Props) => {
         updateCategoryType,
         updateSelectedCategory,
         UpdateGenralGames,
+        ToggleLike,
       }}
     >
       {children}

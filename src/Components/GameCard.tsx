@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { useAppContext } from "../Context/AppContext";
 import { MdAddToPhotos } from "react-icons/md";
-import { GoHeartFill } from "react-icons/go";
-import type { Gamedata } from "../Context/GameContext";
+import { GoHeartFill, GoHeart } from "react-icons/go";
+import { useGameContext, type Gamedata } from "../Context/GameContext";
 
 export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
@@ -23,9 +23,9 @@ const Card = styled.div`
 `;
 
 const GameCard = ({ game }: { game: Gamedata }) => {
+  const { ToggleLike } = useGameContext();
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
-
   return (
     <Card className="card">
       <img
@@ -53,8 +53,13 @@ const GameCard = ({ game }: { game: Gamedata }) => {
             <button
               className="p-1"
               style={{ border: "none", background: "none" }}
+              onClick={() => ToggleLike(game._id, game.liked)}
             >
-              <GoHeartFill size={29} color={game.liked ? "red" : "white"} />
+              {game.liked ? (
+                <GoHeartFill size={29} color="red" />
+              ) : (
+                <GoHeart size={29} color="white" />
+              )}
             </button>
             <a
               href="#"
