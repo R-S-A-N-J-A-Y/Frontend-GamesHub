@@ -3,7 +3,7 @@ import { useAppContext } from "../Context/AppContext";
 import { MdAddToPhotos } from "react-icons/md";
 import { GoHeartFill, GoHeart } from "react-icons/go";
 import { useGameContext, type Gamedata } from "../Context/GameContext";
-
+import { useAuth } from "../Context/AuthContext";
 export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
 
@@ -23,9 +23,23 @@ const Card = styled.div`
 `;
 
 const GameCard = ({ game }: { game: Gamedata }) => {
+  const {
+    state: { isLogged },
+  } = useAuth();
   const { ToggleLike, ToggleWatchList } = useGameContext();
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
+
+  const isToggleWatchList = () => {
+    if (isLogged) ToggleWatchList(game._id, game.watched);
+    else alert("Please Login to Continue...");
+  };
+
+  const isToggleLike = () => {
+    if (isLogged) ToggleLike(game._id, game.liked);
+    else alert("Please Login to Continue...");
+  };
+
   return (
     <Card className="card">
       <img
@@ -53,12 +67,22 @@ const GameCard = ({ game }: { game: Gamedata }) => {
             <button
               className="p-1"
               style={{ border: "none", background: "none" }}
-              onClick={() => ToggleLike(game._id, game.liked)}
+              onClick={isToggleLike}
             >
-              {game.liked ? (
-                <GoHeartFill size={29} color="red" />
+              {isLogged ? (
+                game.liked ? (
+                  <GoHeartFill size={29} color="red" />
+                ) : (
+                  <GoHeart
+                    size={29}
+                    color={curr.name === "dark" ? "white" : "black"}
+                  />
+                )
               ) : (
-                <GoHeart size={29} color="white" />
+                <GoHeartFill
+                  size={29}
+                  color={curr.name === "dark" ? "white" : "black"}
+                />
               )}
             </button>
             <a
@@ -72,18 +96,28 @@ const GameCard = ({ game }: { game: Gamedata }) => {
               className={`btn d-flex align-items-center gap-1 border text-${
                 theme === "dark" ? "white" : "black"
               }`}
-              onClick={() => ToggleWatchList(game._id, game.watched)}
+              onClick={isToggleWatchList}
             >
-              {game.watched ? (
+              {isLogged ? (
+                game.watched ? (
+                  <>
+                    <MdAddToPhotos
+                      size={20}
+                      color={theme === "dark" ? "white" : "black"}
+                    />
+                    Add
+                  </>
+                ) : (
+                  <p className="text-success fw-bold m-0">Added</p>
+                )
+              ) : (
                 <>
                   <MdAddToPhotos
                     size={20}
                     color={theme === "dark" ? "white" : "black"}
                   />
-                  ADD
+                  Add
                 </>
-              ) : (
-                "Added"
               )}
             </button>
           </div>
