@@ -23,7 +23,7 @@ const Card = styled.div`
 `;
 
 const GameCard = ({ game }: { game: Gamedata }) => {
-  const { ToggleLike } = useGameContext();
+  const { ToggleLike, ToggleWatchList } = useGameContext();
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
   return (
@@ -72,10 +72,9 @@ const GameCard = ({ game }: { game: Gamedata }) => {
               className={`btn d-flex align-items-center gap-1 border text-${
                 theme === "dark" ? "white" : "black"
               }`}
+              onClick={() => ToggleWatchList(game._id, game.watched)}
             >
               {game.watched ? (
-                "Added"
-              ) : (
                 <>
                   <MdAddToPhotos
                     size={20}
@@ -83,6 +82,8 @@ const GameCard = ({ game }: { game: Gamedata }) => {
                   />
                   ADD
                 </>
+              ) : (
+                "Added"
               )}
             </button>
           </div>

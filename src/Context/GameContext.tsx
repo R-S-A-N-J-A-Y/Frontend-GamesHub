@@ -55,6 +55,7 @@ interface GameContextType {
   updateSelectedCategory: (categoryData: SelectedCategory) => void;
   UpdateGenralGames: (games: Gamedata[]) => void;
   ToggleLike: (id: string, currStatus: boolean) => void;
+  ToggleWatchList: (id: string, currStatus: boolean) => void;
 }
 
 export const GameContext = createContext<GameContextType | undefined>(
@@ -100,10 +101,12 @@ export const GameContextProvider = ({ children }: Props) => {
     []
   );
 
+  // Genral Games Fetching with Reducer
   const UpdateGenralGames = useCallback((games: Gamedata[]) => {
     dispatch({ type: "SET_GENRAL_GAME_DATA", payload: { games } });
   }, []);
 
+  // Toggle Like of particular Game and update at backend
   const ToggleLike = async (id: string, currStatus: boolean) => {
     dispatch({ type: "TOGGLE_LIKE", payload: { id } });
 
@@ -112,6 +115,21 @@ export const GameContextProvider = ({ children }: Props) => {
       await axios.patch(
         "http://localhost:3000/user/toggleLike",
         { gameId: id, liked: !currStatus },
+        config
+      );
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const ToggleWatchList = async (id: string, currStatus: boolean) => {
+    dispatch({ type: "TOGGLE_WATCHLIST", payload: { id } });
+
+    try {
+      const config = { headers: { "x-auth-token": token } };
+      await axios.patch(
+        "http://localhost:3000/user/toggleWatchList",
+        { gameId: id, watched: currStatus },
         config
       );
     } catch (err) {
@@ -128,6 +146,7 @@ export const GameContextProvider = ({ children }: Props) => {
         updateSelectedCategory,
         UpdateGenralGames,
         ToggleLike,
+        ToggleWatchList,
       }}
     >
       {children}

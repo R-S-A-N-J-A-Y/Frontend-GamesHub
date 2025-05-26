@@ -37,7 +37,7 @@ type GameAction =
       };
     }
   | {
-      type: "TOGGLE_LIKE";
+      type: "TOGGLE_LIKE" | "TOGGLE_WATCHLIST";
       payload: {
         id: string;
       };
@@ -77,6 +77,15 @@ const gameReducer = (state: GameState, action: GameAction) => {
       ...state,
       genralGames: state.genralGames.map((game) =>
         game._id === action.payload.id ? { ...game, liked: !game.liked } : game
+      ),
+    };
+  } else if (action.type === "TOGGLE_WATCHLIST") {
+    return {
+      ...state,
+      genralGames: state.genralGames.map((game) =>
+        game._id === action.payload.id
+          ? { ...game, watched: !game.watched }
+          : game
       ),
     };
   }
