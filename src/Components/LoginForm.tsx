@@ -32,7 +32,7 @@ const LoginForm = () => {
       Navigate("/");
       Login({ ...result.data, token });
     } else {
-      setServerError(result.message);
+      setServerError(result);
     }
   };
 
