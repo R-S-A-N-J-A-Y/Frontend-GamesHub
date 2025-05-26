@@ -26,6 +26,9 @@ type actionData =
       payload: {
         user: BackendProps;
       };
+    }
+  | {
+      type: "LOG_OUT";
     };
 
 const AuthReducer = (state: StateData, action: actionData) => {
@@ -53,6 +56,20 @@ const AuthReducer = (state: StateData, action: actionData) => {
         ...state.profile,
         name: action.payload.user.name,
         email: action.payload.user.email,
+      },
+    };
+  } else if (action.type === "LOG_OUT") {
+    return {
+      isLogged: false,
+      token: "",
+      role: "",
+      id: "",
+      profile: {
+        name: "",
+        email: "",
+        phone: "",
+        dob: "",
+        gender: "",
       },
     };
   }

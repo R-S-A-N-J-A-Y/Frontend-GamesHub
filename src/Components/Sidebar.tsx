@@ -7,6 +7,7 @@ import { HiUserGroup } from "react-icons/hi2";
 import { useAppContext } from "../Context/AppContext";
 import type { ThemeObj } from "../Context/AppContext";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { useAuth } from "../Context/AuthContext";
 
 const SidebarTag = styled.div<{ theme: ThemeObj }>`
   position: fixed;
@@ -51,6 +52,10 @@ const LogoutAnimation = styled(FaArrowRightFromBracket)`
 `;
 
 const Sidebar = () => {
+  const {
+    Logout,
+    state: { isLogged },
+  } = useAuth();
   const { theme, themeColor } = useAppContext();
   const currentTheme = themeColor[theme];
   return (
@@ -80,8 +85,8 @@ const Sidebar = () => {
           />
         </Link>
       </Links>
-      <div className="navbar-brand fw-bolder fs-3">
-        <LogoutAnimation />
+      <div className="navbar-brand fw-bolder fs-3" onClick={() => Logout()}>
+        {isLogged && <LogoutAnimation />}
       </div>
     </SidebarTag>
   );

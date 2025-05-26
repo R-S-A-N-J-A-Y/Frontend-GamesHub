@@ -34,6 +34,7 @@ export interface AuthContextType {
   };
   Register: (userData: BackendProps) => void;
   Login: (user: BackendProps) => void;
+  Logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -69,12 +70,17 @@ export const AuthProvider = ({ children }: Props) => {
     dispatch({ type: "LOGIN_USER", payload: { user } });
   };
 
+  const Logout = () => {
+    localStorage.removeItem("authState");
+    dispatch({ type: "LOG_OUT" });
+  };
+
   useEffect(() => {
     localStorage.setItem("authState", JSON.stringify(state));
   }, [state]);
 
   return (
-    <AuthContext.Provider value={{ state, Register, Login }}>
+    <AuthContext.Provider value={{ state, Register, Login, Logout }}>
       {children}
     </AuthContext.Provider>
   );
