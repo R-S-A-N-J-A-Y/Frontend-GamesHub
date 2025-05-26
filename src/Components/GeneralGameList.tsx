@@ -3,19 +3,25 @@ import { useGameContext } from "../Context/GameContext";
 import axios from "axios";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
+import { useAuth } from "../Context/AuthContext";
 
 const GeneralGameList = () => {
   const {
     state: { genralGames },
     UpdateGenralGames,
   } = useGameContext();
+  const {
+    state: { token },
+  } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/user/games/");
+        const res = await axios.get("http://localhost:3000/user/games/", {
+          headers: { "x-auth-token": token },
+        });
         UpdateGenralGames(res.data.data);
       } catch (err) {
         alert(err);
@@ -24,7 +30,7 @@ const GeneralGameList = () => {
       }
     };
     fetchData();
-  }, [UpdateGenralGames]);
+  }, [UpdateGenralGames, token]);
 
   if (isLoading)
     return (

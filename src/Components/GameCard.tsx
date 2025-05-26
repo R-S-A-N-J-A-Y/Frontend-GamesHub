@@ -54,7 +54,7 @@ const GameCard = ({ game }: { game: Gamedata }) => {
               className="p-1"
               style={{ border: "none", background: "none" }}
             >
-              <GoHeartFill size={29} color="red" />{" "}
+              <GoHeartFill size={29} color={game.liked ? "red" : "white"} />
             </button>
             <a
               href="#"
@@ -68,11 +68,17 @@ const GameCard = ({ game }: { game: Gamedata }) => {
                 theme === "dark" ? "white" : "black"
               }`}
             >
-              <MdAddToPhotos
-                size={20}
-                color={theme === "dark" ? "white" : "black"}
-              />{" "}
-              ADD
+              {game.watched ? (
+                "Added"
+              ) : (
+                <>
+                  <MdAddToPhotos
+                    size={20}
+                    color={theme === "dark" ? "white" : "black"}
+                  />
+                  ADD
+                </>
+              )}
             </button>
           </div>
         </div>

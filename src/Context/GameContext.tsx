@@ -32,6 +32,8 @@ export interface Gamedata {
   peopleAdded: number;
   ratings: number;
   likes: number;
+  liked?: boolean; //Only Available when User Logged In
+  watched?: boolean;
 }
 
 export interface SelectedCategory {
