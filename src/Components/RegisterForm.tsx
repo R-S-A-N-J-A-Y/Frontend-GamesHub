@@ -7,8 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Schema, type FormData } from "../Validation/RegisterForm";
 import { useAppContext } from "../Context/AppContext";
 import { useState } from "react";
+import OverlayLoader from "./OverLayLodder";
 
 const RegisterForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { theme, themeColor, toggleTheme } = useAppContext();
   const currTheme = themeColor[theme];
 
@@ -38,6 +41,7 @@ const RegisterForm = () => {
 
   const CallBackend = async (data: FieldValues) => {
     try {
+      setIsLoading(true);
       const { confirmPassword, ...user } = data;
       console.log(confirmPassword);
       const res = await axios.post("http://localhost:3000/auth/register", {
@@ -59,11 +63,14 @@ const RegisterForm = () => {
           data: { message: "Unexpected error occurred" },
         },
       };
+    } finally {
+      setTimeout(() => setIsLoading(false), 2000);
     }
   };
 
   return (
     <>
+      {isLoading && <OverlayLoader message="Creating an New User..." />}
       <div className="d-flex justify-content-between mb-4">
         <h3 className="fw-bold">Register Form</h3>
         <button

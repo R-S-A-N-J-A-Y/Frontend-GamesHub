@@ -9,8 +9,10 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type FormData, Schema } from "../Validation/LoginForm";
 import { useAppContext } from "../Context/AppContext";
+import OverlayLoader from "./OverLayLodder";
 
 const LoginForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { theme, themeColor, toggleTheme } = useAppContext();
   const currTheme = themeColor[theme];
 
@@ -38,6 +40,7 @@ const LoginForm = () => {
 
   const CallBackend = async (userData: FieldValues) => {
     try {
+      setIsLoading(true);
       const res = await axios.post("http://localhost:3000/auth/login", {
         countryCode: "IN",
         ...userData,
@@ -52,11 +55,14 @@ const LoginForm = () => {
       }
       alert(err);
       return { result: { message: "Unknown Error Acquired..." } };
+    } finally {
+      setTimeout(() => setIsLoading(false), 2000);
     }
   };
 
   return (
     <>
+      {isLoading && <OverlayLoader message="Validating in the Database..." />}
       <div className="d-flex justify-content-between mb-4">
         <h3 className="fw-bold">Login Form</h3>
         <button
