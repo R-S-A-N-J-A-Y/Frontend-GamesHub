@@ -45,7 +45,7 @@ const LibrarySection = () => {
 
   const handleRemove = (id: string) => {
     setWatchList(watchList.filter((game) => game._id !== id));
-    ToggleWatchList(id, false);
+    ToggleWatchList(id, true);
   };
 
   useEffect(() => {
