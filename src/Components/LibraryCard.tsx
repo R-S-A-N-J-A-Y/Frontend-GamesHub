@@ -1,4 +1,17 @@
-const LibraryCard = () => {
+interface Props {
+  game: {
+    name: string;
+    _id: string;
+    shortName: string;
+    coverImageUrl: string;
+    platforms: {
+      _id: string;
+      name: string;
+    }[];
+  };
+}
+
+const LibraryCard = ({ game }: Props) => {
   return (
     <div
       className="d-flex align-items-center justify-content-between px-4"
@@ -9,18 +22,18 @@ const LibraryCard = () => {
         style={{ height: "100%" }}
       >
         <img
-          src="DaysGone.jpg"
+          src={game.coverImageUrl}
           alt=""
           className="rounded-3"
           style={{ height: "100%", width: "50px", objectFit: "cover" }}
         />
         <div>
-          <p className="fs-6 fw-bold m-0">Days Gone Remastered</p>
+          <p className="fs-6 fw-bold m-0">{game.name}</p>
           <p
             className="fw-bold m-0"
             style={{ color: "rgba(185, 159, 159, 0.81)", fontSize: "13px" }}
           >
-            PS5
+            {game.platforms[0].name}
           </p>
         </div>
       </div>

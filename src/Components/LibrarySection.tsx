@@ -3,6 +3,9 @@ import { useAppContext, type ThemeObj } from "../Context/AppContext";
 import { MdDoubleArrow } from "react-icons/md";
 import styled from "styled-components";
 import { CardHoverAnimation } from "./GameCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 
 export const ArrowIcon = styled(MdDoubleArrow)`
   transition: transform 0.2s ease;
@@ -19,8 +22,32 @@ const Wrapper = styled.div<{ theme: ThemeObj }>`
 `;
 
 const LibrarySection = () => {
+  const {
+    state: { token },
+  } = useAuth();
   const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
+
+  const [watchList, setWatchList] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const result = await axios.get(
+          "http://localhost:3000/user/watchListPreview",
+          {
+            headers: { "x-auth-token": token },
+          }
+        );
+        setWatchList(result.data.data);
+      } catch (err) {
+        console.log(err);
+        alert(err);
+      }
+    };
+    fetch();
+  }, [token]);
+
   return (
     <Wrapper
       theme={currTheme}
@@ -32,8 +59,10 @@ const LibrarySection = () => {
       </div>
 
       <div className="d-flex flex-column gap-4">
-        {[...Array(3)].map(() => (
-          <LibraryCard />
+        {watchList.map((data, index) => (
+          <div key={index}>
+            <LibraryCard game={data} />
+          </div>
         ))}
       </div>
     </Wrapper>
