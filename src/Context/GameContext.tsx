@@ -129,7 +129,7 @@ export const GameContextProvider = ({ children }: Props) => {
       const config = { headers: { "x-auth-token": token } };
       await axios.patch(
         "http://localhost:3000/user/toggleWatchList",
-        { gameId: id, watched: currStatus },
+        { gameId: id, watched: !currStatus },
         config
       );
     } catch (err) {

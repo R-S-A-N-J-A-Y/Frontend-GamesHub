@@ -100,6 +100,8 @@ const GameCard = ({ game }: { game: Gamedata }) => {
             >
               {isLogged ? (
                 game.watched ? (
+                  <p className="text-success fw-bold m-0">Added</p>
+                ) : (
                   <>
                     <MdAddToPhotos
                       size={20}
@@ -107,8 +109,6 @@ const GameCard = ({ game }: { game: Gamedata }) => {
                     />
                     Add
                   </>
-                ) : (
-                  <p className="text-success fw-bold m-0">Added</p>
                 )
               ) : (
                 <>
