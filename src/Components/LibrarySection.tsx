@@ -6,6 +6,7 @@ import { CardHoverAnimation } from "./GameCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../Context/AuthContext";
+import { useGameContext } from "../Context/GameContext";
 
 export const ArrowIcon = styled(MdDoubleArrow)`
   transition: transform 0.2s ease;
@@ -21,14 +22,31 @@ const Wrapper = styled.div<{ theme: ThemeObj }>`
   ${CardHoverAnimation};
 `;
 
+export interface WatchListDataType {
+  name: string;
+  _id: string;
+  shortName: string;
+  coverImageUrl: string;
+  platforms: {
+    _id: string;
+    name: string;
+  }[];
+}
+
 const LibrarySection = () => {
   const {
     state: { token },
   } = useAuth();
+  const { ToggleWatchList } = useGameContext();
   const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
 
-  const [watchList, setWatchList] = useState([]);
+  const [watchList, setWatchList] = useState<WatchListDataType[]>([]);
+
+  const handleRemove = (id: string) => {
+    setWatchList(watchList.filter((game) => game._id !== id));
+    ToggleWatchList(id, false);
+  };
 
   useEffect(() => {
     const fetch = async () => {
@@ -61,7 +79,7 @@ const LibrarySection = () => {
       <div className="d-flex flex-column gap-4">
         {watchList.map((data, index) => (
           <div key={index}>
-            <LibraryCard game={data} />
+            <LibraryCard game={data} onClick={handleRemove} />
           </div>
         ))}
       </div>

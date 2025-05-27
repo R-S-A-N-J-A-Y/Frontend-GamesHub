@@ -1,17 +1,11 @@
+import type { WatchListDataType } from "./LibrarySection";
+
 interface Props {
-  game: {
-    name: string;
-    _id: string;
-    shortName: string;
-    coverImageUrl: string;
-    platforms: {
-      _id: string;
-      name: string;
-    }[];
-  };
+  game: WatchListDataType;
+  onClick: (id: string) => void;
 }
 
-const LibraryCard = ({ game }: Props) => {
+const LibraryCard = ({ game, onClick }: Props) => {
   return (
     <div
       className="d-flex align-items-center justify-content-between px-4"
@@ -43,7 +37,10 @@ const LibraryCard = ({ game }: Props) => {
         <p className="fw-bold m-0">2025</p>
       </div>
 
-      <button className="btn btn-outline-danger border-2 fw-bold">
+      <button
+        className="btn btn-outline-danger border-2 fw-bold"
+        onClick={() => onClick(game._id)}
+      >
         Remove
       </button>
     </div>
