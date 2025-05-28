@@ -15,7 +15,7 @@ interface Props {
 }
 
 interface popularGame {
-  gameName: string;
+  name: string;
   likes: number;
 }
 
@@ -23,7 +23,9 @@ export interface ExploreCategoryItem {
   //Explore Section - genre, platform and so on.
   _id: string;
   name: string;
+  shortName: string;
   totalGames: number;
+  coverImageUrl: string;
   popularGame: [popularGame, popularGame];
 }
 

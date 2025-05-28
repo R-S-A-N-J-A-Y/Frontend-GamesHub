@@ -6,11 +6,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ExploreCategorySkeletonCard from "../Components/ExploreCategoryCardSkeleton";
 
-type DataFromFetch = {
-  _id: string;
-  name: string;
-};
-
 const ExploreCategoryPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,16 +37,9 @@ const ExploreCategoryPage = () => {
         // Data Retrival from result.
         const data = res.data.data || [];
 
-        const UpdatedData = data.map((d: DataFromFetch) => ({
-          ...d,
-          popularGame: [
-            { gameName: "The LAst of US", likes: 0 },
-            { gameName: "The LAst of US", likes: 0 },
-          ],
-        }));
-
+        console.log(data);
         // Updating the GameContext
-        updateCategory(type || "", UpdatedData);
+        updateCategory(type || "", data);
       } catch (err) {
         alert(err);
       } finally {

@@ -27,22 +27,22 @@ const ExploreCategoryCard = ({ data, type }: Props) => {
       onClick={() => onCategoryCardClick(data._id)}
     >
       <img
-        src="/DaysGone.jpg"
+        src={`${data.coverImageUrl}`}
         className="card-img rounded-4"
         style={{
           objectFit: "cover",
           height: "100%",
-          opacity: "0.7",
+          opacity: "0.8",
         }}
         alt="Preview"
       />
       <div
         className="card-img-overlay text-center d-flex flex-column justify-content-around rounded-4"
-        style={{ backdropFilter: "blur(5px)" }}
+        style={{ backdropFilter: "blur(1px)" }}
       >
         <h5 className="card-title fw-bold fs-2">
           <span className="border border-top-0 border-start-0 border-end-0  d-inline-block p-2">
-            {data.name}
+            {data.name.length < 10 ? data.name : data.shortName}
           </span>
         </h5>
 
@@ -64,11 +64,11 @@ const ExploreCategoryCard = ({ data, type }: Props) => {
             <p className="card-text p-0 m-0 fw-bold">{data.totalGames} </p>
           </div>
           <div className="d-flex justify-content-between px-2">
-            <p className="card-text p-0 m-0">{data.popularGame[0].gameName}</p>
+            <p className="card-text p-0 m-0">{data.popularGame[0].name}</p>
             <p className="card-text p-0 m-0">{data.popularGame[0].likes}</p>
           </div>
           <div className="d-flex justify-content-between px-2">
-            <p className="card-text p-0 m-0">{data.popularGame[1].gameName}</p>
+            <p className="card-text p-0 m-0">{data.popularGame[1].name}</p>
             <p className="card-text p-0 m-0">{data.popularGame[1].likes}</p>
           </div>
         </div>
