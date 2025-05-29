@@ -1,13 +1,40 @@
+import { useEffect } from "react";
 import AboutSection from "../Components/AboutSection";
+import ProfileSection from "../Components/ProfileSection";
+import { useAuth } from "../Context/AuthContext";
+import axios from "axios";
 
 const ProfilePage = () => {
+  const {
+    state: { token, profile, role },
+    UserProfile,
+  } = useAuth();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const headers = { "x-auth-token": token };
+      try {
+        const data = await axios.get("http://localhost:3000/user/profile", {
+          headers: headers,
+        });
+        UserProfile(data.data);
+      } catch (err) {
+        alert(err);
+      }
+    };
+    fetch();
+  }, [token, UserProfile]);
+
   return (
     <div className="d-flex gap-5" style={{ minHeight: "78vh" }}>
-      <div className="bg-primary" style={{ width: "500px" }}>
-        hi
+      <div
+        className="p-5 d-flex flex-column align-items-center gap-4"
+        style={{ width: "500px" }}
+      >
+        <ProfileSection name={profile.name} role={role} />
       </div>
       <div className="flex-fill px-5 py-4 d-flex flex-column gap-4">
-        <AboutSection />
+        <AboutSection profile={profile} />
       </div>
     </div>
   );

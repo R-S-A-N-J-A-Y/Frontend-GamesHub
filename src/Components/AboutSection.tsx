@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-import { useAuth } from "../Context/AuthContext";
+import { type ProfileData } from "../Context/AuthContext";
 import { useAppContext, type ThemeObj } from "../Context/AppContext";
-import axios from "axios";
 import styled from "styled-components";
 import { HeaderIconShadowEffect } from "./Header";
 import { CardHoverAnimation } from "./GameCard";
@@ -12,28 +10,9 @@ const Wrapper = styled.div<{ theme: ThemeObj }>`
   ${CardHoverAnimation}
 `;
 
-const AboutSection = () => {
+const AboutSection = ({ profile }: { profile: ProfileData }) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
-  const {
-    state: { token, profile },
-    UserProfile,
-  } = useAuth();
-
-  useEffect(() => {
-    const fetch = async () => {
-      const headers = { "x-auth-token": token };
-      try {
-        const data = await axios.get("http://localhost:3000/user/profile", {
-          headers: headers,
-        });
-        UserProfile(data.data);
-      } catch (err) {
-        alert(err);
-      }
-    };
-    fetch();
-  }, [token, UserProfile]);
 
   return (
     <>
