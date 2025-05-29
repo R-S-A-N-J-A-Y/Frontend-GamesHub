@@ -1,4 +1,4 @@
-import type { BackendProps } from "../Context/AuthContext";
+import type { BackendProps, ProfileData } from "../Context/AuthContext";
 
 export type StateData = {
   isLogged: boolean;
@@ -29,6 +29,12 @@ type actionData =
     }
   | {
       type: "LOG_OUT";
+    }
+  | {
+      type: "SET_USER_PROFILE";
+      payload: {
+        user: ProfileData;
+      };
     };
 
 const AuthReducer = (state: StateData, action: actionData) => {
@@ -70,6 +76,14 @@ const AuthReducer = (state: StateData, action: actionData) => {
         phone: "",
         dob: "",
         gender: "",
+      },
+    };
+  } else if (action.type === "SET_USER_PROFILE") {
+    return {
+      ...state,
+      profile: {
+        ...action.payload.user,
+        dob: action.payload.user.dob.split("T")[0],
       },
     };
   }
