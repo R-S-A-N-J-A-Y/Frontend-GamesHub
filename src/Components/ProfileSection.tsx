@@ -6,8 +6,12 @@ const ProfileSection = ({ name, role }: { name: string; role: string }) => {
   return (
     <>
       <div
-        className="border border-3 rounded-circle"
-        style={{ width: "320px", height: "320px" }}
+        className="rounded-circle"
+        style={{
+          width: "320px",
+          height: "320px",
+          border: `5px solid ${curr.name === "dark" ? "white" : "black"}`,
+        }}
       >
         <img
           src="/DaysGone.jpg"

@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import type { Props } from "./AppContext";
 import AuthReducer, { type StateData } from "../Reducers/AuthReducer";
 
@@ -78,9 +84,9 @@ export const AuthProvider = ({ children }: Props) => {
     dispatch({ type: "LOG_OUT" });
   };
 
-  const UserProfile = (user: ProfileData) => {
+  const UserProfile = useCallback((user: ProfileData) => {
     dispatch({ type: "SET_USER_PROFILE", payload: { user } });
-  };
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("authState", JSON.stringify(state));

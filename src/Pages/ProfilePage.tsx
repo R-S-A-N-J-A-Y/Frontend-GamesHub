@@ -29,11 +29,14 @@ const ProfilePage = () => {
     <div className="d-flex gap-5" style={{ minHeight: "78vh" }}>
       <div
         className="p-5 d-flex flex-column align-items-center gap-4"
-        style={{ width: "500px" }}
+        style={{ width: "430px" }}
       >
         <ProfileSection name={profile.name} role={role} />
       </div>
-      <div className="flex-fill px-5 py-4 d-flex flex-column gap-4">
+      <div
+        className="flex-fill px-5 py-4 d-flex flex-column"
+        style={{ gap: "30px" }}
+      >
         <AboutSection profile={profile} />
       </div>
     </div>
