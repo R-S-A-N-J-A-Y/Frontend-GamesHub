@@ -31,8 +31,7 @@ const AppLayout = () => {
 
   return (
     <Root theme={currentTheme}>
-      {url === "/" && <Sidebar />}
-      {url.includes("/explore") && <ExploreSidebar />}
+      {url.includes("/explore") ? <ExploreSidebar /> : <Sidebar />}
       <main id="main" className="d-flex flex-column gap-2">
         <Header />
         <Children>

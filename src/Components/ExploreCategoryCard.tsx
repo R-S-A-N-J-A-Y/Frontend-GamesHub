@@ -42,7 +42,7 @@ const ExploreCategoryCard = ({ data, type }: Props) => {
       >
         <h5 className="card-title fw-bold fs-2">
           <span className="border border-top-0 border-start-0 border-end-0  d-inline-block p-2">
-            {data.name.length < 10 ? data.name : data.shortName}
+            {data.name.length <= 12 ? data.name : data.shortName}
           </span>
         </h5>
 
