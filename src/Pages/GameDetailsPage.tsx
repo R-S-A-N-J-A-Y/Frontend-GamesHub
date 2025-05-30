@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import GameHeroCard from "../Components/GameHeroCard";
 
-interface gameData {
+export interface gameData {
   _id: string;
   name: string;
   shortName: string;
@@ -13,7 +13,7 @@ interface gameData {
   platforms: string[];
   studios: string[];
   stores: string[];
-  tags: string[];
+  tags: { _id: string; name: string }[];
   coverImageUrl: string;
   screenshots: string[];
   likes: number;
@@ -40,8 +40,9 @@ const GameDetailsPage = () => {
     fetch();
   }, [id]);
 
+  console.log(game?.tags);
   if (!game) return <div>Loading...</div>;
-  return <GameHeroCard />;
+  return <GameHeroCard game={game} />;
 };
 
 export default GameDetailsPage;
