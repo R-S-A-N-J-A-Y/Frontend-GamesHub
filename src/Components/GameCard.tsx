@@ -4,6 +4,7 @@ import { MdAddToPhotos } from "react-icons/md";
 import { GoHeartFill, GoHeart } from "react-icons/go";
 import { useGameContext, type Gamedata } from "../Context/GameContext";
 import { useAuth } from "../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
 
@@ -19,10 +20,12 @@ const Card = styled.div`
   border-radius: 10px;
   overflow: hidden;
   padding: 1px;
+  cursor: pointer;
   ${CardHoverAnimation};
 `;
 
 const GameCard = ({ game }: { game: Gamedata }) => {
+  const Navigate = useNavigate();
   const {
     state: { isLogged },
   } = useAuth();
@@ -41,7 +44,7 @@ const GameCard = ({ game }: { game: Gamedata }) => {
   };
 
   return (
-    <Card className="card">
+    <Card className="card" onClick={() => Navigate("game/12")}>
       <img
         src={`${game.coverImageUrl}`}
         className="card-img-top"

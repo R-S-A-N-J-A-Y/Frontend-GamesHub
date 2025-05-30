@@ -11,6 +11,7 @@ import CategoryGameList from "../Components/CategoryGameList";
 import AuthLayout from "../Layouts/AuthLayout";
 import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
+import GameDetailsPage from "../Pages/GameDetailsPage";
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
           <Route element={<AppLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/explore/game/:id" element={<GameDetailsPage />} />
             <Route path="/explore/:type" element={<ExploreCategoryPage />} />
             <Route path="/explore/:type/:id" element={<CategoryGameList />} />
             <Route path="/community" element={<CommunityPage />} />
