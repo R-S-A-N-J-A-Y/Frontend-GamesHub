@@ -40,7 +40,6 @@ const GameDetailsPage = () => {
     fetch();
   }, [id]);
 
-  console.log(game?.tags);
   if (!game) return <div>Loading...</div>;
   return <GameHeroCard game={game} />;
 };

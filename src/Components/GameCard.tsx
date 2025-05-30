@@ -20,7 +20,6 @@ const Card = styled.div`
   border-radius: 10px;
   overflow: hidden;
   padding: 1px;
-  cursor: pointer;
   ${CardHoverAnimation};
 `;
 
@@ -44,12 +43,13 @@ const GameCard = ({ game }: { game: Gamedata }) => {
   };
 
   return (
-    <Card className="card" onClick={() => Navigate(`/games/${game._id}`)}>
+    <Card className="card">
       <img
         src={`${game.coverImageUrl}`}
         className="card-img-top"
-        style={{ borderRadius: "10px 10px 0 0" }}
+        style={{ borderRadius: "10px 10px 0 0", cursor: "pointer" }}
         alt="..."
+        onClick={() => Navigate(`/games/${game._id}`)}
       />
       <div
         className="card-body"

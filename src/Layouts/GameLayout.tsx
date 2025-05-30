@@ -17,7 +17,7 @@ const AppLayout = () => {
 
   return (
     <Root theme={currentTheme}>
-      <main className="bg-primary" style={{ minHeight: "100vh" }}>
+      <main style={{ minHeight: "100vh" }}>
         <Outlet />
       </main>
       <Footer />

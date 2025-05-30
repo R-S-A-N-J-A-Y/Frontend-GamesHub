@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 
 const GameHeroCard = ({ game }: { game: gameData }) => {
   return (
-    <Wrapper className="d-flex gap-5">
+    <Wrapper className="d-flex gap-5 text-light">
       <div
         className="w-50 d-flex flex-column"
         style={{ marginTop: "100px", gap: "70px", padding: "50px 100px" }}
