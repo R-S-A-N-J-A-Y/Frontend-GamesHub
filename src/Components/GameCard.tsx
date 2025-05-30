@@ -44,7 +44,7 @@ const GameCard = ({ game }: { game: Gamedata }) => {
   };
 
   return (
-    <Card className="card" onClick={() => Navigate("game/12")}>
+    <Card className="card" onClick={() => Navigate("/games/12")}>
       <img
         src={`${game.coverImageUrl}`}
         className="card-img-top"
