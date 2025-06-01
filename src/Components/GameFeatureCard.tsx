@@ -39,11 +39,11 @@ const GameFeatureCard = ({ feature, idx }: Props) => {
         style={{ background: `${curr.boxColor}` }}
         className="rounded-3"
       >
-        <h2 className="fw-bold mb-4 text-center">{feature.title}</h2>
+        <h2 className="fw-bold mb-4 text-center">{feature.name}</h2>
         <p>{feature.description}</p>
       </TextSection>
       {idx % 2 == 0 && (
-        <ImgSection imageUrl={feature.imageUrl} className="rounded-start-3" />
+        <ImgSection imageUrl={feature.imageUrl} className="rounded-end-3" />
       )}
     </Container>
   );

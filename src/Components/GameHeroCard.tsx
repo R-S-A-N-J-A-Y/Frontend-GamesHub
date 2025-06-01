@@ -61,7 +61,7 @@ const GameHeroCard = ({ game }: { game: gameData }) => {
               <iframe
                 width="450"
                 height="250"
-                src="https://www.youtube.com/embed/FKtaOY9lMvM"
+                src={game.youtubeLink}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
