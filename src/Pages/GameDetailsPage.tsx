@@ -42,7 +42,7 @@ const GameDetailsPage = () => {
   }, [id]);
   if (!game) return <div>Loading...</div>;
   return (
-    <div className="d-flex flex-column gap-3">
+    <div className="d-flex flex-column gap-5">
       <GameHeroCard game={game} />
       <GameGallery screenshots={game.screenshots} />
     </div>
