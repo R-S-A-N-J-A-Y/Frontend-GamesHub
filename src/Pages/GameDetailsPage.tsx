@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import GameHeroCard from "../Components/GameHeroCard";
+import GameGallery from "../Components/GameGallery";
 
 export interface gameData {
   _id: string;
@@ -39,9 +40,13 @@ const GameDetailsPage = () => {
     };
     fetch();
   }, [id]);
-
   if (!game) return <div>Loading...</div>;
-  return <GameHeroCard game={game} />;
+  return (
+    <div className="d-flex flex-column gap-3">
+      <GameHeroCard game={game} />
+      <GameGallery screenshots={game.screenshots} />
+    </div>
+  );
 };
 
 export default GameDetailsPage;
