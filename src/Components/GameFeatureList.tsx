@@ -21,9 +21,9 @@ const GameFeatureList = ({ name, features }: Props) => {
           </span>{" "}
         </h1>
       </div>
-      <div className="px-5 py-3 d-flex flex-column gap-5">
+      <div className="px-5 py-3 d-flex flex-column" style={{ gap: "70px" }}>
         {features.map((ft, idx) => (
-          <GameFeatureCard key={idx} feature={ft} />
+          <GameFeatureCard key={idx} feature={ft} idx={idx} />
         ))}
       </div>
     </div>

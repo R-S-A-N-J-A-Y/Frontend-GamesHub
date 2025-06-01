@@ -3,6 +3,7 @@ import { useAppContext } from "../Context/AppContext";
 import type { featureType } from "../Pages/GameDetailsPage";
 
 interface Props {
+  idx: number;
   feature: featureType;
 }
 
@@ -25,12 +26,15 @@ const TextSection = styled.div`
 
 const Container = styled.div``;
 
-const GameFeatureCard = ({ feature }: Props) => {
+const GameFeatureCard = ({ feature, idx }: Props) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
+
   return (
     <Container className="d-flex border rounded-3">
-      <ImgSection imageUrl={feature.imageUrl} className="rounded-start-3" />
+      {idx % 2 != 0 && (
+        <ImgSection imageUrl={feature.imageUrl} className="rounded-start-3" />
+      )}
       <TextSection
         style={{ background: `${curr.boxColor}` }}
         className="rounded-3"
@@ -38,6 +42,9 @@ const GameFeatureCard = ({ feature }: Props) => {
         <h2 className="fw-bold mb-4 text-center">{feature.title}</h2>
         <p>{feature.description}</p>
       </TextSection>
+      {idx % 2 == 0 && (
+        <ImgSection imageUrl={feature.imageUrl} className="rounded-start-3" />
+      )}
     </Container>
   );
 };

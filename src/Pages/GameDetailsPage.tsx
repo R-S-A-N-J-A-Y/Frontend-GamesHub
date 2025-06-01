@@ -34,23 +34,30 @@ const InitialFeature = [
   {
     imageUrl:
       "https://gmedia.playstation.com/is/image/SIEPDC/Days-Gone-Remastered-screenshot-legal-10-21feb25?$1600px$",
-    title: "Farewell Wilderness",
+    title: "Explore the Wild",
     description:
-      "From lush pine forests and meadows, to cascading waterfalls, and desert lava fields, the world of Days Gone is both beautiful and lethal. Descend into the depths of caves and mines, scavenge supplies in small rural towns, or ride up snow covered mountains to take in the vast landscapes of a post-apocalyptic Oregon.",
+      "Ride through forests, rivers, caves, and snowy mountains in a dangerous but beautiful world. Search small towns for supplies, explore dark caves, and enjoy the huge open land of post-apocalyptic Oregon.",
   },
   {
     imageUrl:
-      "https://gmedia.playstation.com/is/image/SIEPDC/Days-Gone-Remastered-screenshot-legal-10-21feb25?$1600px$",
-    title: "Farewell Wilderness",
+      "https://gmedia.playstation.com/is/image/SIEPDC/Days-Gone-Remastered-screenshot-legal-12-21feb25?$1600px$",
+    title: "Survive the Hordes",
     description:
-      "From lush pine forests and meadows, to cascading waterfalls, and desert lava fields, the world of Days Gone is both beautiful and lethal. Descend into the depths of caves and mines, scavenge supplies in small rural towns, or ride up snow covered mountains to take in the vast landscapes of a post-apocalyptic Oregon.",
+      "Play as Deacon and fight to stay alive against hundreds of wild Freakers chasing you. Grab everything you need from camp before heading out — running into a horde could mean the end.",
   },
   {
     imageUrl:
-      "https://gmedia.playstation.com/is/image/SIEPDC/Days-Gone-Remastered-screenshot-legal-10-21feb25?$1600px$",
-    title: "Farewell Wilderness",
+      "https://gmedia.playstation.com/is/image/SIEPDC/Days-Gone-Remastered-screenshot-legal-14-21feb25?$1600px$",
+    title: "A Story of Love and Brotherhood",
     description:
-      "From lush pine forests and meadows, to cascading waterfalls, and desert lava fields, the world of Days Gone is both beautiful and lethal. Descend into the depths of caves and mines, scavenge supplies in small rural towns, or ride up snow covered mountains to take in the vast landscapes of a post-apocalyptic Oregon.",
+      "Ride with Deacon as he holds on to the memories of his lost wife and fights to protect his closest friend. In a world falling apart, love gives him strength, and brotherhood keeps him going. Through pain, loss, and danger—this journey is about never giving up on the people you care about.",
+  },
+  {
+    imageUrl:
+      "https://ik.imagekit.io/sanjayvault/GamesHub/Game%20Previews/Days%20Gone/Screenshots/DaysGone.png",
+    title: "Ride and Fight",
+    description:
+      "Hop on your bike and ride through a world full of danger. Face changing weather, day and night cycles, random enemies, and Freakers that keep getting smarter. Stay ready — the road is never safe.",
   },
 ];
 
