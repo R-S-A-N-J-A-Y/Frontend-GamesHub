@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import GameHeroCard from "../Components/GameHeroCard";
 import GameGallery from "../Components/GameGallery";
 import GameFeatureList from "../Components/GameFeatureList";
+import GameSimilarSection from "../Components/GameSimilarSection";
 
 export interface featureType {
   imageUrl: string;
@@ -58,6 +59,7 @@ const GameDetailsPage = () => {
       <GameHeroCard game={game} />
       <GameGallery screenshots={game.screenshots} />
       <GameFeatureList name={game.name} features={game.features} />
+      <GameSimilarSection />
     </div>
   );
 };
