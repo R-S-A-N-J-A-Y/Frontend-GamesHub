@@ -32,6 +32,7 @@ export interface WatchListDataType {
     _id: string;
     name: string;
   }[];
+  addedAt: string;
 }
 
 const LibrarySection = () => {

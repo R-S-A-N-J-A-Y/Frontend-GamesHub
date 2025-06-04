@@ -6,6 +6,14 @@ interface Props {
 }
 
 const LibraryCard = ({ game, onClick }: Props) => {
+  const addedDate = new Date(game.addedAt);
+  const year = addedDate.getFullYear();
+  const day = String(addedDate.getDate()).padStart(2, "0");
+
+  const MonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+    new Date(addedDate)
+  );
+
   return (
     <div
       className="d-flex align-items-center justify-content-between px-4"
@@ -23,18 +31,22 @@ const LibraryCard = ({ game, onClick }: Props) => {
         />
         <div>
           <p className="fs-6 fw-bold m-0">{game.name}</p>
-          <p
-            className="fw-bold m-0"
-            style={{ color: "rgba(185, 159, 159, 0.81)", fontSize: "13px" }}
-          >
-            {game.platforms[0].name}
-          </p>
+          {game.platforms.length !== 0 && (
+            <p
+              className="fw-bold m-0"
+              style={{ color: "rgba(185, 159, 159, 0.81)", fontSize: "13px" }}
+            >
+              {game.platforms[0].name}
+            </p>
+          )}
         </div>
       </div>
 
       <div style={{ color: "rgba(255, 255, 255, 0.78)", fontSize: "13px" }}>
-        <p className="fs-6 fw-bold m-0">12 Jan</p>
-        <p className="fw-bold m-0">2025</p>
+        <p className="fs-6 fw-bold m-0">
+          {day} {MonthName}
+        </p>
+        <p className="fw-bold m-0">{year}</p>
       </div>
 
       <button
