@@ -1,12 +1,14 @@
 import { motion, useMotionValue } from "framer-motion";
 import GameScreenshotCard from "./GameScreenshotCard";
 import { useEffect, useRef, useState } from "react";
+import type { ThemeObj } from "../Context/AppContext";
 
 interface Props {
   screenshots: string[];
+  theme: ThemeObj;
 }
 
-const GameGallery = ({ screenshots }: Props) => {
+const GameGallery = ({ screenshots, theme }: Props) => {
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const firstCardRef = useRef<HTMLDivElement | null>(null);
   const x = useMotionValue(0);
@@ -38,7 +40,7 @@ const GameGallery = ({ screenshots }: Props) => {
   }, [halfWidth, halfCardPlusGap, x]);
 
   useEffect(() => {
-    return x.onChange((latest) => {
+    return x.on("change", (latest) => {
       if (latest < -halfWidth) {
         x.set(latest + halfWidth);
       } else if (latest > 0) {
@@ -51,7 +53,15 @@ const GameGallery = ({ screenshots }: Props) => {
 
   return (
     <div className="d-flex flex-column gap-5">
-      <h2 className="ms-5 mt-4">Game Gallery</h2>
+      <div className="text-center p-5">
+        <h4 className="text-secondary fw-bold mb-2">
+          Curious how the game looks?
+        </h4>
+        <h2 className="fw-bolder">
+          Get a sneak peek before{" "}
+          <span style={{ color: theme.highLight }}>you play !</span>{" "}
+        </h2>
+      </div>
 
       <motion.div
         ref={carouselRef}

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import GameCard from "./GameCard";
 import { useEffect, useRef, useState } from "react";
-import { useAppContext } from "../Context/AppContext";
+import { type ThemeObj } from "../Context/AppContext";
 
 const data = {
   _id: "string",
@@ -17,10 +17,7 @@ const data = {
 
 const cards = [...Array(5)];
 
-const GameSimilarSection = () => {
-  const { theme, themeColor } = useAppContext();
-  const curr = themeColor[theme];
-
+const GameSimilarSection = ({ theme }: { theme: ThemeObj }) => {
   const CarouselEffect = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState(0);
 
@@ -37,7 +34,7 @@ const GameSimilarSection = () => {
         <h4 className="text-secondary fw-bold">Don’t stop here!</h4>
         <h2 className="fw-bolder">
           Discover something else worth{" "}
-          <span style={{ color: curr.highLight }}>Exploring.</span>{" "}
+          <span style={{ color: theme.highLight }}>Exploring.</span>{" "}
         </h2>
       </div>
 

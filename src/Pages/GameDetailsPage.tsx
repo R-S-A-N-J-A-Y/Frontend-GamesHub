@@ -6,6 +6,7 @@ import GameHeroCard from "../Components/GameHeroCard";
 import GameGallery from "../Components/GameGallery";
 import GameFeatureList from "../Components/GameFeatureList";
 import GameSimilarSection from "../Components/GameSimilarSection";
+import { useAppContext } from "../Context/AppContext";
 
 export interface featureType {
   imageUrl: string;
@@ -37,6 +38,8 @@ export interface gameData {
 }
 
 const GameDetailsPage = () => {
+  const { theme, themeColor } = useAppContext();
+  const curr = themeColor[theme];
   const { id } = useParams<{ id: string }>();
   const [game, setGame] = useState<gameData | null>(null);
 
@@ -57,9 +60,9 @@ const GameDetailsPage = () => {
   return (
     <div className="d-flex flex-column gap-5">
       <GameHeroCard game={game} />
-      <GameGallery screenshots={game.screenshots} />
+      <GameGallery theme={curr} screenshots={game.screenshots} />
       <GameFeatureList name={game.name} features={game.features} />
-      <GameSimilarSection />
+      <GameSimilarSection theme={curr} />
     </div>
   );
 };

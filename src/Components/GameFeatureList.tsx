@@ -13,13 +13,15 @@ const GameFeatureList = ({ name, features }: Props) => {
   return (
     <div className="p-5 d-flex flex-column" style={{ gap: "60px" }}>
       <div className="text-center">
-        <h5 className="text-secondary">Key Features</h5>
-        <h1>
+        <h1 className="mb-4">
           Why you should Play{" "}
           <span className="fw-bold" style={{ color: `${curr.highLight}` }}>
             {name}
           </span>{" "}
         </h1>
+        <h5 className="text-secondary fw-bold">
+          Discover the features that set it apart.
+        </h5>
       </div>
       <div className="px-5 py-3 d-flex flex-column" style={{ gap: "70px" }}>
         {features.map((ft, idx) => (
