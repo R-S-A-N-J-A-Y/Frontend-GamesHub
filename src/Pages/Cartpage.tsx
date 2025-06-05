@@ -29,6 +29,8 @@ const Cartpage = () => {
     fetch();
   }, [token]);
 
+  console.log(cartArray);
+
   return (
     <Wrapper className="d-flex flex-column gap-5 mt-3">
       <h3>Your Cart</h3>
