@@ -2,6 +2,13 @@ import styled from "styled-components";
 import { ImCross } from "react-icons/im";
 import { useAppContext } from "../Context/AppContext";
 
+interface Props {
+  data: {
+    _id: string;
+    addedAt: string;
+  };
+}
+
 const ImageWrapper = styled.div`
   height: 150px;
   width: 150px;
@@ -10,9 +17,16 @@ const ImageWrapper = styled.div`
   background-image: url(DaysGone.jpg);
 `;
 
-const CartCard = () => {
+const CartCard = ({ data }: Props) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
+
+  const date = new Date(data.addedAt);
+  const year = date.getFullYear();
+  const day = date.getDate();
+  const MonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+    date
+  );
 
   return (
     <div
@@ -32,7 +46,9 @@ const CartCard = () => {
           <div>100</div>
         </div>
       </div>
-      <div>12 JAN 2020</div>
+      <div>
+        {day} {MonthName} {year}
+      </div>
       <div>Quanitity</div>
       <div>890</div>
       <button style={{ background: "none", border: "none" }}>
