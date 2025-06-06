@@ -3,10 +3,12 @@ import { ImCross } from "react-icons/im";
 import { useAppContext } from "../Context/AppContext";
 import { MdCurrencyRupee } from "react-icons/md";
 import type { CartData } from "../Pages/Cartpage";
+import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 
 interface Props {
   data: CartData;
   deleteCart: (id: string) => void;
+  UpdateQuantity: (gameId: string, cartId: string) => void;
 }
 
 const CardWrapper = styled.div<{
@@ -25,7 +27,7 @@ const ImageWrapper = styled.div<{ $image_url: string }>`
   background-image: url(${({ $image_url }) => $image_url});
 `;
 
-const CartCard = ({ data, deleteCart }: Props) => {
+const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
 
@@ -35,7 +37,6 @@ const CartCard = ({ data, deleteCart }: Props) => {
   const MonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
     date
   );
-
   return (
     <CardWrapper
       $background_color={curr.boxColor}
@@ -66,17 +67,25 @@ const CartCard = ({ data, deleteCart }: Props) => {
       </div>
 
       {/* Quantity  */}
-      <div>Quanitity</div>
+      <div className="d-flex gap-2 align-items-center">
+        <CiSquareMinus size={25} style={{ cursor: "pointer" }} />
+        <p className="p-0 m-0 fs-4">{data.quantity}</p>
+        <CiSquarePlus
+          size={25}
+          style={{ cursor: "pointer" }}
+          onClick={() => UpdateQuantity(data.game._id, data._id)}
+        />
+      </div>
 
       {/* Total Price  */}
       <div>
         <div className="d-flex align-items-center">
           <MdCurrencyRupee size={23} />
-          <p className="m-0 p-0">{data.game.price * 1}</p>
+          <p className="m-0 p-0">{data.game.price * data.quantity}</p>
         </div>
       </div>
 
-      {/* toggle Button  */}
+      {/* Delete Cart Button  */}
       <button
         style={{ background: "none", border: "none" }}
         onClick={() => deleteCart(data._id)}

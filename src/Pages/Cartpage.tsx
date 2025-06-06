@@ -11,7 +11,9 @@ const Wrapper = styled.div`
 export type CartData = {
   _id: string;
   addedAt: string;
+  quantity: number;
   game: {
+    _id: string;
     name: string;
     coverImageUrl: string;
     price: number;
@@ -41,7 +43,7 @@ const Cartpage = () => {
   }, [token]);
 
   const deleteCart = async (id: string) => {
-    const currArray = cartArray;
+    const cartBackup = cartArray;
     setCartArray(cartArray.filter((data) => data._id !== id));
     const fetch = async () => {
       try {
@@ -55,7 +57,32 @@ const Cartpage = () => {
       } catch (err) {
         console.log(err);
         alert("Error");
-        setCartArray(currArray);
+        setCartArray(cartBackup);
+      }
+    };
+    fetch();
+  };
+
+  const UpdateQuantity = (gameId: string, cartId: string) => {
+    const cartBackup = cartArray;
+
+    setCartArray([
+      ...cartArray.map((cart) =>
+        cart._id === cartId ? { ...cart, quantity: cart.quantity + 1 } : cart
+      ),
+    ]);
+    const fetch = async () => {
+      try {
+        const result = await axios.post(
+          "http://localhost:3000/user/cart",
+          { gameId },
+          { headers: { "x-auth-token": token } }
+        );
+        console.log(result);
+      } catch (err) {
+        console.log(err);
+        alert("error...");
+        setCartArray(cartBackup);
       }
     };
     fetch();
@@ -69,7 +96,12 @@ const Cartpage = () => {
       ) : (
         <div className="d-flex flex-column gap-5">
           {cartArray.map((data, idx) => (
-            <CartCard key={idx} data={data} deleteCart={deleteCart} />
+            <CartCard
+              key={idx}
+              data={data}
+              deleteCart={deleteCart}
+              UpdateQuantity={UpdateQuantity}
+            />
           ))}
         </div>
       )}
