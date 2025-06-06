@@ -52,7 +52,7 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
         <div className="d-flex flex-column gap-3">
           <div>
             <h3 className="fw-bolder">{data.game.name}</h3>
-            <h5>{data.game.platforms[0].name}</h5>
+            <h5 className="text-secondary">{data.game.platforms[0].name}</h5>
           </div>
           <div className="d-flex align-items-center">
             <MdCurrencyRupee size={23} />
