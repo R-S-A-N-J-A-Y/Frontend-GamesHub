@@ -2,34 +2,30 @@ import styled from "styled-components";
 import { ImCross } from "react-icons/im";
 import { useAppContext } from "../Context/AppContext";
 import { MdCurrencyRupee } from "react-icons/md";
+import type { CartData } from "../Pages/Cartpage";
 
 interface Props {
-  data: {
-    _id: string;
-    addedAt: string;
-    game: {
-      name: string;
-      coverImageUrl: string;
-      price: number;
-      platforms: { name: string; _id: string }[];
-    };
-  };
+  data: CartData;
+  deleteCart: (id: string) => void;
 }
 
-const CardWrapper = styled.div<{ backgroundColor: string; highLight: string }>`
-  background: ${({ backgroundColor }) => backgroundColor};
-  border-left: 8px solid ${({ highLight }) => highLight};
+const CardWrapper = styled.div<{
+  $background_color: string;
+  $highlight: string;
+}>`
+  background: ${({ $background_color }) => $background_color};
+  border-left: 8px solid ${({ $highlight }) => $highlight};
 `;
 
-const ImageWrapper = styled.div<{ imageUrl: string }>`
+const ImageWrapper = styled.div<{ $image_url: string }>`
   height: 130px;
   width: 150px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  background-image: url(${({ imageUrl }) => imageUrl});
+  background-image: url(${({ $image_url }) => $image_url});
 `;
 
-const CartCard = ({ data }: Props) => {
+const CartCard = ({ data, deleteCart }: Props) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
 
@@ -42,14 +38,14 @@ const CartCard = ({ data }: Props) => {
 
   return (
     <CardWrapper
-      backgroundColor={curr.boxColor}
-      highLight={curr.highLight}
+      $background_color={curr.boxColor}
+      $highlight={curr.highLight}
       className="d-flex flex-column gap-3 flex-md-row justify-content-between align-items-center px-5 py-4 fs-5 fw-bold rounded-4"
     >
       {/* GameDetails  */}
       <div className="d-flex align-items-center gap-5">
         <ImageWrapper
-          imageUrl={data.game.coverImageUrl}
+          $image_url={data.game.coverImageUrl}
           className="rounded-3"
         />
         <div className="d-flex flex-column gap-3">
@@ -81,7 +77,10 @@ const CartCard = ({ data }: Props) => {
       </div>
 
       {/* toggle Button  */}
-      <button style={{ background: "none", border: "none" }}>
+      <button
+        style={{ background: "none", border: "none" }}
+        onClick={() => deleteCart(data._id)}
+      >
         <ImCross color="red" size={20} />
       </button>
     </CardWrapper>
