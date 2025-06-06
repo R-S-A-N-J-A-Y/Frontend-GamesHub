@@ -63,22 +63,24 @@ const Cartpage = () => {
     fetch();
   };
 
-  const UpdateQuantity = (gameId: string, cartId: string) => {
+  const UpdateQuantity = (gameId: string, cartId: string, isInc: boolean) => {
     const cartBackup = cartArray;
 
     setCartArray([
       ...cartArray.map((cart) =>
-        cart._id === cartId ? { ...cart, quantity: cart.quantity + 1 } : cart
+        cart._id === cartId
+          ? { ...cart, quantity: cart.quantity + (isInc ? 1 : -1) }
+          : cart
       ),
     ]);
+
     const fetch = async () => {
       try {
-        const result = await axios.post(
+        await axios.post(
           "http://localhost:3000/user/cart",
-          { gameId },
+          { gameId, isInc },
           { headers: { "x-auth-token": token } }
         );
-        console.log(result);
       } catch (err) {
         console.log(err);
         alert("error...");

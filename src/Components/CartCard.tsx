@@ -3,12 +3,12 @@ import { ImCross } from "react-icons/im";
 import { useAppContext } from "../Context/AppContext";
 import { MdCurrencyRupee } from "react-icons/md";
 import type { CartData } from "../Pages/Cartpage";
-import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 
 interface Props {
   data: CartData;
   deleteCart: (id: string) => void;
-  UpdateQuantity: (gameId: string, cartId: string) => void;
+  UpdateQuantity: (gameId: string, cartId: string, isInc: boolean) => void;
 }
 
 const CardWrapper = styled.div<{
@@ -68,13 +68,25 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
 
       {/* Quantity  */}
       <div className="d-flex gap-2 align-items-center">
-        <CiSquareMinus size={25} style={{ cursor: "pointer" }} />
-        <p className="p-0 m-0 fs-4">{data.quantity}</p>
-        <CiSquarePlus
-          size={25}
-          style={{ cursor: "pointer" }}
-          onClick={() => UpdateQuantity(data.game._id, data._id)}
-        />
+        {data.quantity === 1 ? (
+          <FaArrowDown color="grey" size={25} />
+        ) : (
+          <FaArrowDown
+            size={25}
+            style={{ cursor: "pointer" }}
+            onClick={() => UpdateQuantity(data.game._id, data._id, false)}
+          />
+        )}
+        <p className="p-0 m-0 fs-3">{data.quantity}</p>
+        {data.quantity === 5 ? (
+          <FaArrowUp color="grey" size={25} />
+        ) : (
+          <FaArrowUp
+            size={25}
+            style={{ cursor: "pointer" }}
+            onClick={() => UpdateQuantity(data.game._id, data._id, true)}
+          />
+        )}
       </div>
 
       {/* Total Price  */}
