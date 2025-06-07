@@ -24,7 +24,7 @@ const Card = styled.div`
 `;
 
 const CardImagePreview = styled.div<{ imageUrl: string }>`
-  aspect-ratio: 16/9;
+  aspect-ratio: 14/9;
   background-image: url(${({ imageUrl }) => imageUrl});
   background-repeat: no-repeat;
   background-size: cover;
@@ -32,7 +32,13 @@ const CardImagePreview = styled.div<{ imageUrl: string }>`
   border-radius: 10px 10px 0 0;
 `;
 
-const GameCard = ({ game }: { game: Gamedata }) => {
+const GameCard = ({
+  game,
+  cardWidth,
+}: {
+  game: Gamedata;
+  cardWidth?: string;
+}) => {
   const Navigate = useNavigate();
   const {
     state: { isLogged },
@@ -52,78 +58,67 @@ const GameCard = ({ game }: { game: Gamedata }) => {
   };
 
   return (
-    <Card className="card">
+    <Card className="card" style={{ width: `${cardWidth}` }}>
       <CardImagePreview
         imageUrl={game.coverImageUrl}
         className="card-img-top"
         onClick={() => Navigate(`/games/${game._id}`)}
       ></CardImagePreview>
       <div
-        className="card-body"
+        className="card-body d-flex flex-column"
         style={{
+          gap: "4px",
           background: `${curr.boxColor}`,
           color: `${curr.name === "dark" ? "#ffffff" : "#000000"}`,
           borderRadius: "0px 0px 10px 10px",
         }}
       >
-        <div className="d-flex flex-column gap-2">
-          <p className="fs-5 fw-bold m-0 p-0">{game.name}</p>
-          <div className="d-flex align-items-center gap-4">
-            <p className="m-0 p-0" style={{ fontSize: "1.25rem" }}>
-              $78
-            </p>
-          </div>
-          <div className="d-flex gap-2">
-            <button
-              style={{
-                border: "none",
-                background: "none",
-              }}
-              className="p-0"
-              onClick={isToggleLike}
-            >
-              {isLogged ? (
-                game.liked ? (
-                  <GoHeartFill size={29} color="red" />
-                ) : (
-                  <GoHeart
-                    size={29}
-                    color={curr.name === "dark" ? "white" : "black"}
-                  />
-                )
+        <p className="fs-5 fw-bold m-0 p-0">{game.name}</p>
+        <p className="m-0 p-0" style={{ fontSize: "1.25rem" }}>
+          $78
+        </p>
+        <div className="d-flex gap-2">
+          <button
+            style={{
+              border: "none",
+              background: "none",
+            }}
+            className="p-0"
+            onClick={isToggleLike}
+          >
+            {isLogged ? (
+              game.liked ? (
+                <GoHeartFill size={29} color="red" />
               ) : (
-                <GoHeartFill
+                <GoHeart
                   size={29}
                   color={curr.name === "dark" ? "white" : "black"}
                 />
-              )}
-            </button>
-            <a
-              href="#"
-              className="btn fw-bold px-1 w-100"
-              style={{ background: `${curr.highLight}`, fontSize: "0.958rem" }}
-            >
-              Purchase
-            </a>
-            <button
-              className={`btn p-2 d-flex align-items-center gap-1 border text-${
-                theme === "dark" ? "white" : "black"
-              }`}
-              onClick={isToggleWatchList}
-              style={{ fontSize: "0.938rem" }}
-            >
-              {isLogged ? (
-                game.watched ? (
-                  <p className="text-success fw-bold m-0">Added</p>
-                ) : (
-                  <>
-                    <MdAddToPhotos
-                      size={20}
-                      color={theme === "dark" ? "white" : "black"}
-                    />
-                    Add
-                  </>
-                )
+              )
+            ) : (
+              <GoHeartFill
+                size={29}
+                color={curr.name === "dark" ? "white" : "black"}
+              />
+            )}
+          </button>
+          <a
+            href="#"
+            className="btn fw-bold px-1 w-100"
+            style={{ background: `${curr.highLight}`, fontSize: "0.958rem" }}
+          >
+            Purchase
+          </a>
+          <button
+            className={`btn p-2 d-flex align-items-center gap-1 border text-${
+              theme === "dark" ? "white" : "black"
+            }`}
+            onClick={isToggleWatchList}
+            style={{ fontSize: "0.938rem" }}
+          >
+            {isLogged ? (
+              game.watched ? (
+                <p className="text-success fw-bold m-0">Added</p>
               ) : (
                 <>
                   <MdAddToPhotos
@@ -132,9 +127,17 @@ const GameCard = ({ game }: { game: Gamedata }) => {
                   />
                   Add
                 </>
-              )}
-            </button>
-          </div>
+              )
+            ) : (
+              <>
+                <MdAddToPhotos
+                  size={20}
+                  color={theme === "dark" ? "white" : "black"}
+                />
+                Add
+              </>
+            )}
+          </button>
         </div>
       </div>
     </Card>

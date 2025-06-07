@@ -5,12 +5,15 @@ import { useGameContext } from "../Context/GameContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ExploreCategorySkeletonCard from "../Components/ExploreCategoryCardSkeleton";
+import { useAppContext } from "../Context/AppContext";
 
 const ExploreCategoryPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-
   const { type } = useParams<{ type: string }>();
   const { state, updateCategory } = useGameContext();
+
+  const { theme, themeColor } = useAppContext();
+  const currTheme = themeColor[theme];
 
   useEffect(() => {
     setIsLoading(true);
@@ -41,7 +44,12 @@ const ExploreCategoryPage = () => {
   if (isLoading)
     return (
       <div>
-        <p className="fw-bold fs-2">Available {type}</p>
+        <p className="fw-bold fs-2">
+          Step Into{" "}
+          <span style={{ color: currTheme.highLight }}>
+            {type && type.charAt(0).toUpperCase() + type.slice(1)}
+          </span>
+        </p>
         <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
           {[...Array(8)].map((key) => (
             <div className="col" key={key}>
@@ -53,7 +61,12 @@ const ExploreCategoryPage = () => {
     );
   return (
     <div>
-      <p className="fw-bold fs-2">Available {type}</p>
+      <p className="fw-bold fs-2">
+        Step Into{" "}
+        <span style={{ color: currTheme.highLight }}>
+          {type && type.charAt(0).toUpperCase() + type.slice(1)}
+        </span>
+      </p>
       {state.category.data.length === 0 ? (
         <p className="mb-5">No data to Show</p>
       ) : (

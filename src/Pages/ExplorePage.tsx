@@ -3,20 +3,30 @@ import { Outlet, useLocation } from "react-router-dom";
 import GeneralGameList from "../Components/GeneralGameList";
 import { useAppContext } from "../Context/AppContext";
 import { ImCross } from "react-icons/im";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  min-height: 78vh;
+`;
+
+const HeadSection = styled.div``;
 
 const ExplorePage = () => {
   const location = useLocation();
   const [url, setUrl] = useState("/explore");
+
   const { theme, themeColor } = useAppContext();
   const CurrTheme = themeColor[theme];
 
   useEffect(() => {
     setUrl(location.pathname);
   }, [location]);
+
   if (url !== "/explore") return <Outlet />;
+
   return (
-    <div className="d-flex flex-column gap-4">
-      <div className="d-flex flex-column gap-4 pb-2">
+    <Wrapper className="d-flex flex-column gap-4">
+      <HeadSection className="d-flex flex-column gap-4 pb-2">
         <div className="d-flex flex-column gap-2">
           <p className="fw-bolder fs-1 m-0">
             Top Picks of the
@@ -104,10 +114,10 @@ const ExplorePage = () => {
             </ul>
           </div>
         </div>
-      </div>
+      </HeadSection>
 
       <GeneralGameList />
-    </div>
+    </Wrapper>
   );
 };
 

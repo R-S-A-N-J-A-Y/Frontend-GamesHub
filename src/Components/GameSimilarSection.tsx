@@ -15,7 +15,7 @@ const data = {
   watched: true,
 };
 
-const cards = [...Array(5)];
+const cards = [...Array(7)];
 
 const GameSimilarSection = ({ theme }: { theme: ThemeObj }) => {
   const CarouselEffect = useRef<HTMLDivElement | null>(null);
@@ -50,7 +50,7 @@ const GameSimilarSection = ({ theme }: { theme: ThemeObj }) => {
         >
           {cards.map((_) => (
             <motion.div key={_}>
-              <GameCard game={data} />
+              <GameCard game={data} cardWidth="300px" />
             </motion.div>
           ))}
         </motion.div>

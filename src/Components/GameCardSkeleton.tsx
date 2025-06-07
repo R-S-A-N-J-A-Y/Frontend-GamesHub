@@ -3,7 +3,6 @@ import { useAppContext } from "../Context/AppContext";
 
 const Card = styled.div`
   border-radius: 10px;
-  width: 300px;
   overflow: hidden;
 `;
 
@@ -15,7 +14,7 @@ const GameCardSkeleton = () => {
     <Card className="card border" aria-hidden="true">
       <div
         className="card-img-top bg-secondary"
-        style={{ height: "170px" }}
+        style={{ aspectRatio: "14/9" }}
       ></div>
       <div
         className="card-body placeholder-glow"

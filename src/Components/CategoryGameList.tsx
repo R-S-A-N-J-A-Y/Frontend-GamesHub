@@ -35,12 +35,19 @@ const CategoryGameList = () => {
 
   if (isLoading)
     return (
-      <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
-        {[...Array(8)].map((key) => (
-          <div className="col" key={key}>
-            <GameCardSkeleton />
-          </div>
-        ))}
+      <div className="d-flex flex-column gap-4" style={{ minHeight: "81vh" }}>
+        <h3 className="fw-bold">
+          {" "}
+          Explore Realms of the{" "}
+          <span style={{ color: currTheme.highLight }}>{game.name}</span>
+        </h3>
+        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
+          {[...Array(8)].map((key) => (
+            <div className="col" key={key}>
+              <GameCardSkeleton />
+            </div>
+          ))}
+        </div>
       </div>
     );
 

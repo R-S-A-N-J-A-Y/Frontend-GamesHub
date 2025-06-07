@@ -34,7 +34,7 @@ const GeneralGameList = () => {
 
   if (isLoading)
     return (
-      <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
+      <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
         {[...Array(8)].map((key) => (
           <div className="col" key={key}>
             <GameCardSkeleton />
@@ -48,7 +48,7 @@ const GeneralGameList = () => {
       {genralGames.length === 0 ? (
         "No Games Available"
       ) : (
-        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 ">
+        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
           {genralGames.map((data, key) => (
             <div key={key} className="col">
               <GameCard game={data} />

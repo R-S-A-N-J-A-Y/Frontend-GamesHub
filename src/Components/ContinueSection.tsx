@@ -44,10 +44,11 @@ const ContinueSection = () => {
           drag="x"
           dragConstraints={{ right: 0, left: -width }}
           className="d-flex gap-5"
+          whileTap={{ cursor: "grabbing" }}
         >
           {[...Array(5)].map((_, i) => (
             <motion.div key={i} style={{ flex: "0 0 auto" }}>
-              <GameCard game={SampleGameData} />
+              <GameCard game={SampleGameData} cardWidth="300px" />
             </motion.div>
           ))}
           <div style={{ flex: "0 0 auto", width: "10px" }} />
