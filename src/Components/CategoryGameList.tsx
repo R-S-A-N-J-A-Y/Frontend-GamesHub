@@ -4,6 +4,7 @@ import GameCard from "./GameCard";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import GameCardSkeleton from "./GameCardSkeleton";
+import { useAppContext } from "../Context/AppContext";
 
 const CategoryGameList = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,6 +13,8 @@ const CategoryGameList = () => {
     updateSelectedCategory,
   } = useGameContext();
   const { type, id } = useParams<{ type: string; id: string }>();
+  const { theme, themeColor } = useAppContext();
+  const currTheme = themeColor[theme];
 
   useEffect(() => {
     const fetch = async () => {
@@ -44,13 +47,18 @@ const CategoryGameList = () => {
   if (game._id === "") return <p>No Category is Selected.</p>;
 
   return (
-    <div>
+    <div className="d-flex flex-column gap-4" style={{ minHeight: "81vh" }}>
+      <h3 className="fw-bold">
+        {" "}
+        Explore Realms of the{" "}
+        <span style={{ color: currTheme.highLight }}>{game.name}</span>
+      </h3>
       {game.gamesId.length === 0 ? (
         <p>No Games Available.</p>
       ) : (
-        <div>
+        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
           {game.gamesId.map((data, key) => (
-            <div key={key}>
+            <div key={key} className="col">
               <GameCard game={data} />
             </div>
           ))}

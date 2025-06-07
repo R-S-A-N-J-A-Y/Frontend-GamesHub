@@ -16,7 +16,6 @@ export const CardHoverAnimation = css`
 `;
 
 const Card = styled.div`
-  width: 300px;
   border: none;
   border-radius: 10px;
   overflow: hidden;
@@ -70,14 +69,17 @@ const GameCard = ({ game }: { game: Gamedata }) => {
         <div className="d-flex flex-column gap-2">
           <p className="fs-5 fw-bold m-0 p-0">{game.name}</p>
           <div className="d-flex align-items-center gap-4">
-            <p className="m-0 p-0" style={{ fontSize: "20px" }}>
+            <p className="m-0 p-0" style={{ fontSize: "1.25rem" }}>
               $78
             </p>
           </div>
           <div className="d-flex gap-2">
             <button
-              className="p-1"
-              style={{ border: "none", background: "none" }}
+              style={{
+                border: "none",
+                background: "none",
+              }}
+              className="p-0"
               onClick={isToggleLike}
             >
               {isLogged ? (
@@ -98,16 +100,17 @@ const GameCard = ({ game }: { game: Gamedata }) => {
             </button>
             <a
               href="#"
-              className="btn fw-bold w-100"
-              style={{ background: `${curr.highLight}` }}
+              className="btn fw-bold px-1 w-100"
+              style={{ background: `${curr.highLight}`, fontSize: "0.958rem" }}
             >
               Purchase
             </a>
             <button
-              className={`btn d-flex align-items-center gap-1 border text-${
+              className={`btn p-2 d-flex align-items-center gap-1 border text-${
                 theme === "dark" ? "white" : "black"
               }`}
               onClick={isToggleWatchList}
+              style={{ fontSize: "0.938rem" }}
             >
               {isLogged ? (
                 game.watched ? (
