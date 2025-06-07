@@ -3,21 +3,21 @@ import type { gameData } from "../Pages/GameDetailsPage";
 import { MdAddToPhotos } from "react-icons/md";
 import { FaPlaystation, FaWindows } from "react-icons/fa";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ imageUrl: string }>`
   min-height: 100vh;
   background-image: linear-gradient(
       to right,
       rgba(0, 0, 0, 0.56),
       rgba(89, 74, 74, 0.38)
     ),
-    url(https://ik.imagekit.io/sanjayvault/GamesHub/Game%20Previews/Days%20Gone/Screenshots/2025.02.02-13.47.27.png);
+    url(${({ imageUrl }) => imageUrl});
   background-repeat: no-repeat;
   background-size: 100% 100%;
 `;
 
 const GameHeroCard = ({ game }: { game: gameData }) => {
   return (
-    <Wrapper className="d-flex gap-5 text-light">
+    <Wrapper imageUrl={game.heroImageUrl} className="d-flex gap-5 text-light">
       <div
         className="w-50 d-flex flex-column"
         style={{ marginTop: "100px", gap: "70px", padding: "50px 100px" }}
@@ -26,7 +26,7 @@ const GameHeroCard = ({ game }: { game: gameData }) => {
           className="fw-bolder"
           style={{ fontSize: "60px", color: "#00BFFF" }}
         >
-          Days Gone
+          {game.name}
         </h1>
         <div className="d-flex flex-column gap-4">
           <h2 className="fw-bolder">About the Game</h2>
@@ -71,12 +71,15 @@ const GameHeroCard = ({ game }: { game: gameData }) => {
           </div>
           <div className="d-flex flex-column gap-3">
             <h2 className="fw-bold">Tags</h2>
-            <div className="d-flex gap-4">
+            <div className="d-flex gap-4 align-items-center">
               {game.tags.map((data) => (
                 <p
                   key={data._id}
                   className="border px-4 py-2 rounded-3"
-                  style={{ backdropFilter: "blur(50px)" }}
+                  style={{
+                    whiteSpace: "nowrap",
+                    backdropFilter: "blur(50px)",
+                  }}
                 >
                   {data.name}
                 </p>

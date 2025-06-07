@@ -27,6 +27,7 @@ export interface gameData {
   tags: { _id: string; name: string }[];
 
   coverImageUrl: string;
+  heroImageUrl: string;
   screenshots: string[];
   youtubeLink: string;
   features: featureType[];

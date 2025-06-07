@@ -5,6 +5,7 @@ import { GoHeartFill, GoHeart } from "react-icons/go";
 import { useGameContext, type Gamedata } from "../Context/GameContext";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
 export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
 
@@ -21,6 +22,15 @@ const Card = styled.div`
   overflow: hidden;
   padding: 1px;
   ${CardHoverAnimation};
+`;
+
+const CardImagePreview = styled.div<{ imageUrl: string }>`
+  aspect-ratio: 16/9;
+  background-image: url(${({ imageUrl }) => imageUrl});
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
+  border-radius: 10px 10px 0 0;
 `;
 
 const GameCard = ({ game }: { game: Gamedata }) => {
@@ -44,13 +54,11 @@ const GameCard = ({ game }: { game: Gamedata }) => {
 
   return (
     <Card className="card">
-      <img
-        src={`${game.coverImageUrl}`}
+      <CardImagePreview
+        imageUrl={game.coverImageUrl}
         className="card-img-top"
-        style={{ borderRadius: "10px 10px 0 0", cursor: "pointer" }}
-        alt="..."
         onClick={() => Navigate(`/games/${game._id}`)}
-      />
+      ></CardImagePreview>
       <div
         className="card-body"
         style={{
