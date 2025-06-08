@@ -29,6 +29,14 @@ export interface ExploreCategoryItem {
   popularGame: [popularGame, popularGame];
 }
 
+interface Platform {
+  _id: string;
+  parentPlatform: {
+    _id: string;
+    name: string;
+  };
+}
+
 export interface Gamedata {
   _id: string;
   name: string;
@@ -36,6 +44,7 @@ export interface Gamedata {
   peopleAdded: number;
   ratings: number;
   likes: number;
+  platforms: Platform[];
   liked: boolean; //Only Available when User Logged In
   watched: boolean;
 }

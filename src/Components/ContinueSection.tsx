@@ -16,13 +16,18 @@ const ContinueSection = () => {
   }, []);
 
   const SampleGameData = {
-    _id: "6824d8a8c772e77e31f943c5",
-    name: "Days Gone",
+    _id: "string",
+    name: "string",
     coverImageUrl:
       "https://ik.imagekit.io/sanjayvault/GamesHub/Game%20Previews/Days%20Gone/Preview/DaysGone.png",
     peopleAdded: 0,
     ratings: 0,
     likes: 0,
+
+    platforms: [{ _id: "123", parentPlatform: { name: "PC", _id: "akhd" } }],
+
+    liked: true, //Only Available when User Logged In
+    watched: true,
   };
 
   return (

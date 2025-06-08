@@ -33,6 +33,8 @@ const CategoryGameList = () => {
     fetch();
   }, [type, id, updateSelectedCategory]);
 
+  console.log(game.gamesId);
+
   if (isLoading)
     return (
       <div className="d-flex flex-column gap-4" style={{ minHeight: "81vh" }}>

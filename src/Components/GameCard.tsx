@@ -7,6 +7,15 @@ import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { PiFilmSlate } from "react-icons/pi";
 
+import {
+  FaPlaystation,
+  FaWindows,
+  FaXbox,
+  BsNintendoSwitch,
+  FaApple,
+  BsAndroid2,
+} from "../Utils/platformIconLinks";
+
 export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
 
@@ -86,6 +95,18 @@ const GameCard = ({ game, cardWidth }: Props) => {
           borderRadius: "0px 0px 10px 10px",
         }}
       >
+        <div className="d-flex px-1" style={{ gap: "15px" }}>
+          {game.platforms.map((obj) => (
+            <>
+              {obj.parentPlatform.name === "PC" && <FaWindows />}
+              {obj.parentPlatform.name === "PlayStation" && <FaPlaystation />}
+              {obj.parentPlatform.name === "Xbox" && <FaXbox />}
+              {obj.parentPlatform.name === "Nintendo" && <BsNintendoSwitch />}
+              {obj.parentPlatform.name === "Android" && <BsAndroid2 />}
+              {obj.parentPlatform.name === "ios" && <FaApple />}
+            </>
+          ))}
+        </div>
         <p className="fs-5 fw-bold m-0 p-0">{game.name}</p>
         <p className="m-0 p-0" style={{ fontSize: "1.25rem" }}>
           $78

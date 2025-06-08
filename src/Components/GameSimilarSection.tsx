@@ -11,6 +11,9 @@ const data = {
   peopleAdded: 0,
   ratings: 0,
   likes: 0,
+
+  platforms: [{ _id: "123", parentPlatform: { name: "PC", _id: "akhd" } }],
+
   liked: true, //Only Available when User Logged In
   watched: true,
 };
