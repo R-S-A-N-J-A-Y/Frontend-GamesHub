@@ -45,6 +45,7 @@ export interface Gamedata {
   ratings: number;
   likes: number;
   platforms: Platform[];
+  price: number;
   liked: boolean; //Only Available when User Logged In
   watched: boolean;
 }

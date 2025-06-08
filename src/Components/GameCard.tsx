@@ -6,6 +6,7 @@ import { useGameContext, type Gamedata } from "../Context/GameContext";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { PiFilmSlate } from "react-icons/pi";
+import { MdCurrencyRupee } from "react-icons/md";
 
 import {
   FaPlaystation,
@@ -108,8 +109,12 @@ const GameCard = ({ game, cardWidth }: Props) => {
           ))}
         </div>
         <p className="fs-5 fw-bold m-0 p-0">{game.name}</p>
-        <p className="m-0 p-0" style={{ fontSize: "1.25rem" }}>
-          $78
+        <p
+          className="m-0 p-0 d-flex align-items-center"
+          style={{ fontSize: "1.25rem" }}
+        >
+          <MdCurrencyRupee />
+          {game.price}
         </p>
         <div className="d-flex gap-2">
           <button
