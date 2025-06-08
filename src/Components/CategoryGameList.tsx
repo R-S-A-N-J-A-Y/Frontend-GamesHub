@@ -35,7 +35,7 @@ const CategoryGameList = () => {
       } catch (err) {
         alert(err);
       } finally {
-        setTimeout(() => setIsLoading(false), 2000);
+        setTimeout(() => setIsLoading(false), 1000);
       }
     };
 
