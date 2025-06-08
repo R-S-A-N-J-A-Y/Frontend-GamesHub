@@ -7,6 +7,7 @@ import GameGallery from "../Components/GameGallery";
 import GameFeatureList from "../Components/GameFeatureList";
 import GameSimilarSection from "../Components/GameSimilarSection";
 import { useAppContext } from "../Context/AppContext";
+import { useAuth } from "../Context/AuthContext";
 
 export interface featureType {
   imageUrl: string;
@@ -36,13 +37,20 @@ export interface gameData {
   peopleAdded: number;
   rating: number;
   totalPurchase: number;
+
+  isInCart: boolean; //Only For Logged in User
 }
 
 const GameDetailsPage = () => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
+
   const { id } = useParams<{ id: string }>();
   const [game, setGame] = useState<gameData | null>(null);
+
+  const {
+    state: { token },
+  } = useAuth();
 
   useEffect(() => {
     const fetch = async () => {
@@ -57,10 +65,33 @@ const GameDetailsPage = () => {
     };
     fetch();
   }, [id]);
+
+  const ToggleAddtoCart = (id: string, currState: boolean) => {
+    if (!game) return;
+
+    const fetch = async () => {
+      try {
+        const result = await axios.post(
+          "http://localhost:3000/user/cart",
+          { gameId: id, currState },
+          {
+            headers: { "x-auth-token": token },
+          }
+        );
+        console.log(result);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    setGame({ ...game, isInCart: !game.isInCart });
+    fetch();
+  };
+
   if (!game) return <div>Loading...</div>;
   return (
     <div className="d-flex flex-column gap-5">
-      <GameHeroCard game={game} />
+      <GameHeroCard game={game} ToggleAddtoCart={ToggleAddtoCart} />
       <GameGallery theme={curr} screenshots={game.screenshots} />
       <GameFeatureList name={game.name} features={game.features} />
       <GameSimilarSection theme={curr} />

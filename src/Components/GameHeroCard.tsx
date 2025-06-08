@@ -2,6 +2,12 @@ import styled from "styled-components";
 import type { gameData } from "../Pages/GameDetailsPage";
 import { MdAddToPhotos } from "react-icons/md";
 import { FaPlaystation, FaWindows } from "react-icons/fa";
+import { useAuth } from "../Context/AuthContext";
+
+interface Props {
+  game: gameData;
+  ToggleAddtoCart: (id: string, currStatus: boolean) => void;
+}
 
 const Wrapper = styled.div<{ imageUrl: string }>`
   min-height: 100vh;
@@ -15,7 +21,19 @@ const Wrapper = styled.div<{ imageUrl: string }>`
   background-size: 100% 100%;
 `;
 
-const GameHeroCard = ({ game }: { game: gameData }) => {
+const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
+  const {
+    state: { isLogged },
+  } = useAuth();
+
+  const HandleClickCart = () => {
+    if (!isLogged) {
+      alert("Log in to Continue");
+      return;
+    }
+    ToggleAddtoCart(game._id, true);
+  };
+
   return (
     <Wrapper imageUrl={game.heroImageUrl} className="d-flex gap-5 text-light">
       <div
@@ -38,9 +56,12 @@ const GameHeroCard = ({ game }: { game: gameData }) => {
             >
               Purchase Now
             </button>
-            <button className="btn bg-secondary d-flex align-items-center gap-1 border">
+            <button
+              className="btn bg-secondary d-flex align-items-center gap-1 border"
+              onClick={HandleClickCart}
+            >
               <MdAddToPhotos size={20} />
-              Add to Cart
+              {!game.isInCart ? "Add to Cart" : "In the Cart"}
             </button>
           </div>
           <div className="d-flex gap-4 mt-3">
