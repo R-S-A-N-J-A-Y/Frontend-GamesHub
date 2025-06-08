@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { CardHoverAnimation } from "./GameCard";
-import type { ExploreCategoryItem } from "../Context/GameContext";
+import {
+  useGameContext,
+  type ExploreCategoryItem,
+} from "../Context/GameContext";
 import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`
@@ -16,15 +19,17 @@ interface Props {
 
 const ExploreCategoryCard = ({ data, type }: Props) => {
   const Navigate = useNavigate();
+  const { UpdateSelectedCategoryType } = useGameContext();
 
-  const onCategoryCardClick = (id: string) => {
+  const onCategoryCardClick = (id: string, name: string) => {
+    UpdateSelectedCategoryType(name);
     Navigate(`/explore/${type}/${id}`);
   };
 
   return (
     <Card
       className="card text-bg-dark d-flex align-items-center justify-content-center border border-2 rounded-4"
-      onClick={() => onCategoryCardClick(data._id)}
+      onClick={() => onCategoryCardClick(data._id, data.name)}
     >
       <img
         src={`${data.coverImageUrl}`}

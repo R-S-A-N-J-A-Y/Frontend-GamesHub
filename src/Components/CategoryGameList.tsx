@@ -5,14 +5,20 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { useAppContext } from "../Context/AppContext";
+import { useAuth } from "../Context/AuthContext";
 
 const CategoryGameList = () => {
+  const {
+    state: { token },
+  } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const {
     state: { game },
     updateSelectedCategory,
   } = useGameContext();
+
   const { type, id } = useParams<{ type: string; id: string }>();
+
   const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
 
@@ -21,7 +27,10 @@ const CategoryGameList = () => {
       try {
         let url = type;
         if (type === "platforms") url = "platformsv";
-        const res = await axios.get(`http://localhost:3000/user/${url}/${id}`);
+        const res = await axios.get(`http://localhost:3000/user/${url}/${id}`, {
+          headers: { "x-auth-token": token },
+        });
+        console.log(res.data.data);
         updateSelectedCategory(res.data.data);
       } catch (err) {
         alert(err);
@@ -31,9 +40,9 @@ const CategoryGameList = () => {
     };
 
     fetch();
-  }, [type, id, updateSelectedCategory]);
+  }, [type, id, updateSelectedCategory, token]);
 
-  console.log(game.gamesId);
+  // console.log(game.gamesId);
 
   if (isLoading)
     return (

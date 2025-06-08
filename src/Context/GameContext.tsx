@@ -64,6 +64,7 @@ interface GameContextType {
   };
   updateCategory: (type: string, data: ExploreCategoryItem[]) => void;
   updateCategoryType: (type: string) => void;
+  UpdateSelectedCategoryType: (type: string) => void;
   updateSelectedCategory: (categoryData: SelectedCategory) => void;
   UpdateGenralGames: (games: Gamedata[]) => void;
   ToggleLike: (id: string, currStatus: boolean) => void;
@@ -101,6 +102,10 @@ export const GameContextProvider = ({ children }: Props) => {
   // Update the Type of Category to first, to avoid the fetching the leftOver page for previous category
   const updateCategoryType = useCallback((type: string) => {
     dispatch({ type: "SET_CATEGORY_TYPE", payload: { type } });
+  }, []);
+
+  const UpdateSelectedCategoryType = useCallback((type: string) => {
+    dispatch({ type: "SET_SELECTED_CATEGORY_TYPE", payload: { type } });
   }, []);
 
   // Update the Selected Category Data
@@ -157,6 +162,7 @@ export const GameContextProvider = ({ children }: Props) => {
         updateCategory,
         updateCategoryType,
         updateSelectedCategory,
+        UpdateSelectedCategoryType,
         UpdateGenralGames,
         ToggleLike,
         ToggleWatchList,

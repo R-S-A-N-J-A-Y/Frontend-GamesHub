@@ -19,7 +19,7 @@ type GameAction =
       };
     }
   | {
-      type: "SET_CATEGORY_TYPE";
+      type: "SET_CATEGORY_TYPE" | "SET_SELECTED_CATEGORY_TYPE";
       payload: {
         type: string;
       };
@@ -60,6 +60,14 @@ const gameReducer = (state: GameState, action: GameAction) => {
         data: action.payload.data,
       },
     };
+  } else if (action.type === "SET_SELECTED_CATEGORY_TYPE") {
+    return {
+      ...state,
+      game: {
+        ...state.game,
+        name: action.payload.type,
+      },
+    };
   } else if (action.type === "SET_SELECTED_CATEGORY_DATA") {
     return {
       ...state,
@@ -75,6 +83,14 @@ const gameReducer = (state: GameState, action: GameAction) => {
   } else if (action.type === "TOGGLE_LIKE") {
     return {
       ...state,
+      game: {
+        ...state.game,
+        gamesId: state.game.gamesId.map((game) =>
+          game._id === action.payload.id
+            ? { ...game, liked: !game.liked }
+            : game
+        ),
+      },
       genralGames: state.genralGames.map((game) =>
         game._id === action.payload.id ? { ...game, liked: !game.liked } : game
       ),
@@ -82,6 +98,14 @@ const gameReducer = (state: GameState, action: GameAction) => {
   } else if (action.type === "TOGGLE_WATCHLIST") {
     return {
       ...state,
+      game: {
+        ...state.game,
+        gamesId: state.game.gamesId.map((game) =>
+          game._id === action.payload.id
+            ? { ...game, watched: !game.watched }
+            : game
+        ),
+      },
       genralGames: state.genralGames.map((game) =>
         game._id === action.payload.id
           ? { ...game, watched: !game.watched }
