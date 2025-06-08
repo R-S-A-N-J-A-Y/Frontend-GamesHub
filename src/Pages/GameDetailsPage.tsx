@@ -56,7 +56,8 @@ const GameDetailsPage = () => {
     const fetch = async () => {
       try {
         const result = await axios.get(
-          `http://localhost:3000/user/games/${id}`
+          `http://localhost:3000/user/games/${id}`,
+          { headers: { "x-auth-token": token } }
         );
         setGame(result.data.data);
       } catch (err) {
@@ -64,16 +65,16 @@ const GameDetailsPage = () => {
       }
     };
     fetch();
-  }, [id]);
+  }, [id, token]);
 
-  const ToggleAddtoCart = (id: string, currState: boolean) => {
+  const ToggleAddtoCart = (id: string) => {
     if (!game) return;
 
     const fetch = async () => {
       try {
         const result = await axios.post(
           "http://localhost:3000/user/cart",
-          { gameId: id, currState },
+          { gameId: id },
           {
             headers: { "x-auth-token": token },
           }
@@ -84,7 +85,7 @@ const GameDetailsPage = () => {
       }
     };
 
-    setGame({ ...game, isInCart: !game.isInCart });
+    setGame({ ...game, isInCart: true });
     fetch();
   };
 

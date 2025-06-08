@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import type { gameData } from "../Pages/GameDetailsPage";
-import { MdAddToPhotos } from "react-icons/md";
 import { FaPlaystation, FaWindows } from "react-icons/fa";
 import { useAuth } from "../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   game: gameData;
-  ToggleAddtoCart: (id: string, currStatus: boolean) => void;
+  ToggleAddtoCart: (id: string) => void;
 }
 
 const Wrapper = styled.div<{ imageUrl: string }>`
@@ -25,13 +25,17 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
   const {
     state: { isLogged },
   } = useAuth();
+  const Navigate = useNavigate();
 
   const HandleClickCart = () => {
     if (!isLogged) {
       alert("Log in to Continue");
       return;
     }
-    ToggleAddtoCart(game._id, true);
+    if (game.isInCart) {
+      return Navigate("/cart");
+    }
+    ToggleAddtoCart(game._id);
   };
 
   return (
@@ -51,17 +55,21 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
           <p style={{ color: "#C8D6E5" }}>{game.description}</p>
           <div className="d-flex gap-4">
             <button
-              className="btn btn-primary px-3 py-2"
+              className="btn btn-primary px-3 py-2 fw-bolder"
               style={{ background: "#1E90FF" }}
             >
               Purchase Now
             </button>
             <button
-              className="btn bg-secondary d-flex align-items-center gap-1 border"
+              className="btn d-flex align-items-center gap-1 border"
+              style={{ backdropFilter: "blur(20px)" }}
               onClick={HandleClickCart}
             >
-              <MdAddToPhotos size={20} />
-              {!game.isInCart ? "Add to Cart" : "In the Cart"}
+              {!game.isInCart ? (
+                <p className="p-0 m-0 fw-bold text-white">Add to Cart</p>
+              ) : (
+                <p className="p-0 m-0 fw-bold text-white">Go to Cart</p>
+              )}
             </button>
           </div>
           <div className="d-flex gap-4 mt-3">
