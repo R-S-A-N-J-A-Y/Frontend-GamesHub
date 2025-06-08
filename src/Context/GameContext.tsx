@@ -68,6 +68,7 @@ export const GameContextProvider = ({ children }: Props) => {
   const {
     state: { token },
   } = useAuth();
+
   const [state, dispatch] = useReducer(gameReducer, {
     category: { type: "", data: [] },
     game: {
