@@ -64,11 +64,15 @@ const ExploreCategoryCard = ({ data, type }: Props) => {
             <p className="card-text p-0 m-0 fw-bold">{data.totalGames} </p>
           </div>
           <div className="d-flex justify-content-between px-2">
-            <p className="card-text p-0 m-0">{data.popularGame[0].name}</p>
+            <p className="card-text p-0 m-0 text-start">
+              {data.popularGame[0].name}
+            </p>
             <p className="card-text p-0 m-0">{data.popularGame[0].likes}</p>
           </div>
           <div className="d-flex justify-content-between px-2">
-            <p className="card-text p-0 m-0">{data.popularGame[1].name}</p>
+            <p className="card-text p-0 m-0 text-start">
+              {data.popularGame[1].name}
+            </p>
             <p className="card-text p-0 m-0">{data.popularGame[1].likes}</p>
           </div>
         </div>
