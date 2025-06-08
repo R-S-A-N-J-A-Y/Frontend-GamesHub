@@ -44,10 +44,16 @@ const CardImagePreview = styled.div<{ imageUrl: string }>`
 `;
 
 const RatingContainer = styled.div`
-  bottom: 10px;
-  left: 10px;
+  right: 10px;
+  top: 10px;
   backdrop-filter: blur(20px);
-  web
+`;
+
+const PlatformContainer = styled.div`
+  left: 10px;
+  bottom: 10px;
+  gap: 15px;
+  backdrop-filter: blur(20px);
 `;
 
 interface Props {
@@ -86,32 +92,39 @@ const GameCard = ({ game, cardWidth }: Props) => {
           <PiFilmSlate size={22} color="white" />
           <p className="text-white fw-bold p-0 m-0">{game.ratings}</p>
         </RatingContainer>
+
+        <PlatformContainer className="position-absolute d-flex p-2 border rounded-3">
+          {game.platforms.map((obj) => (
+            <>
+              {obj.parentPlatform.name === "PC" && <FaWindows color="white" />}
+              {obj.parentPlatform.name === "PlayStation" && (
+                <FaPlaystation color="white" />
+              )}
+              {obj.parentPlatform.name === "Xbox" && <FaXbox color="white" />}
+              {obj.parentPlatform.name === "Nintendo" && (
+                <BsNintendoSwitch color="white" />
+              )}
+              {obj.parentPlatform.name === "Android" && (
+                <BsAndroid2 color="white" />
+              )}
+              {obj.parentPlatform.name === "ios" && <FaApple color="white" />}
+            </>
+          ))}
+        </PlatformContainer>
       </CardImagePreview>
       <div
         className="card-body d-flex flex-column"
         style={{
-          gap: "4px",
+          gap: "7px",
           background: `${curr.boxColor}`,
           color: `${curr.name === "dark" ? "#ffffff" : "#000000"}`,
           borderRadius: "0px 0px 10px 10px",
         }}
       >
-        <div className="d-flex px-1" style={{ gap: "15px" }}>
-          {game.platforms.map((obj) => (
-            <>
-              {obj.parentPlatform.name === "PC" && <FaWindows />}
-              {obj.parentPlatform.name === "PlayStation" && <FaPlaystation />}
-              {obj.parentPlatform.name === "Xbox" && <FaXbox />}
-              {obj.parentPlatform.name === "Nintendo" && <BsNintendoSwitch />}
-              {obj.parentPlatform.name === "Android" && <BsAndroid2 />}
-              {obj.parentPlatform.name === "ios" && <FaApple />}
-            </>
-          ))}
-        </div>
         <p className="fs-5 fw-bold m-0 p-0">{game.name}</p>
         <p
           className="m-0 p-0 d-flex align-items-center"
-          style={{ fontSize: "1.25rem" }}
+          style={{ fontSize: "1.05rem" }}
         >
           <MdCurrencyRupee />
           {game.price}
