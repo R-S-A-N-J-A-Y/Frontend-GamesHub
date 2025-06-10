@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import GeneralGameList from "../Components/GeneralGameList";
 import { useAppContext } from "../Context/AppContext";
-import { ImCross } from "react-icons/im";
 import styled from "styled-components";
+import DropDown from "../Components/DropDown";
 
 const Wrapper = styled.div`
   min-height: 78vh;
 `;
 
 const HeadSection = styled.div``;
+
+const OrderByDropDown = ["Name", "Popularity", "Ratings", "Release Date"];
+const Platforms = ["PC", "PlayStation", "Xbox", "Nintendo", "Apple", "Android"];
 
 const ExplorePage = () => {
   const location = useLocation();
@@ -21,6 +24,10 @@ const ExplorePage = () => {
   useEffect(() => {
     setUrl(location.pathname);
   }, [location]);
+
+  const HandleClick = (name: string, item: string) => {
+    console.log(name, item);
+  };
 
   if (url !== "/explore") return <Outlet />;
 
@@ -38,81 +45,16 @@ const ExplorePage = () => {
         </div>
 
         <div className="d-flex gap-4">
-          <div className="dropdown">
-            <button
-              className={`btn  dropdown-toggle rounded-5 fw-bold text-${
-                CurrTheme.name === "light" ? "dark" : "light"
-              } border border-${CurrTheme.name === "light" ? "dark" : "light"}`}
-              style={{ padding: "10px 20px" }}
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Order By
-            </button>
-            <ul className="dropdown-menu">
-              <li>
-                <button className="dropdown-item">Name</button>
-              </li>
-              <li>
-                <button className="dropdown-item">Popularity</button>
-              </li>
-              <li>
-                <button className="dropdown-item">Ratings</button>
-              </li>
-              <li>
-                <button className="dropdown-item">Release Date</button>
-              </li>
-              <li>
-                <button className="dropdown-item d-flex align-items-center text-danger fw-bold gap-2">
-                  <ImCross color="red" />
-                  Clear
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <div className="dropdown">
-            <button
-              className={`btn  dropdown-toggle rounded-5 fw-bold text-${
-                CurrTheme.name === "light" ? "dark" : "light"
-              } border border-${CurrTheme.name === "light" ? "dark" : "light"}`}
-              style={{ padding: "10px 20px" }}
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Platforms
-            </button>
-
-            <ul className="dropdown-menu">
-              <li>
-                <button className="dropdown-item">PC</button>
-              </li>
-              <li>
-                <button className="dropdown-item">Playstation</button>
-              </li>
-              <li>
-                <button className="dropdown-item">Xbox</button>
-              </li>
-              <li>
-                <button className="dropdown-item">Nintendo</button>
-              </li>
-              <li>
-                <button className="dropdown-item">Android</button>
-              </li>
-
-              <li>
-                <button className="dropdown-item">Apple</button>
-              </li>
-              <li>
-                <button className="dropdown-item d-flex align-items-center text-danger fw-bold gap-2">
-                  <ImCross color="red" />
-                  Clear
-                </button>
-              </li>
-            </ul>
-          </div>
+          <DropDown
+            name="Order By"
+            listItems={OrderByDropDown}
+            handleClick={HandleClick}
+          />
+          <DropDown
+            name="Platforms"
+            listItems={Platforms}
+            handleClick={HandleClick}
+          />
         </div>
       </HeadSection>
 
