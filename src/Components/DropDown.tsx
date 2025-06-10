@@ -23,10 +23,11 @@ const ListItems = styled.li`
 interface Props {
   name: string;
   listItems: string[];
+  selectedOrder?: string;
   handleClick: (name: string, item: string) => void;
 }
 
-const DropDown = ({ name, listItems, handleClick }: Props) => {
+const DropDown = ({ name, listItems, selectedOrder, handleClick }: Props) => {
   const { theme, themeColor } = useAppContext();
   const CurrTheme = themeColor[theme];
 
@@ -38,7 +39,7 @@ const DropDown = ({ name, listItems, handleClick }: Props) => {
         } border border-${CurrTheme.name === "light" ? "dark" : "light"}`}
         data-bs-toggle="dropdown"
       >
-        {name}
+        {selectedOrder ? selectedOrder : name}
       </DropDownButton>
       <DropDownMenu className="dropdown-menu">
         {listItems.map((item, idx) => (

@@ -68,6 +68,7 @@ const ExplorePage = () => {
           <DropDown
             name="Order By"
             listItems={OrderByDropDown}
+            selectedOrder={orderBy}
             handleClick={HandleClick}
           />
           <DropDown
@@ -77,25 +78,28 @@ const ExplorePage = () => {
           />
         </div>
 
-        <div className="d-flex gap-3">
-          {platform.map((item, idx) => (
-            <p
-              className={`rounded-3 px-3 py-2 text-${
-                CurrTheme.name === "light" ? "dark" : "light"
-              } border border-${
-                CurrTheme.name === "light" ? "dark" : "light"
-              } d-flex gap-3 align-items-center`}
-              key={idx}
-            >
-              {item}
-              <ImCross
-                color="red"
-                style={{ cursor: "pointer" }}
-                onClick={() => RemovePlatform(item)}
-              />
-            </p>
-          ))}
-        </div>
+        {platform.length > 0 && (
+          <div className="d-flex gap-3 align-items-center">
+            <p className="fw-bold fs-4">Filters:</p>
+            {platform.map((item, idx) => (
+              <p
+                className={`rounded-3 px-3 py-2 text-${
+                  CurrTheme.name === "light" ? "dark" : "light"
+                } border border-${
+                  CurrTheme.name === "light" ? "dark" : "light"
+                } d-flex gap-3 align-items-center`}
+                key={idx}
+              >
+                {item}
+                <ImCross
+                  color="red"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => RemovePlatform(item)}
+                />
+              </p>
+            ))}
+          </div>
+        )}
       </HeadSection>
 
       <GeneralGameList orderBy={orderBy} platform={platform} />
