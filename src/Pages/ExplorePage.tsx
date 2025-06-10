@@ -4,6 +4,7 @@ import GeneralGameList from "../Components/GeneralGameList";
 import { useAppContext } from "../Context/AppContext";
 import styled from "styled-components";
 import DropDown from "../Components/DropDown";
+import { ImCross } from "react-icons/im";
 
 const Wrapper = styled.div`
   min-height: 78vh;
@@ -28,14 +29,24 @@ const ExplorePage = () => {
   const CurrTheme = themeColor[theme];
 
   const [orderBy, setOrderBy] = useState("");
+  const [platform, setPlatform] = useState<string[]>([]);
 
   useEffect(() => {
     setUrl(location.pathname);
   }, [location]);
 
   const HandleClick = (name: string, item: string) => {
-    console.log(name, item);
-    setOrderBy(item);
+    if (name === "Platforms") {
+      if (item === "") setPlatform([]);
+      else
+        setPlatform((prev) =>
+          prev.includes(item) ? prev.filter((x) => x !== item) : [...prev, item]
+        );
+    } else setOrderBy(item);
+  };
+
+  const RemovePlatform = (item: string) => {
+    setPlatform((prev) => prev.filter((obj) => obj != item));
   };
 
   if (url !== "/explore") return <Outlet />;
@@ -65,9 +76,29 @@ const ExplorePage = () => {
             handleClick={HandleClick}
           />
         </div>
+
+        <div className="d-flex gap-3">
+          {platform.map((item, idx) => (
+            <p
+              className={`rounded-3 px-3 py-2 text-${
+                CurrTheme.name === "light" ? "dark" : "light"
+              } border border-${
+                CurrTheme.name === "light" ? "dark" : "light"
+              } d-flex gap-3 align-items-center`}
+              key={idx}
+            >
+              {item}
+              <ImCross
+                color="red"
+                style={{ cursor: "pointer" }}
+                onClick={() => RemovePlatform(item)}
+              />
+            </p>
+          ))}
+        </div>
       </HeadSection>
 
-      <GeneralGameList orderBy={orderBy} />
+      <GeneralGameList orderBy={orderBy} platform={platform} />
     </Wrapper>
   );
 };

@@ -50,7 +50,10 @@ const DropDown = ({ name, listItems, handleClick }: Props) => {
             {item}
           </ListItems>
         ))}
-        <ListItems className="fw-bold d-flex gap-2 align-items-center text-danger">
+        <ListItems
+          className="fw-bold d-flex gap-2 align-items-center text-danger"
+          onClick={() => handleClick(name, "")}
+        >
           <ImCross color="red" />
           Clear
         </ListItems>
