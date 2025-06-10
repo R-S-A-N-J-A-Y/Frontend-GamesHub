@@ -6,6 +6,7 @@ import { IoNotifications } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { useAuth } from "../Context/AuthContext";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const SearchBar = styled.input<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
@@ -25,6 +26,23 @@ const SearchBar = styled.input<{ theme: ThemeObj }>`
 
 const Links = styled.div`
   width: 400px;
+
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+`;
+
+const HamBurger = styled.div<{ $background: string }>`
+  display: none !important;
+
+  @media (max-width: 768px) {
+    cursor: pointer;
+    background: ${({ $background }) => $background};
+    padding: 10px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const HeaderIconShadowEffect = css<{ theme: ThemeObj }>`
@@ -75,7 +93,7 @@ const Header = () => {
 
   return (
     <div className="d-flex justify-content-between align-items-center px-5 py-4">
-      <div className="w-50">
+      <div className="w-75">
         <SearchBar
           theme={currentTheme}
           className="me-2 rounded-2 px-3 py-2 w-50"
@@ -83,6 +101,10 @@ const Header = () => {
           placeholder="Search"
         />
       </div>
+
+      <HamBurger $background={currentTheme.boxColor} className="rounded-3">
+        <RxHamburgerMenu size={20} />
+      </HamBurger>
 
       <Links className="d-flex justify-content-between align-items-center align-center px-4">
         <Link
