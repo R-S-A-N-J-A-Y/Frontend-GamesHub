@@ -15,7 +15,7 @@ const Root = styled.div<{ theme: ThemeObj }>`
 `;
 
 const Children = styled.div`
-  padding: 0 50px;
+  padding: 0 30px;
 `;
 
 const AppLayout = () => {

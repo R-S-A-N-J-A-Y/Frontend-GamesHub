@@ -17,6 +17,10 @@ const SidebarTag = styled.div<{ theme: ThemeObj }>`
   height: 100vh;
   width: 150px;
   background-color: ${({ theme }) => theme.color};
+
+  @media (max-width: 768px) {
+    display: none !important;
+  }
 `;
 
 const Links = styled.div`
