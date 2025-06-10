@@ -11,7 +11,13 @@ const Wrapper = styled.div`
 
 const HeadSection = styled.div``;
 
-const OrderByDropDown = ["Name", "Popularity", "Ratings", "Release Date"];
+const OrderByDropDown = [
+  "Name",
+  "Popularity",
+  "Ratings",
+  "Release Date",
+  "Price",
+];
 const Platforms = ["PC", "PlayStation", "Xbox", "Nintendo", "Apple", "Android"];
 
 const ExplorePage = () => {
@@ -21,12 +27,15 @@ const ExplorePage = () => {
   const { theme, themeColor } = useAppContext();
   const CurrTheme = themeColor[theme];
 
+  const [orderBy, setOrderBy] = useState("");
+
   useEffect(() => {
     setUrl(location.pathname);
   }, [location]);
 
   const HandleClick = (name: string, item: string) => {
     console.log(name, item);
+    setOrderBy(item);
   };
 
   if (url !== "/explore") return <Outlet />;
@@ -58,7 +67,7 @@ const ExplorePage = () => {
         </div>
       </HeadSection>
 
-      <GeneralGameList />
+      <GeneralGameList orderBy={orderBy} />
     </Wrapper>
   );
 };

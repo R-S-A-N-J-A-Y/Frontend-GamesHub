@@ -5,7 +5,11 @@ import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { useAuth } from "../Context/AuthContext";
 
-const GeneralGameList = () => {
+interface Props {
+  orderBy: string;
+}
+
+const GeneralGameList = ({ orderBy }: Props) => {
   const {
     state: { genralGames },
     UpdateGenralGames,
@@ -13,13 +17,16 @@ const GeneralGameList = () => {
   const {
     state: { token },
   } = useAuth();
+
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
+      const url = "http://localhost:3000/user/games/";
       try {
-        const res = await axios.get("http://localhost:3000/user/games/", {
+        const res = await axios.get(url, {
+          params: { sortBy: orderBy.toLowerCase(), order: "asc" },
           headers: { "x-auth-token": token },
         });
         UpdateGenralGames(res.data.data);
@@ -30,7 +37,7 @@ const GeneralGameList = () => {
       }
     };
     fetchData();
-  }, [UpdateGenralGames, token]);
+  }, [UpdateGenralGames, token, orderBy]);
 
   if (isLoading)
     return (
