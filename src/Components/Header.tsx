@@ -68,7 +68,7 @@ const Link = styled(NavLink)<{ theme: ThemeObj }>`
   }
 `;
 
-const MobileNav = styled.div<{ theme: ThemeObj }>`
+export const MobileNav = styled.div<{ theme: ThemeObj }>`
   position: fixed;
   top: 0;
   left: 0;
