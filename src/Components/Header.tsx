@@ -7,6 +7,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { useAuth } from "../Context/AuthContext";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { RxCross1 } from "react-icons/rx";
+import { useState } from "react";
 
 const SearchBar = styled.input<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
@@ -66,10 +68,28 @@ const Link = styled(NavLink)<{ theme: ThemeObj }>`
   }
 `;
 
+const MobileNav = styled.div<{ theme: ThemeObj }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: ${({ theme }) => theme.boxColor};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  z-index: 1;
+  overflow: hidden;
+`;
+
 const Header = () => {
   const { state } = useAuth();
   const { theme, themeColor, toggleTheme } = useAppContext();
   const currentTheme = themeColor[theme];
+
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const Navigate = useNavigate();
 
@@ -102,9 +122,94 @@ const Header = () => {
         />
       </div>
 
-      <HamBurger $background={currentTheme.boxColor} className="rounded-3">
+      <HamBurger
+        $background={currentTheme.boxColor}
+        className="rounded-3"
+        onClick={() => setShowMobileMenu((prev) => !prev)}
+      >
         <RxHamburgerMenu size={20} />
       </HamBurger>
+
+      {showMobileMenu && (
+        <MobileNav theme={currentTheme}>
+          <div
+            className="position-absolute"
+            style={{ top: "30px", right: "20px" }}
+          >
+            <RxCross1 size={25} onClick={() => setShowMobileMenu(false)} />
+          </div>
+          <div
+            className="d-flex flex-column align-items-start"
+            style={{ gap: "2rem" }}
+          >
+            <div className="d-flex align-items-center gap-3">
+              <Link
+                theme={currentTheme}
+                to="/notifications"
+                data-name="notifications"
+                onClick={(e) => {
+                  HandleNavigate(e);
+                  setShowMobileMenu(false);
+                }}
+                className="p-2 rounded-3 me-1"
+              >
+                <IoNotifications
+                  size={24}
+                  color={theme === "dark" ? "white" : "black"}
+                />
+              </Link>
+              <p className="p-0 m-0 fw-bold">Notifications</p>
+            </div>
+            <div className="d-flex align-items-center gap-3">
+              <Link
+                theme={currentTheme}
+                to="/cart"
+                data-name="cart"
+                onClick={(e) => {
+                  HandleNavigate(e);
+                  setShowMobileMenu(false);
+                }}
+                className="p-2 rounded-3"
+              >
+                <FaShoppingCart
+                  size={24}
+                  color={theme === "dark" ? "white" : "black"}
+                />
+              </Link>
+              <p className="p-0 m-0 fw-bold">Cart</p>
+            </div>
+            <div className="d-flex align-items-center gap-3">
+              <Link
+                theme={currentTheme}
+                to="/profile"
+                data-name="profile"
+                onClick={(e) => {
+                  HandleNavigate(e);
+                  setShowMobileMenu(false);
+                }}
+                className="p-2 rounded-3"
+              >
+                <MdAccountCircle
+                  size={25}
+                  color={theme === "dark" ? "white" : "black"}
+                />
+              </Link>
+              <p className="p-0 m-0 fw-bold">Profile</p>
+            </div>
+          </div>
+          <button
+            className={`rounded-4 px-3 py-2 
+        bg-${theme === "dark" ? "light" : "dark"} 
+        text-${theme}`}
+            onClick={() => {
+              toggleTheme();
+              setShowMobileMenu(false);
+            }}
+          >
+            Theme
+          </button>
+        </MobileNav>
+      )}
 
       <Links className="d-flex justify-content-between align-items-center align-center px-4">
         <Link
