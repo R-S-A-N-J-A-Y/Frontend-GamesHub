@@ -1,17 +1,18 @@
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { useState } from "react";
 
 import { GrHomeRounded } from "react-icons/gr";
 import { IoGameController } from "react-icons/io5";
 import { HiUserGroup } from "react-icons/hi2";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
+import { VscLayoutSidebarLeft } from "react-icons/vsc";
+import { RxCross1 } from "react-icons/rx";
+
 import { useAppContext } from "../Context/AppContext";
 import type { ThemeObj } from "../Context/AppContext";
-import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { useAuth } from "../Context/AuthContext";
-import { VscLayoutSidebarLeft } from "react-icons/vsc";
-import { useState } from "react";
 import { MobileNav } from "./Header";
-import { RxCross1 } from "react-icons/rx";
 
 const SidebarTag = styled.div<{ theme: ThemeObj }>`
   position: fixed;
@@ -24,7 +25,7 @@ const SidebarTag = styled.div<{ theme: ThemeObj }>`
   }
 `;
 
-const CollapsedSidebar = styled.div`
+export const CollapsedSidebar = styled.div`
   display: none;
 
   @media (max-width: 768px) {
