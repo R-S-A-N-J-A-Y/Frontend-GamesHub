@@ -59,7 +59,7 @@ const GameFeatureCard = ({ feature, idx }: Props) => {
     const handleResize = () => setIsMobile(window.innerWidth <= 800);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // added [] to avoid memory leak
+  }, []);
 
   return (
     <Container className="border rounded-3">

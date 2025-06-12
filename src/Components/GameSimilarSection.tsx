@@ -13,6 +13,7 @@ const data = {
   likes: 0,
 
   platforms: [{ _id: "123", parentPlatform: { name: "PC", _id: "akhd" } }],
+  price: 0,
 
   liked: true, //Only Available when User Logged In
   watched: true,
@@ -34,7 +35,7 @@ const GameSimilarSection = ({ theme }: { theme: ThemeObj }) => {
   return (
     <div className="d-flex flex-column gap-5 mb-5">
       <div className="text-center px-5">
-        <h4 className="text-secondary fw-bold">Don’t stop here!</h4>
+        <h5 className="text-secondary fw-bold mb-4">Don’t stop here!</h5>
         <h2 className="fw-bolder">
           Discover something else worth{" "}
           <span style={{ color: theme.highLight }}>Exploring.</span>{" "}
