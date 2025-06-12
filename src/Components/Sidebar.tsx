@@ -27,11 +27,14 @@ const SidebarTag = styled.div<{ theme: ThemeObj }>`
 
 export const CollapsedSidebar = styled.div`
   display: none;
+  cursor: pointer;
 
   @media (max-width: 768px) {
     display: block !important;
     position: fixed;
-    top: 60px;
+    top: 80px;
+    left: 25px;
+    z-index: 1;
   }
 `;
 
@@ -84,7 +87,7 @@ const Sidebar = () => {
   return (
     <>
       <CollapsedSidebar onClick={() => setShowMobileMenu(true)}>
-        <VscLayoutSidebarLeft size={30} />
+        <VscLayoutSidebarLeft size={20} />
       </CollapsedSidebar>
 
       {showMobileMenu && (
@@ -96,7 +99,10 @@ const Sidebar = () => {
             <RxCross1 size={25} onClick={() => setShowMobileMenu(false)} />
           </div>
 
-          <Links className="d-flex flex-column justify-content-around align-items-start">
+          <div
+            className="d-flex flex-column align-items-start"
+            style={{ gap: "2rem" }}
+          >
             <div className="d-flex align-items-center gap-3">
               <Link theme={currentTheme} to="/" className="p-3 rounded-4">
                 <GrHomeRounded
@@ -134,7 +140,7 @@ const Sidebar = () => {
               </Link>
               <p className="p-0 m-0 fw-bold">Community</p>
             </div>
-          </Links>
+          </div>
           <div className="navbar-brand fw-bolder fs-3" onClick={() => Logout()}>
             {isLogged && <LogoutAnimation />}
           </div>

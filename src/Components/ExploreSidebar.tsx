@@ -68,7 +68,7 @@ const ExploreSidebar = () => {
   return (
     <>
       <CollapsedSidebar onClick={() => setShowMobileMenu(true)}>
-        <VscLayoutSidebarLeft size={30} />
+        <VscLayoutSidebarLeft size={20} />
       </CollapsedSidebar>
 
       {showMobileMenu && (

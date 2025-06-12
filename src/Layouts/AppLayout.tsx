@@ -16,6 +16,10 @@ const Root = styled.div<{ theme: ThemeObj }>`
 
 const Children = styled.div`
   padding: 0 30px;
+
+  @media (max-width: 768px) {
+    margin-top: 30px;
+  }
 `;
 
 const AppLayout = () => {
