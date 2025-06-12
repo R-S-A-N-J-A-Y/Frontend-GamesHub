@@ -23,6 +23,7 @@ const ContinueSection = () => {
     peopleAdded: 0,
     ratings: 0,
     likes: 0,
+    price: 0,
 
     platforms: [{ _id: "123", parentPlatform: { name: "PC", _id: "akhd" } }],
 
@@ -40,7 +41,7 @@ const ContinueSection = () => {
           cursor: "grab",
           padding: "20px",
           marginLeft: "-120px", // Start under sidebar
-          marginRight: "-50px",
+          marginRight: "-15px",
           paddingLeft: "120px", // Room for first card
           zIndex: 0,
         }}

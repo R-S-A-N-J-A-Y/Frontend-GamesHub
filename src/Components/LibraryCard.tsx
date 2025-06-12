@@ -1,9 +1,19 @@
+import styled from "styled-components";
 import type { WatchListDataType } from "./LibrarySection";
 
 interface Props {
   game: WatchListDataType;
   onClick: (id: string) => void;
 }
+
+const Wrapper = styled.div`
+  padding: 0 30px;
+  gap: 10px;
+
+  @media (max-width: 590px) {
+    padding: 0;
+  }
+`;
 
 const LibraryCard = ({ game, onClick }: Props) => {
   const addedDate = new Date(game.addedAt);
@@ -15,19 +25,13 @@ const LibraryCard = ({ game, onClick }: Props) => {
   );
 
   return (
-    <div
-      className="d-flex align-items-center justify-content-between px-4"
-      style={{ height: "50px" }}
-    >
-      <div
-        className="d-flex gap-3 align-items-center"
-        style={{ height: "100%" }}
-      >
+    <Wrapper className="d-flex align-items-center justify-content-between w-100 flex-wrap mb-2">
+      <div className="d-flex gap-3 align-items-center">
         <img
           src={game.coverImageUrl}
           alt=""
           className="rounded-3"
-          style={{ height: "100%", width: "50px", objectFit: "cover" }}
+          style={{ height: "50px", width: "50px", objectFit: "cover" }}
         />
         <div>
           <p className="fs-6 fw-bold m-0">{game.name}</p>
@@ -55,7 +59,7 @@ const LibraryCard = ({ game, onClick }: Props) => {
       >
         Remove
       </button>
-    </div>
+    </Wrapper>
   );
 };
 
