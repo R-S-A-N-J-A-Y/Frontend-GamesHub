@@ -9,6 +9,26 @@ const Card = styled.div<{ theme: ThemeObj }>`
   ${CardHoverAnimation}
 `;
 
+const ContentWrapper = styled.section`
+  padding: 48px;
+
+  @media (max-width: 400px) {
+    padding: 20px;
+  }
+
+  @media (min-width: 400px) and (max-width: 500px) {
+    padding: 30px;
+  }
+`;
+
+const NewCard = styled.p`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.92rem;
+  padding: 5px 12px;
+`;
+
 const HeroCard = () => {
   const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
@@ -20,13 +40,15 @@ const HeroCard = () => {
         style={{ objectFit: "cover" }}
         alt="Preview"
       />
-      <div className="card-img-overlay d-flex flex-column justify-content-between gap-2 flex-fill p-5 m-3 text-white">
-        <p className="border rounded-4 px-4 py-2 position-absolute top-0 end-0 mt-3 me-3">
-          New
+      <ContentWrapper className="card-img-overlay d-flex flex-column justify-content-between gap-2 flex-fill m-3 text-white">
+        <NewCard className="border rounded-3">New</NewCard>
+        <p className="fw-bold m-0 p-0" style={{ fontSize: "1.25rem" }}>
+          Days Gone Remastered
         </p>
-        <p className="fs-2 fw-bold m-0 p-0">Days Gone Remastered</p>
-        <p className="fs-4 m-0 p-0">$78</p>
-        <div className="d-flex gap-3">
+        <p className="m-0 p-0" style={{ fontSize: "1.15rem" }}>
+          $78
+        </p>
+        <div className="d-flex align-items-center gap-3 flex-wrap">
           <button
             className="btn fw-bold"
             style={{
@@ -46,7 +68,7 @@ const HeroCard = () => {
             Add to Cart
           </button>
         </div>
-      </div>
+      </ContentWrapper>
     </Card>
   );
 };
