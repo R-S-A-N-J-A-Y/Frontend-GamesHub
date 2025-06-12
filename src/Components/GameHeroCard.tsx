@@ -122,7 +122,7 @@ const GameTitle = styled.h1`
   }
 `;
 
-const SectionTitle = styled.h2`
+export const SectionTitle = styled.h2`
   font-weight: 700;
   font-size: 1.25rem;
 

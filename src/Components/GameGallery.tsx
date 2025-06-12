@@ -2,11 +2,20 @@ import { motion, useMotionValue } from "framer-motion";
 import GameScreenshotCard from "./GameScreenshotCard";
 import { useEffect, useRef, useState } from "react";
 import type { ThemeObj } from "../Context/AppContext";
+import styled from "styled-components";
 
 interface Props {
   screenshots: string[];
   theme: ThemeObj;
 }
+
+const ScreenshotWrapper = styled(motion.div)`
+  min-width: 500px;
+
+  @media (max-width: 768px) {
+    min-width: 90%;
+  }
+`;
 
 const GameGallery = ({ screenshots, theme }: Props) => {
   const carouselRef = useRef<HTMLDivElement | null>(null);
@@ -54,9 +63,9 @@ const GameGallery = ({ screenshots, theme }: Props) => {
   return (
     <div className="d-flex flex-column gap-5">
       <div className="text-center p-5">
-        <h4 className="text-secondary fw-bold mb-2">
+        <h5 className="text-secondary fw-bold mb-4">
           Curious how the game looks?
-        </h4>
+        </h5>
         <h2 className="fw-bolder">
           Get a sneak peek before{" "}
           <span style={{ color: theme.highLight }}>you play !</span>{" "}
@@ -76,13 +85,9 @@ const GameGallery = ({ screenshots, theme }: Props) => {
           className="d-flex gap-5"
         >
           {extendedScreenshots.map((imgUrl, idx) => (
-            <motion.div
-              key={idx}
-              ref={idx === 0 ? firstCardRef : null}
-              style={{ minWidth: 500 }}
-            >
+            <ScreenshotWrapper key={idx} ref={idx === 0 ? firstCardRef : null}>
               <GameScreenshotCard imgUrl={imgUrl} />
-            </motion.div>
+            </ScreenshotWrapper>
           ))}
         </motion.div>
       </motion.div>
