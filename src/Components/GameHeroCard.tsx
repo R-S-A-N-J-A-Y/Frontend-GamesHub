@@ -19,6 +19,124 @@ const Wrapper = styled.div<{ imageUrl: string }>`
     url(${({ imageUrl }) => imageUrl});
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 1350px) {
+    gap: 50px;
+    padding: 0;
+  }
+
+  @media (min-width: 1350px) {
+    flex-direction: row;
+    gap: 300px;
+    padding: 0;
+  }
+`;
+
+const LeftSection = styled.section`
+  margin-top: 100px;
+  gap: 70px;
+  padding: 50px 0 0 100px;
+
+  @media (max-width: 1350px) {
+    margin-top: 60px;
+    gap: 40px;
+    padding: 0 25px;
+  }
+
+  @media (min-width: 750px) and (max-width: 1350px) {
+    padding: 0 55px;
+  }
+
+  @media (min-width: 1350px) {
+    flex: 1;
+    max-width: 50%;
+  }
+`;
+
+const RightSection = styled.section`
+  margin-top: 50px;
+  gap: 50px;
+  padding: 0 120px 0 0;
+
+  @media (max-width: 500px) {
+    margin: 0;
+    padding: 0 25px;
+  }
+
+  @media (min-width: 500px) and (max-width: 750px) {
+    margin: 0;
+    gap: 40px;
+    padding: 0 25px;
+  }
+
+  @media (min-width: 750px) and (max-width: 1350px) {
+    margin: 0;
+    gap: 40px;
+    padding: 0 55px;
+  }
+
+  @media (min-width: 1350px) {
+    flex: 1;
+    max-width: 50%;
+  }
+`;
+
+const VideoIcon = styled.iframe`
+  width: 100%;
+  height: 280px;
+
+  @media (min-width: 500px) and (max-width: 700px) {
+    height: 250px;
+  }
+
+  @media (min-width: 700px) and (max-width: 1000px) {
+    height: 350px;
+  }
+
+  @media (min-width: 1001px) and (max-width: 1350px) {
+    height: 450px;
+  }
+`;
+
+const GameTitle = styled.h1`
+  color: #00bfff;
+  font-weight: 800;
+  font-size: 2rem;
+
+  @media (min-width: 500px) {
+    font-size: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 3.5rem;
+  }
+
+  @media (min-width: 1350px) {
+    font-size: 4rem;
+  }
+`;
+
+const SectionTitle = styled.h2`
+  font-weight: 700;
+  font-size: 1.25rem;
+
+  @media (min-width: 500px) {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 2rem;
+  }
 `;
 
 const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
@@ -39,23 +157,15 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
   };
 
   return (
-    <Wrapper imageUrl={game.heroImageUrl} className="d-flex gap-5 text-light">
-      <div
-        className="w-50 d-flex flex-column"
-        style={{ marginTop: "100px", gap: "70px", padding: "50px 100px" }}
-      >
-        <h1
-          className="fw-bolder"
-          style={{ fontSize: "60px", color: "#00BFFF" }}
-        >
-          {game.name}
-        </h1>
+    <Wrapper imageUrl={game.heroImageUrl} className="text-light">
+      <LeftSection className="w-100 w-lg-50 d-flex flex-column">
+        <GameTitle>{game.name}</GameTitle>
         <div className="d-flex flex-column gap-4">
-          <h2 className="fw-bolder">About the Game</h2>
+          <SectionTitle>About the Game</SectionTitle>
           <p style={{ color: "#C8D6E5" }}>{game.description}</p>
           <div className="d-flex gap-4">
             <button
-              className="btn btn-primary px-3 py-2 fw-bolder"
+              className="btn btn-primary fw-bolder"
               style={{ background: "#1E90FF" }}
             >
               Purchase Now
@@ -77,46 +187,42 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
             <FaWindows size={30} />
           </div>
         </div>
-      </div>
-      <div
-        className="w-50"
-        style={{ marginTop: "50px", gap: "70px", padding: "0 120px 0 200px" }}
-      >
-        <div className="w-50 d-flex flex-column" style={{ gap: "60px" }}>
+      </LeftSection>
+      <RightSection className="d-flex flex-column">
+        <div>
+          <SectionTitle>View Trailer</SectionTitle>
+          <div className="border mb-3"></div>
           <div>
-            <h4>View Trailer</h4>
-            <div className="border mb-3"></div>
-            <div>
-              <iframe
-                width="450"
-                height="250"
-                src={game.youtubeLink}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="border border-2"
-              ></iframe>
-            </div>
-          </div>
-          <div className="d-flex flex-column gap-3">
-            <h2 className="fw-bold">Tags</h2>
-            <div className="d-flex gap-4 align-items-center">
-              {game.tags.map((data) => (
-                <p
-                  key={data._id}
-                  className="border px-4 py-2 rounded-3"
-                  style={{
-                    whiteSpace: "nowrap",
-                    backdropFilter: "blur(50px)",
-                  }}
-                >
-                  {data.name}
-                </p>
-              ))}
-            </div>
+            <VideoIcon
+              src={game.youtubeLink}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="border border-2"
+            ></VideoIcon>
           </div>
         </div>
-      </div>
+        <div className="d-flex flex-column gap-3">
+          <SectionTitle className="fw-bold">Tags</SectionTitle>
+          <div
+            className="d-flex align-items-center flex-wrap"
+            style={{ gap: "5px 20px" }}
+          >
+            {game.tags.map((data) => (
+              <p
+                key={data._id}
+                className="border px-4 py-2 rounded-3"
+                style={{
+                  whiteSpace: "nowrap",
+                  backdropFilter: "blur(50px)",
+                }}
+              >
+                {data.name}
+              </p>
+            ))}
+          </div>
+        </div>
+      </RightSection>
     </Wrapper>
   );
 };
