@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { useAppContext } from "../Context/AppContext";
 import type { featureType } from "../Pages/GameDetailsPage";
 import GameFeatureCard from "./GameFeatureCard";
@@ -7,28 +8,41 @@ interface Props {
   features: featureType[];
 }
 
+const Wrapper = styled.div`
+  padding: 3rem;
+
+  @media (max-width: 500px) {
+    padding: 1rem;
+  }
+`;
+
+const GameFetureWrapper = styled.div`
+  padding: 5px;
+`;
+
 const GameFeatureList = ({ name, features }: Props) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
   return (
-    <div className="p-5 d-flex flex-column" style={{ gap: "60px" }}>
+    <Wrapper className="d-flex flex-column" style={{ gap: "60px" }}>
       <div className="text-center">
-        <h1 className="mb-4">
+        <h2 className="mb-4">
           Why you should Play{" "}
           <span className="fw-bold" style={{ color: `${curr.highLight}` }}>
             {name}
           </span>{" "}
-        </h1>
+          ?
+        </h2>
         <h5 className="text-secondary fw-bold">
           Discover the features that set it apart.
         </h5>
       </div>
-      <div className="px-5 py-3 d-flex flex-column" style={{ gap: "70px" }}>
+      <GameFetureWrapper className="d-flex flex-column" style={{ gap: "70px" }}>
         {features.map((ft, idx) => (
           <GameFeatureCard key={idx} feature={ft} idx={idx} />
         ))}
-      </div>
-    </div>
+      </GameFetureWrapper>
+    </Wrapper>
   );
 };
 
