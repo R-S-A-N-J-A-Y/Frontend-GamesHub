@@ -79,7 +79,7 @@ const ExplorePage = () => {
         </div>
 
         {platform.length > 0 && (
-          <div className="d-flex gap-3 align-items-center">
+          <div className="d-flex gap-3 align-items-center flex-wrap">
             <p className="fw-bold fs-4">Filters:</p>
             {platform.map((item, idx) => (
               <p

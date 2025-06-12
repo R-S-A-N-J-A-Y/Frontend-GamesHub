@@ -52,7 +52,7 @@ const CategoryGameList = () => {
           Explore Realms of the{" "}
           <span style={{ color: currTheme.highLight }}>{game.name}</span>
         </h3>
-        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
           {[...Array(8)].map((key) => (
             <div className="col" key={key}>
               <GameCardSkeleton />
@@ -74,7 +74,7 @@ const CategoryGameList = () => {
       {game.gamesId.length === 0 ? (
         <p>No Games Available.</p>
       ) : (
-        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
           {game.gamesId.map((data, key) => (
             <div key={key} className="col">
               <GameCard game={data} />

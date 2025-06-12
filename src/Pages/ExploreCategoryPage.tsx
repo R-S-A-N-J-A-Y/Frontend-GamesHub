@@ -50,7 +50,7 @@ const ExploreCategoryPage = () => {
             {type && type.charAt(0).toUpperCase() + type.slice(1)}
           </span>
         </p>
-        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
           {[...Array(8)].map((key) => (
             <div className="col" key={key}>
               <ExploreCategorySkeletonCard />
@@ -70,7 +70,7 @@ const ExploreCategoryPage = () => {
       {state.category.data.length === 0 ? (
         <p className="mb-5">No data to Show</p>
       ) : (
-        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5 mb-5">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4 mb-5">
           {state.category.data.map((data, key) => (
             <div className="col" key={key}>
               <ExploreCategoryCard type={type || ""} data={data} />

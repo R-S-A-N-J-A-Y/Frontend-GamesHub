@@ -7,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`
+  overflow: hidden;
   height: 280px;
   cursor: pointer;
   ${CardHoverAnimation}
