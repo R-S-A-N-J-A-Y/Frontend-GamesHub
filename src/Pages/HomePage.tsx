@@ -4,6 +4,7 @@ import AccessoriedSection from "../Components/AccessoriedSection";
 import styled from "styled-components";
 import { useAuth } from "../Context/AuthContext";
 import HeroCard from "../Components/HeroCard";
+import NewReleases from "../Components/NewReleases";
 
 const UserAction = styled.section`
   display: flex;
@@ -40,6 +41,11 @@ const HomePage = () => {
             <AccessoriedSection />
             <LibrarySection />
           </UserAction>
+        </>
+      )}
+      {!isLogged && (
+        <>
+          <NewReleases />
         </>
       )}
     </div>
