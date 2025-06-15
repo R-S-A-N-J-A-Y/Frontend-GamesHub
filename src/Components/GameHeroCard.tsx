@@ -3,6 +3,7 @@ import type { gameData } from "../Pages/GameDetailsPage";
 import { FaPlaystation, FaWindows } from "react-icons/fa";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   game: gameData;
@@ -34,10 +35,10 @@ const Wrapper = styled.div<{ imageUrl: string }>`
   }
 `;
 
-const LeftSection = styled.section`
+const LeftSection = styled.section<{ $isTwoLine: boolean }>`
   margin-top: 100px;
-  gap: 70px;
-  padding: 50px 0 0 100px;
+  gap: ${({ $isTwoLine }) => ($isTwoLine ? "20px" : "70px")};
+  padding: ${({ $isTwoLine }) => ($isTwoLine ? "0" : "50px")} 0 0 100px;
 
   @media (max-width: 1350px) {
     margin-top: 60px;
@@ -145,6 +146,20 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
   } = useAuth();
   const Navigate = useNavigate();
 
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const [isTwoLine, setTwoLine] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (titleRef.current) {
+      const lineHeight = parseFloat(
+        getComputedStyle(titleRef.current).lineHeight
+      );
+      const height = titleRef.current.offsetHeight;
+      const lines = Math.round(height / lineHeight);
+      setTwoLine(lines > 1);
+    }
+  }, [game.name]);
+
   const HandleClickCart = () => {
     if (!isLogged) {
       alert("Log in to Continue");
@@ -156,10 +171,14 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
     ToggleAddtoCart(game._id);
   };
 
+  console.log(isTwoLine);
   return (
     <Wrapper imageUrl={game.heroImageUrl} className="text-light">
-      <LeftSection className="w-100 w-lg-50 d-flex flex-column">
-        <GameTitle>{game.name}</GameTitle>
+      <LeftSection
+        $isTwoLine={isTwoLine}
+        className="w-100 w-lg-50 d-flex flex-column"
+      >
+        <GameTitle ref={titleRef}>{game.name}</GameTitle>
         <div className="d-flex flex-column gap-4">
           <SectionTitle>About the Game</SectionTitle>
           <p style={{ color: "#C8D6E5" }}>{game.description}</p>
