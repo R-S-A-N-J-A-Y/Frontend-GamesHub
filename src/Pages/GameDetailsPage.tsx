@@ -8,6 +8,7 @@ import GameFeatureList from "../Components/GameFeatureList";
 import GameSimilarSection from "../Components/GameSimilarSection";
 import { useAppContext } from "../Context/AppContext";
 import { useAuth } from "../Context/AuthContext";
+import type { Platform } from "../Context/GameContext";
 
 export interface featureType {
   imageUrl: string;
@@ -22,7 +23,7 @@ export interface gameData {
   description: string;
 
   genres: string[];
-  platforms: string[];
+  platforms: Platform[];
   studios: string[];
   stores: string[];
   tags: { _id: string; name: string }[];

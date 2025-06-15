@@ -29,7 +29,7 @@ export interface ExploreCategoryItem {
   popularGame: [popularGame, popularGame];
 }
 
-interface Platform {
+export interface Platform {
   _id: string;
   parentPlatform: {
     _id: string;

@@ -8,14 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { PiFilmSlate } from "react-icons/pi";
 import { MdCurrencyRupee } from "react-icons/md";
 
-import {
-  FaPlaystation,
-  FaWindows,
-  FaXbox,
-  BsNintendoSwitch,
-  FaApple,
-  BsAndroid2,
-} from "../Utils/platformIconLinks";
+import Platforms from "./Platforms";
 
 export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
@@ -94,22 +87,7 @@ const GameCard = ({ game, cardWidth }: Props) => {
         </RatingContainer>
 
         <PlatformContainer className="position-absolute d-flex p-2 border rounded-3">
-          {game.platforms.map((obj) => (
-            <>
-              {obj.parentPlatform.name === "PC" && <FaWindows color="white" />}
-              {obj.parentPlatform.name === "PlayStation" && (
-                <FaPlaystation color="white" />
-              )}
-              {obj.parentPlatform.name === "Xbox" && <FaXbox color="white" />}
-              {obj.parentPlatform.name === "Nintendo" && (
-                <BsNintendoSwitch color="white" />
-              )}
-              {obj.parentPlatform.name === "Android" && (
-                <BsAndroid2 color="white" />
-              )}
-              {obj.parentPlatform.name === "ios" && <FaApple color="white" />}
-            </>
-          ))}
+          <Platforms platforms={game.platforms} />
         </PlatformContainer>
       </CardImagePreview>
       <div

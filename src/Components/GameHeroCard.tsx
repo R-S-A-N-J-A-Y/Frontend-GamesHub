@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import type { gameData } from "../Pages/GameDetailsPage";
-import { FaPlaystation, FaWindows } from "react-icons/fa";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import Platforms from "./Platforms";
 
 interface Props {
   game: gameData;
@@ -146,6 +146,8 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
   } = useAuth();
   const Navigate = useNavigate();
 
+  console.log(game.platforms);
+
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const [isTwoLine, setTwoLine] = useState<boolean>(false);
 
@@ -202,8 +204,7 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
             </button>
           </div>
           <div className="d-flex gap-4 mt-3">
-            <FaPlaystation size={30} />
-            <FaWindows size={30} />
+            <Platforms size="30" platforms={game.platforms} />
           </div>
         </div>
       </LeftSection>
