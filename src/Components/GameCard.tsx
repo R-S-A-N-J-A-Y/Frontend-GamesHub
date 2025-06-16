@@ -9,6 +9,7 @@ import { PiFilmSlate } from "react-icons/pi";
 import { MdCurrencyRupee } from "react-icons/md";
 
 import Platforms from "./Platforms";
+import { useState } from "react";
 
 export const CardHoverAnimation = css`
   transition: box-shadow 0.3s ease, transform 0.3s ease-in;
@@ -64,14 +65,21 @@ const GameCard = ({ game, cardWidth }: Props) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
 
+  const [isLiked, setIsLiked] = useState(game.liked);
+  const [isWatched, setIsWatched] = useState(game.watched);
+
   const isToggleWatchList = () => {
-    if (isLogged) ToggleWatchList(game._id, game.watched);
-    else alert("Please Login to Continue...");
+    if (isLogged) {
+      setIsWatched(!isWatched);
+      ToggleWatchList(game._id, game.watched);
+    } else alert("Please Login to Continue...");
   };
 
   const isToggleLike = () => {
-    if (isLogged) ToggleLike(game._id, game.liked);
-    else alert("Please Login to Continue...");
+    if (isLogged) {
+      setIsLiked(!isLiked);
+      ToggleLike(game._id, game.liked);
+    } else alert("Please Login to Continue...");
   };
 
   return (
@@ -117,7 +125,7 @@ const GameCard = ({ game, cardWidth }: Props) => {
             onClick={isToggleLike}
           >
             {isLogged ? (
-              game.liked ? (
+              isLiked ? (
                 <GoHeartFill size={29} color="red" />
               ) : (
                 <GoHeart
@@ -147,7 +155,7 @@ const GameCard = ({ game, cardWidth }: Props) => {
             style={{ fontSize: "0.938rem" }}
           >
             {isLogged ? (
-              game.watched ? (
+              isWatched ? (
                 <p className="text-success fw-bold m-0">Added</p>
               ) : (
                 <>
