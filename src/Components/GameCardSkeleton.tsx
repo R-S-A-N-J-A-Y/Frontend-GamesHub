@@ -6,12 +6,20 @@ const Card = styled.div`
   overflow: hidden;
 `;
 
-const GameCardSkeleton = () => {
+interface Props {
+  cardWidth?: string;
+}
+
+const GameCardSkeleton = ({ cardWidth }: Props) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
 
   return (
-    <Card className="card border" aria-hidden="true">
+    <Card
+      className="card border"
+      aria-hidden="true"
+      style={{ width: `${cardWidth}` }}
+    >
       <div
         className="card-img-top bg-secondary"
         style={{ aspectRatio: "14/9" }}
