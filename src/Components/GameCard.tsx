@@ -20,7 +20,7 @@ export const CardHoverAnimation = css`
   }
 `;
 
-const Card = styled.div`
+const Card = styled.div.attrs({ className: "game-card" })`
   border: none;
   border-radius: 10px;
   overflow: hidden;
@@ -28,9 +28,9 @@ const Card = styled.div`
   ${CardHoverAnimation};
 `;
 
-const CardImagePreview = styled.div<{ imageUrl: string }>`
+const CardImagePreview = styled.div<{ $imageUrl: string }>`
   aspect-ratio: 14/9;
-  background-image: url(${({ imageUrl }) => imageUrl});
+  background-image: url(${({ $imageUrl }) => $imageUrl});
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
@@ -48,6 +48,19 @@ const PlatformContainer = styled.div`
   bottom: 10px;
   gap: 15px;
   backdrop-filter: blur(20px);
+`;
+
+const GameName = styled.p`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  .game-card:hover & {
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+    transition: all 0.5s ease;
+  }
 `;
 
 interface Props {
@@ -85,7 +98,7 @@ const GameCard = ({ game, cardWidth }: Props) => {
   return (
     <Card className="card" style={{ width: `${cardWidth}` }}>
       <CardImagePreview
-        imageUrl={game.coverImageUrl}
+        $imageUrl={game.coverImageUrl}
         className="card-img-top position-relative"
         onClick={() => Navigate(`/games/${game._id}`)}
       >
@@ -107,7 +120,7 @@ const GameCard = ({ game, cardWidth }: Props) => {
           borderRadius: "0px 0px 10px 10px",
         }}
       >
-        <p className="fs-5 fw-bold m-0 p-0">{game.name}</p>
+        <GameName className="fs-5 fw-bold m-0 p-0">{game.name}</GameName>
         <p
           className="m-0 p-0 d-flex align-items-center"
           style={{ fontSize: "1.05rem" }}
