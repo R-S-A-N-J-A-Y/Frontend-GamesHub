@@ -7,6 +7,7 @@ import type { Gamedata } from "../Context/GameContext";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { useAppContext } from "../Context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { ArrowIcon } from "./LibrarySection";
 
 const ContinueSection = () => {
   const carouselRef = useRef<HTMLDivElement | null>(null);
@@ -24,12 +25,21 @@ const ContinueSection = () => {
 
   useEffect(() => {
     const carousel = carouselRef.current;
-    if (carousel) {
+    if (!carousel) return;
+
+    const calculateWidth = () => {
       const fullScrollWidth = carousel.scrollWidth;
       const visibleWidth = carousel.offsetWidth;
-      setWidth(fullScrollWidth - visibleWidth);
-    }
-  }, []);
+      setWidth(fullScrollWidth - visibleWidth + 100); // +60 buffer
+    };
+
+    calculateWidth();
+
+    const resizeObserver = new ResizeObserver(calculateWidth);
+    resizeObserver.observe(carousel);
+
+    return () => resizeObserver.disconnect();
+  }, [gameData]); // recalculate when data changes
 
   useEffect(() => {
     const fetch = async () => {
@@ -54,7 +64,7 @@ const ContinueSection = () => {
         <div className="d-flex flex-column align-items-center p-5 gap-3">
           <h2 className="fs-3 font-bolder mb-2">
             Explore Your First{" "}
-            <span className="fw-bold" style={{ color: `${curr.highLight}` }}>
+            <span className="fw-bold" style={{ color: curr.highLight }}>
               Game
             </span>{" "}
             Here.
@@ -62,7 +72,7 @@ const ContinueSection = () => {
           <div>
             <button
               className="btn fw-bold w-100"
-              style={{ background: `${curr.highLight}` }}
+              style={{ background: curr.highLight }}
               onClick={() => Navigate("/explore")}
             >
               Browse Games
@@ -81,9 +91,10 @@ const ContinueSection = () => {
         style={{
           cursor: "grab",
           padding: "20px",
-          marginLeft: "-120px", // Start under sidebar
+          marginLeft: "-120px",
           marginRight: "-15px",
-          paddingLeft: "120px", // Room for first card
+          paddingLeft: "120px",
+          paddingRight: "20px", // ensure last item isn't clipped
           zIndex: 0,
         }}
       >
@@ -94,20 +105,33 @@ const ContinueSection = () => {
           whileTap={{ cursor: "grabbing" }}
         >
           {!isLoading &&
-            gameData.map((game, _) => (
-              <motion.div key={_} style={{ flex: "0 0 auto" }}>
+            gameData.map((game, index) => (
+              <motion.div key={index} style={{ flex: "0 0 auto" }}>
                 <GameCard game={game} cardWidth="300px" />
               </motion.div>
             ))}
 
           {isLoading &&
-            [...Array(5)].map((_, key) => (
-              <motion.div key={key} style={{ flex: "0 0 auto" }}>
+            [...Array(5)].map((_, index) => (
+              <motion.div key={index} style={{ flex: "0 0 auto" }}>
                 <GameCardSkeleton cardWidth="300px" />
               </motion.div>
             ))}
 
-          <div style={{ flex: "0 0 auto", width: "10px" }} />
+          {/* spacer for end visibility */}
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ width: "500px" }}
+          >
+            <button
+              className="btn fw-bold w-100 fs-5 d-flex gap-3 justify-content-center align-items-center"
+              style={{ background: `${curr.highLight}` }}
+              onClick={() => Navigate("/explore")}
+            >
+              Explore
+              <ArrowIcon size={25} />
+            </button>
+          </div>
         </motion.div>
       </motion.div>
     </div>
