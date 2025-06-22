@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 import CartCard from "../Components/CartCard";
 import styled from "styled-components";
+import { useAppContext } from "../Context/AppContext";
 
 const Wrapper = styled.div`
   min-height: 75vh;
@@ -26,11 +27,12 @@ const Cartpage = () => {
     state: { token },
   } = useAuth();
   const [cartArray, setCartArray] = useState<CartData[]>([]);
+  const { backendUrl } = useAppContext();
 
   useEffect(() => {
     const fetch = async () => {
       try {
-        const result = await axios.get("http://localhost:3000/user/cart", {
+        const result = await axios.get(`${backendUrl}/user/cart`, {
           headers: { "x-auth-token": token },
         });
         setCartArray(result.data.data);
@@ -40,19 +42,16 @@ const Cartpage = () => {
     };
 
     fetch();
-  }, [token]);
+  }, [token, backendUrl]);
 
   const deleteCart = async (id: string) => {
     const cartBackup = cartArray;
     setCartArray(cartArray.filter((data) => data._id !== id));
     const fetch = async () => {
       try {
-        const result = await axios.delete(
-          `http://localhost:3000/user/cart/${id}`,
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        const result = await axios.delete(`backendUrl/user/cart/${id}`, {
+          headers: { "x-auth-token": token },
+        });
         console.log(result);
       } catch (err) {
         console.log(err);
@@ -77,7 +76,7 @@ const Cartpage = () => {
     const fetch = async () => {
       try {
         await axios.post(
-          "http://localhost:3000/user/cart",
+          "backendUrl/user/cart",
           { gameId, isInc },
           { headers: { "x-auth-token": token } }
         );

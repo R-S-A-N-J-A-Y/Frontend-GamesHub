@@ -5,6 +5,7 @@ import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { useAuth } from "../Context/AuthContext";
 import qs from "qs";
+import { useAppContext } from "../Context/AppContext";
 
 interface Props {
   orderBy: string;
@@ -21,13 +22,15 @@ const GeneralGameList = ({ orderBy, platform }: Props) => {
     state: { token },
   } = useAuth();
 
+  const { backendUrl } = useAppContext();
+
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     console.log(platform);
     setIsLoading(true);
     const fetchData = async () => {
-      let url = "http://localhost:3000/user/games/";
+      let url = `${backendUrl}/user/games/`;
 
       const params: { sortBy?: string; order: string; platforms?: string[] } = {
         sortBy: orderBy.toLowerCase(),
@@ -55,7 +58,7 @@ const GeneralGameList = ({ orderBy, platform }: Props) => {
       }
     };
     fetchData();
-  }, [UpdateGenralGames, token, orderBy, platform]);
+  }, [UpdateGenralGames, token, orderBy, platform, backendUrl]);
 
   if (isLoading)
     return (

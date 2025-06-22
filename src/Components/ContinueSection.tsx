@@ -18,7 +18,7 @@ const ContinueSection = () => {
   const [gameData, setGameData] = useState<Gamedata[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { theme, themeColor } = useAppContext();
+  const { theme, themeColor, backendUrl } = useAppContext();
   const curr = themeColor[theme];
   const Navigate = useNavigate();
 
@@ -34,10 +34,9 @@ const ContinueSection = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const result = await axios.get(
-          "http://localhost:3000/user/recentlyWatched/",
-          { headers: { "x-auth-token": token } }
-        );
+        const result = await axios.get(`${backendUrl}/user/recentlyWatched/`, {
+          headers: { "x-auth-token": token },
+        });
         setGameData(result.data.data);
       } catch (err) {
         console.log(err);
@@ -46,7 +45,7 @@ const ContinueSection = () => {
       }
     };
     fetch();
-  }, [token]);
+  }, [backendUrl, token]);
 
   if (gameData.length === 0)
     return (

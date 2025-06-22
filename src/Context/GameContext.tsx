@@ -131,7 +131,7 @@ export const GameContextProvider = ({ children }: Props) => {
     try {
       const config = { headers: { "x-auth-token": token } };
       await axios.patch(
-        "http://localhost:3000/user/toggleLike",
+        "backendUrl/user/toggleLike",
         { gameId: id, liked: !currStatus },
         config
       );
@@ -146,7 +146,7 @@ export const GameContextProvider = ({ children }: Props) => {
     try {
       const config = { headers: { "x-auth-token": token } };
       await axios.patch(
-        "http://localhost:3000/user/toggleWatchList",
+        "backendUrl/user/toggleWatchList",
         { gameId: id, watched: !currStatus },
         config
       );

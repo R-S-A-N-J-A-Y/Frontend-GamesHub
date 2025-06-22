@@ -12,7 +12,7 @@ import OverlayLoader from "./OverLayLodder";
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { theme, themeColor, toggleTheme } = useAppContext();
+  const { theme, themeColor, toggleTheme, backendUrl } = useAppContext();
   const currTheme = themeColor[theme];
 
   const [serverError, setServerError] = useState<string>("");
@@ -44,7 +44,7 @@ const RegisterForm = () => {
       setIsLoading(true);
       const { confirmPassword, ...user } = data;
       console.log(confirmPassword);
-      const res = await axios.post("http://localhost:3000/auth/register", {
+      const res = await axios.post(`${backendUrl}/auth/register`, {
         countryCode: "IN",
         ...user,
       });

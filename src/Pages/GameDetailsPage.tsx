@@ -43,7 +43,7 @@ export interface gameData {
 }
 
 const GameDetailsPage = () => {
-  const { theme, themeColor } = useAppContext();
+  const { theme, themeColor, backendUrl } = useAppContext();
   const curr = themeColor[theme];
 
   const { id } = useParams<{ id: string }>();
@@ -56,17 +56,16 @@ const GameDetailsPage = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const result = await axios.get(
-          `http://localhost:3000/user/games/${id}`,
-          { headers: { "x-auth-token": token } }
-        );
+        const result = await axios.get(`${backendUrl}/user/games/${id}`, {
+          headers: { "x-auth-token": token },
+        });
         setGame(result.data.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetch();
-  }, [id, token]);
+  }, [id, token, backendUrl]);
 
   const ToggleAddtoCart = (id: string) => {
     if (!game) return;
@@ -74,7 +73,7 @@ const GameDetailsPage = () => {
     const fetch = async () => {
       try {
         const result = await axios.post(
-          "http://localhost:3000/user/cart",
+          "backendUrl/user/cart",
           { gameId: id },
           {
             headers: { "x-auth-token": token },
