@@ -18,10 +18,21 @@ const GameSimilarSection = ({ theme, genres }: Props) => {
   const [similarGenre, setSimilarGenre] = useState<Gamedata[]>([]);
 
   useEffect(() => {
-    if (!CarouselEffect.current) return;
-    setWidth(
-      CarouselEffect.current.scrollWidth - CarouselEffect.current.offsetWidth
-    );
+    const carousel = CarouselEffect.current;
+    if (!carousel) return;
+
+    const calculateWidth = () => {
+      const fullScrollWidth = carousel.scrollWidth;
+      const visibleWidth = carousel.offsetWidth;
+      setWidth(fullScrollWidth - visibleWidth + 100); // +60 buffer
+    };
+
+    calculateWidth();
+
+    const resizeObserver = new ResizeObserver(calculateWidth);
+    resizeObserver.observe(carousel);
+
+    return () => resizeObserver.disconnect();
   }, []);
 
   useEffect(() => {
@@ -62,6 +73,7 @@ const GameSimilarSection = ({ theme, genres }: Props) => {
           dragConstraints={{ left: -width, right: 0 }}
           className="d-flex gap-5"
           whileTap={{ cursor: "grabbing" }}
+          style={{ minWidth: "fit-content" }}
         >
           {similarGenre.map((game, idx) => (
             <motion.div key={idx}>
