@@ -12,7 +12,7 @@ const ExploreCategoryPage = () => {
   const { type } = useParams<{ type: string }>();
   const { state, updateCategory } = useGameContext();
 
-  const { theme, themeColor, backendUrl } = useAppContext();
+  const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
 
   useEffect(() => {
@@ -22,7 +22,10 @@ const ExploreCategoryPage = () => {
         // Call To Backend .
         let url = type;
         if (type === "platforms") url = "platformsv";
-        const res = await axios.get(`${backendUrl}/user/${url}/`, {});
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/user/${url}/`,
+          {}
+        );
 
         // Data Retrival from result.
         const data = res.data.data || [];
@@ -39,7 +42,7 @@ const ExploreCategoryPage = () => {
     };
 
     fetchData();
-  }, [updateCategory, type, backendUrl]);
+  }, [updateCategory, type]);
 
   if (isLoading)
     return (

@@ -9,7 +9,6 @@ import {
 import gameReducer from "../Reducers/GameReducer";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
-import { useAppContext } from "./AppContext";
 
 interface Props {
   children: ReactNode;
@@ -80,7 +79,6 @@ export const GameContextProvider = ({ children }: Props) => {
   const {
     state: { token },
   } = useAuth();
-  const { backendUrl } = useAppContext();
 
   const [state, dispatch] = useReducer(gameReducer, {
     category: { type: "", data: [] },
@@ -133,7 +131,7 @@ export const GameContextProvider = ({ children }: Props) => {
     try {
       const config = { headers: { "x-auth-token": token } };
       await axios.patch(
-        `${backendUrl}/user/toggleLike`,
+        `${import.meta.env.VITE_BACKEND_URL}/user/toggleLike`,
         { gameId: id, liked: !currStatus },
         config
       );
@@ -148,7 +146,7 @@ export const GameContextProvider = ({ children }: Props) => {
     try {
       const config = { headers: { "x-auth-token": token } };
       await axios.patch(
-        `${backendUrl}/user/toggleWatchList`,
+        `${import.meta.env.VITE_BACKEND_URL}/user/toggleWatchList`,
         { gameId: id, watched: !currStatus },
         config
       );

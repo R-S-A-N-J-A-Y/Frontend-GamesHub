@@ -15,7 +15,6 @@ interface AppContextType {
   themeColor: Record<ThemeType, ThemeObj>;
   theme: ThemeType;
   toggleTheme: () => void;
-  backendUrl: string;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -45,14 +44,13 @@ export const AppContextProvider = ({ children }: Props) => {
   };
 
   const [theme, setTheme] = useState<ThemeType>("dark");
-  const backendUrl = "http://localhost:3000";
 
   const toggleTheme = () => {
     setTheme((curr) => (curr === "dark" ? "light" : "dark"));
   };
 
   return (
-    <AppContext.Provider value={{ theme, themeColor, toggleTheme, backendUrl }}>
+    <AppContext.Provider value={{ theme, themeColor, toggleTheme }}>
       {children}
     </AppContext.Provider>
   );

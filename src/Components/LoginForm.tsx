@@ -13,7 +13,7 @@ import OverlayLoader from "./OverLayLodder";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { theme, themeColor, toggleTheme, backendUrl } = useAppContext();
+  const { theme, themeColor, toggleTheme } = useAppContext();
   const currTheme = themeColor[theme];
 
   const Navigate = useNavigate();
@@ -41,10 +41,13 @@ const LoginForm = () => {
   const CallBackend = async (userData: FieldValues) => {
     try {
       setIsLoading(true);
-      const res = await axios.post(`${backendUrl}/auth/login`, {
-        countryCode: "IN",
-        ...userData,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
+        {
+          countryCode: "IN",
+          ...userData,
+        }
+      );
       const token = res.headers["x-auth-token"];
       return { result: res.data, token };
     } catch (err) {

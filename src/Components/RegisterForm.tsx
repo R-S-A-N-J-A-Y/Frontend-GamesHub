@@ -12,7 +12,7 @@ import OverlayLoader from "./OverLayLodder";
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { theme, themeColor, toggleTheme, backendUrl } = useAppContext();
+  const { theme, themeColor, toggleTheme } = useAppContext();
   const currTheme = themeColor[theme];
 
   const [serverError, setServerError] = useState<string>("");
@@ -44,10 +44,13 @@ const RegisterForm = () => {
       setIsLoading(true);
       const { confirmPassword, ...user } = data;
       console.log(confirmPassword);
-      const res = await axios.post(`${backendUrl}/auth/register`, {
-        countryCode: "IN",
-        ...user,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
+        {
+          countryCode: "IN",
+          ...user,
+        }
+      );
       const token = res.headers["x-auth-token"];
       return { result: res.data, token };
     } catch (err) {

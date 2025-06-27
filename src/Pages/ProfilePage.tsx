@@ -3,7 +3,6 @@ import AboutSection from "../Components/AboutSection";
 import ProfileSection from "../Components/ProfileSection";
 import { useAuth } from "../Context/AuthContext";
 import axios from "axios";
-import { useAppContext } from "../Context/AppContext";
 
 const ProfilePage = () => {
   const {
@@ -11,22 +10,23 @@ const ProfilePage = () => {
     UserProfile,
   } = useAuth();
 
-  const { backendUrl } = useAppContext();
-
   useEffect(() => {
     const fetch = async () => {
       const headers = { "x-auth-token": token };
       try {
-        const data = await axios.get(`${backendUrl}/user/profile`, {
-          headers: headers,
-        });
+        const data = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/user/profile`,
+          {
+            headers: headers,
+          }
+        );
         UserProfile(data.data);
       } catch (err) {
         alert(err);
       }
     };
     fetch();
-  }, [token, UserProfile, backendUrl]);
+  }, [token, UserProfile]);
 
   return (
     <div className="d-flex gap-5" style={{ minHeight: "78vh" }}>

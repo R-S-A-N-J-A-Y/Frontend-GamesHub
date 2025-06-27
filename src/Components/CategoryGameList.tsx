@@ -19,7 +19,7 @@ const CategoryGameList = () => {
 
   const { type, id } = useParams<{ type: string; id: string }>();
 
-  const { theme, themeColor, backendUrl } = useAppContext();
+  const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
 
   useEffect(() => {
@@ -27,9 +27,12 @@ const CategoryGameList = () => {
       try {
         let url = type;
         if (type === "platforms") url = "platformsv";
-        const res = await axios.get(`${backendUrl}/user/${url}/${id}`, {
-          headers: { "x-auth-token": token },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/user/${url}/${id}`,
+          {
+            headers: { "x-auth-token": token },
+          }
+        );
         console.log(res.data.data);
         updateSelectedCategory(res.data.data);
       } catch (err) {
@@ -40,7 +43,7 @@ const CategoryGameList = () => {
     };
 
     fetch();
-  }, [type, id, updateSelectedCategory, token, backendUrl]);
+  }, [type, id, updateSelectedCategory, token]);
 
   // console.log(game.gamesId);
 

@@ -47,7 +47,7 @@ const LibrarySection = () => {
   } = useAuth();
   const { ToggleWatchList } = useGameContext();
 
-  const { theme, themeColor, backendUrl } = useAppContext();
+  const { theme, themeColor } = useAppContext();
   const currTheme = themeColor[theme];
 
   const [watchList, setWatchList] = useState<WatchListDataType[]>([]);
@@ -60,9 +60,12 @@ const LibrarySection = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const result = await axios.get(`${backendUrl}/user/watchListPreview`, {
-          headers: { "x-auth-token": token },
-        });
+        const result = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/user/watchListPreview`,
+          {
+            headers: { "x-auth-token": token },
+          }
+        );
         setWatchList(result.data.data);
       } catch (err) {
         console.log(err);
@@ -70,7 +73,7 @@ const LibrarySection = () => {
       }
     };
     fetch();
-  }, [token, backendUrl]);
+  }, [token]);
 
   return (
     <Wrapper
