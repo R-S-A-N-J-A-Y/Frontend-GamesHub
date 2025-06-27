@@ -20,7 +20,7 @@ const Platforms = ({ platforms, size }: Props) => {
   return (
     <>
       {uniquePlatforms.map((obj) => (
-        <>
+        <div key={obj._id}>
           {obj.parentPlatform.name === "PC" && (
             <FaWindows size={size} color="white" />
           )}
@@ -39,7 +39,7 @@ const Platforms = ({ platforms, size }: Props) => {
           {obj.parentPlatform.name === "ios" && (
             <FaApple size={size} color="white" />
           )}
-        </>
+        </div>
       ))}
     </>
   );
