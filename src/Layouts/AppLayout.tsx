@@ -31,7 +31,6 @@ const AppLayout = () => {
 
   useEffect(() => {
     setUrl(location.pathname);
-    // console.log(location);
   }, [location]);
 
   return (

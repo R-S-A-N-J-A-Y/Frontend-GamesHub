@@ -13,11 +13,13 @@ import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
 import GameLayout from "../Layouts/GameLayout";
 import GameDetailsPage from "../Pages/GameDetailsPage";
+import ScrollToTop from "../Components/ScrollToTop";
 
 const AppRoutes = () => {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Routes>
           {/* AppLayout Routes  */}
           <Route element={<AppLayout />}>

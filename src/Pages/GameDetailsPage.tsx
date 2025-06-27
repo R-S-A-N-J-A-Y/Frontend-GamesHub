@@ -75,14 +75,13 @@ const GameDetailsPage = () => {
 
     const fetch = async () => {
       try {
-        const result = await axios.post(
+        await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/user/cart`,
           { gameId: id },
           {
             headers: { "x-auth-token": token },
           }
         );
-        console.log(result);
       } catch (err) {
         console.log(err);
       }

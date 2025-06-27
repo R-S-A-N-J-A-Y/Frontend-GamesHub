@@ -33,7 +33,6 @@ const CategoryGameList = () => {
             headers: { "x-auth-token": token },
           }
         );
-        console.log(res.data.data);
         updateSelectedCategory(res.data.data);
       } catch (err) {
         alert(err);
@@ -44,8 +43,6 @@ const CategoryGameList = () => {
 
     fetch();
   }, [type, id, updateSelectedCategory, token]);
-
-  // console.log(game.gamesId);
 
   if (isLoading)
     return (

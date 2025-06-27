@@ -53,7 +53,7 @@ const GameSimilarSection = ({ theme, genres }: Props) => {
     };
     fetch();
   }, [genres]);
-  console.log(genres);
+
   return (
     <div className="d-flex flex-column gap-5 mb-5">
       <div className="text-center px-5">

@@ -50,13 +50,12 @@ const Cartpage = () => {
     setCartArray(cartArray.filter((data) => data._id !== id));
     const fetch = async () => {
       try {
-        const result = await axios.delete(
+        await axios.delete(
           `${import.meta.env.VITE_BACKEND_URL}/user/cart/${id}`,
           {
             headers: { "x-auth-token": token },
           }
         );
-        console.log(result);
       } catch (err) {
         console.log(err);
         alert("Error");

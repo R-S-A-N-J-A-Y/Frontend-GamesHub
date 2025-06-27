@@ -146,8 +146,6 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
   } = useAuth();
   const Navigate = useNavigate();
 
-  console.log(game.platforms);
-
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const [isTwoLine, setTwoLine] = useState<boolean>(false);
 
@@ -173,7 +171,6 @@ const GameHeroCard = ({ game, ToggleAddtoCart }: Props) => {
     ToggleAddtoCart(game._id);
   };
 
-  console.log(isTwoLine);
   return (
     <Wrapper imageUrl={game.heroImageUrl} className="text-light">
       <LeftSection

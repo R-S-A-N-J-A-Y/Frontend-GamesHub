@@ -12,7 +12,6 @@ interface Props {
 }
 
 const GeneralGameList = ({ orderBy, platform }: Props) => {
-  console.log(orderBy);
   const {
     state: { genralGames },
     UpdateGenralGames,
@@ -24,7 +23,6 @@ const GeneralGameList = ({ orderBy, platform }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log(platform);
     setIsLoading(true);
     const fetchData = async () => {
       let url = `${import.meta.env.VITE_BACKEND_URL}/user/games/`;
@@ -46,7 +44,6 @@ const GeneralGameList = ({ orderBy, platform }: Props) => {
           paramsSerializer: (params) =>
             qs.stringify(params, { arrayFormat: "repeat" }),
         });
-        console.log(res.data.data);
         UpdateGenralGames(res.data.data);
       } catch (err) {
         alert(err);
