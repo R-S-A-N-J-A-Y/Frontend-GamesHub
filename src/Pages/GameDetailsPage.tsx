@@ -98,7 +98,7 @@ const GameDetailsPage = () => {
       <GameHeroCard game={game} ToggleAddtoCart={ToggleAddtoCart} />
       <GameGallery theme={curr} screenshots={game.screenshots} />
       <GameFeatureList name={game.name} features={game.features} />
-      <GameSimilarSection theme={curr} />
+      <GameSimilarSection genres={game.genres} theme={curr} />
     </div>
   );
 };
