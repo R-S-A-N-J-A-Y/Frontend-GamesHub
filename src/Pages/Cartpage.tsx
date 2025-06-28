@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 import CartCard from "../Components/CartCard";
 import styled from "styled-components";
+import UndoSection from "../Components/UndoSection";
 
 const Wrapper = styled.div`
   min-height: 75vh;
@@ -26,6 +27,8 @@ const Cartpage = () => {
     state: { token },
   } = useAuth();
   const [cartArray, setCartArray] = useState<CartData[]>([]);
+  const [showUndo, setShowUndo] = useState(false);
+  const isUndoRef = useRef<boolean | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
@@ -46,8 +49,12 @@ const Cartpage = () => {
   }, [token]);
 
   const deleteCart = async (id: string) => {
+    setShowUndo(true);
+
+    // cart Backup and updated
     const cartBackup = cartArray;
     setCartArray(cartArray.filter((data) => data._id !== id));
+
     const fetch = async () => {
       try {
         await axios.delete(
@@ -60,9 +67,19 @@ const Cartpage = () => {
         console.log(err);
         alert("Error");
         setCartArray(cartBackup);
+      } finally {
+        setShowUndo(false);
       }
     };
-    fetch();
+
+    //undo will shows the 5 seconds.
+    setTimeout(() => {
+      if (!isUndoRef.current) fetch();
+      else {
+        setCartArray(cartBackup);
+      }
+      setShowUndo(false);
+    }, 5000);
   };
 
   const UpdateQuantity = (gameId: string, cartId: string, isInc: boolean) => {
@@ -92,8 +109,18 @@ const Cartpage = () => {
     fetch();
   };
 
+  const handleUndo = () => {
+    isUndoRef.current = true;
+  };
+
   return (
-    <Wrapper className="d-flex flex-column gap-5 mt-3">
+    <Wrapper className="position-relative d-flex flex-column gap-5 mt-3">
+      {showUndo && (
+        <UndoSection
+          handleUndo={handleUndo}
+          message={`Oops! You just removed an item.\nWant to Undo that?`}
+        />
+      )}
       <h3>Your Cart</h3>
       {cartArray.length === 0 ? (
         <p>Your cart is Empty.</p>
