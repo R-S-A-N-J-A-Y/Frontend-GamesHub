@@ -3,13 +3,15 @@ import { ImCross } from "react-icons/im";
 
 interface Props {
   handleUndo: () => void;
+  cancelShowUndo: () => void;
   message: string;
 }
 
-const UndoSection = ({ message, handleUndo }: Props) => {
+const UndoSection = ({ message, handleUndo, cancelShowUndo }: Props) => {
   return (
     <motion.div
-      className="position-absolute end-0 bg-danger p-3 rounded-3 text-white fw-bold d-flex gap-3"
+      className="position-fixed bg-danger p-3 rounded-3 text-white fw-bold d-flex gap-3"
+      style={{ right: "20px" }}
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 300, opacity: 0 }}
@@ -33,7 +35,11 @@ const UndoSection = ({ message, handleUndo }: Props) => {
           Undo
         </button>
       </p>
-      <button className="m-2" style={{ background: "none", border: "none" }}>
+      <button
+        className="m-2"
+        style={{ background: "none", border: "none" }}
+        onClick={cancelShowUndo}
+      >
         <ImCross color="white" size={23} />
       </button>
     </motion.div>

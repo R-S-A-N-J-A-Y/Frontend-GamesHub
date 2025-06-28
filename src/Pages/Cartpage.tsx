@@ -29,6 +29,7 @@ const Cartpage = () => {
   const [cartArray, setCartArray] = useState<CartData[]>([]);
   const [showUndo, setShowUndo] = useState(false);
   const isUndoRef = useRef<boolean | null>(null);
+  const deletedItemRef = useRef<CartData | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
@@ -51,8 +52,11 @@ const Cartpage = () => {
   const deleteCart = async (id: string) => {
     setShowUndo(true);
 
+    const itemToDelete = cartArray.find((cart) => cart._id === id);
+    if (!itemToDelete) return;
+
     // cart Backup and updated
-    const cartBackup = cartArray;
+    deletedItemRef.current = itemToDelete;
     setCartArray(cartArray.filter((data) => data._id !== id));
 
     const fetch = async () => {
@@ -66,7 +70,7 @@ const Cartpage = () => {
       } catch (err) {
         console.log(err);
         alert("Error");
-        setCartArray(cartBackup);
+        setCartArray((prev) => [...prev, deletedItemRef.current!]);
       } finally {
         setShowUndo(false);
       }
@@ -75,10 +79,7 @@ const Cartpage = () => {
     //undo will shows the 5 seconds.
     setTimeout(() => {
       if (!isUndoRef.current) fetch();
-      else {
-        setCartArray(cartBackup);
-      }
-      setShowUndo(false);
+      isUndoRef.current = null;
     }, 5000);
   };
 
@@ -111,6 +112,13 @@ const Cartpage = () => {
 
   const handleUndo = () => {
     isUndoRef.current = true;
+    if (deletedItemRef.current)
+      setCartArray((prev) => [...prev, deletedItemRef.current!]);
+    setShowUndo(false);
+  };
+
+  const cancelShowUndo = () => {
+    setShowUndo(false);
   };
 
   return (
@@ -118,6 +126,7 @@ const Cartpage = () => {
       {showUndo && (
         <UndoSection
           handleUndo={handleUndo}
+          cancelShowUndo={cancelShowUndo}
           message={`Oops! You just removed an item.\nWant to Undo that?`}
         />
       )}
