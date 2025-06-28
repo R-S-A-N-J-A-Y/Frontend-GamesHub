@@ -4,6 +4,7 @@ import { useAuth } from "../Context/AuthContext";
 import CartCard from "../Components/CartCard";
 import styled from "styled-components";
 import UndoSection from "../Components/UndoSection";
+import { useAppContext } from "../Context/AppContext";
 
 const Wrapper = styled.div`
   min-height: 75vh;
@@ -26,12 +27,17 @@ const Cartpage = () => {
   const {
     state: { token },
   } = useAuth();
+  const { theme, themeColor } = useAppContext();
+  const CurrTheme = themeColor[theme];
+
+  const [isLoading, setIsLoading] = useState(false);
   const [cartArray, setCartArray] = useState<CartData[]>([]);
   const [showUndo, setShowUndo] = useState(false);
   const isUndoRef = useRef<boolean | null>(null);
   const deletedItemRef = useRef<CartData | null>(null);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetch = async () => {
       try {
         const result = await axios.get(
@@ -43,6 +49,8 @@ const Cartpage = () => {
         setCartArray(result.data.data);
       } catch (err) {
         alert(err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -124,8 +132,26 @@ const Cartpage = () => {
           message={`Oops! You just removed an item.\nWant to Undo that?`}
         />
       )}
-      <h3>Your Cart</h3>
-      {cartArray.length === 0 ? (
+      <div className="d-flex flex-column gap-2">
+        <p className="fw-bold fs-4 m-0 text-secondary">
+          Here's everything you've picked
+        </p>
+        <p className="fs-2 m-0 fw-bolder">
+          Review and Get Ready to
+          <span style={{ color: `${CurrTheme.highLight}` }}> Checkout!</span>
+        </p>
+      </div>
+      {isLoading ? (
+        <div className="text-center">
+          <div
+            className="spinner-border"
+            role="status"
+            style={{ width: "3rem", height: "3rem", borderWidth: "8px" }}
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      ) : cartArray.length === 0 ? (
         <p>Your cart is Empty.</p>
       ) : (
         <div className="d-flex flex-column gap-5">
