@@ -83,31 +83,25 @@ const Cartpage = () => {
     }, 5000);
   };
 
-  const UpdateQuantity = (gameId: string, cartId: string, isInc: boolean) => {
-    const cartBackup = cartArray;
-
-    setCartArray([
-      ...cartArray.map((cart) =>
-        cart._id === cartId
-          ? { ...cart, quantity: cart.quantity + (isInc ? 1 : -1) }
-          : cart
-      ),
-    ]);
-
+  const UpdateQuantity = async (
+    cartId: string,
+    isInc: boolean,
+    value: number
+  ) => {
     const fetch = async () => {
       try {
-        await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/user/cart`,
-          { gameId, isInc },
+        await axios.patch(
+          `${import.meta.env.VITE_BACKEND_URL}/user/updateCart`,
+          { cartId, isInc, value },
           { headers: { "x-auth-token": token } }
         );
+        return true;
       } catch (err) {
         console.log(err);
-        alert("error...");
-        setCartArray(cartBackup);
+        return false;
       }
     };
-    fetch();
+    return await fetch();
   };
 
   const handleUndo = () => {

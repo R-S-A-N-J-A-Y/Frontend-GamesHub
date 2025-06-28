@@ -4,11 +4,16 @@ import { useAppContext } from "../Context/AppContext";
 import { MdCurrencyRupee } from "react-icons/md";
 import type { CartData } from "../Pages/Cartpage";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
+import { useRef, useState } from "react";
 
 interface Props {
   data: CartData;
   deleteCart: (id: string) => void;
-  UpdateQuantity: (gameId: string, cartId: string, isInc: boolean) => void;
+  UpdateQuantity: (
+    cartId: string,
+    isInc: boolean,
+    value: number
+  ) => Promise<boolean>;
 }
 
 const CardWrapper = styled.div<{
@@ -37,6 +42,29 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
   const MonthName = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
     date
   );
+
+  // Maintaining the quantity changes for debouncing
+  const [localQuantity, setLocalQuantity] = useState(data.quantity);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleUpdateQuantity = (isInc: boolean) => {
+    const newQuantity = localQuantity + (isInc ? 1 : -1);
+
+    if (newQuantity < 1 || newQuantity > 5) return;
+    setLocalQuantity(newQuantity);
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(async () => {
+      const result = await UpdateQuantity(
+        data._id,
+        newQuantity > data.quantity,
+        newQuantity - data.quantity
+      );
+      if (!result) setLocalQuantity(data.quantity);
+    }, 3000);
+  };
+
   return (
     <CardWrapper
       $background_color={curr.boxColor}
@@ -68,23 +96,23 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
 
       {/* Quantity  */}
       <div className="d-flex gap-2 align-items-center">
-        {data.quantity === 1 ? (
+        {localQuantity === 1 ? (
           <FaArrowDown color="grey" size={25} />
         ) : (
           <FaArrowDown
             size={25}
             style={{ cursor: "pointer" }}
-            onClick={() => UpdateQuantity(data.game._id, data._id, false)}
+            onClick={() => handleUpdateQuantity(false)}
           />
         )}
-        <p className="p-0 m-0 fs-3">{data.quantity}</p>
-        {data.quantity === 5 ? (
+        <p className="p-0 m-0 fs-3">{localQuantity}</p>
+        {localQuantity === 5 ? (
           <FaArrowUp color="grey" size={25} />
         ) : (
           <FaArrowUp
             size={25}
             style={{ cursor: "pointer" }}
-            onClick={() => UpdateQuantity(data.game._id, data._id, true)}
+            onClick={() => handleUpdateQuantity(true)}
           />
         )}
       </div>
