@@ -25,8 +25,8 @@ const CardWrapper = styled.div<{
 `;
 
 const ImageWrapper = styled.div<{ $image_url: string }>`
-  height: 130px;
-  width: 150px;
+  height: 80px;
+  width: 100px;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-image: url(${({ $image_url }) => $image_url});
@@ -77,12 +77,14 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
           $image_url={data.game.coverImageUrl}
           className="rounded-3"
         />
-        <div className="d-flex flex-column gap-3">
+        <div className="d-flex flex-column gap-3 fs-5">
           <div>
-            <h3 className="fw-bolder">{data.game.name}</h3>
-            <h5 className="text-secondary">{data.game.platforms[0].name}</h5>
+            <p className="m-0 p-0 fw-bolder">{data.game.name}</p>
+            <p className="fs-6 m-0 p-0 text-secondary">
+              {data.game.platforms[0].name}
+            </p>
           </div>
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center fs-6">
             <MdCurrencyRupee size={23} />
             <p className="m-0 p-0">{data.game.price}</p>
           </div>
@@ -121,7 +123,7 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
       <div>
         <div className="d-flex align-items-center">
           <MdCurrencyRupee size={23} />
-          <p className="m-0 p-0">{data.game.price * data.quantity}</p>
+          <p className="m-0 p-0">{data.game.price * localQuantity}</p>
         </div>
       </div>
 
