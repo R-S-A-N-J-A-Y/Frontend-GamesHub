@@ -1,6 +1,7 @@
 import { MdCurrencyRupee } from "react-icons/md";
 import { ArrowIcon } from "./LibrarySection";
 import { useAppContext } from "../Context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   games: number;
@@ -10,6 +11,7 @@ interface Props {
 const BuyCard = ({ games, total }: Props) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
+  const Navigate = useNavigate();
 
   return (
     <div
@@ -24,6 +26,7 @@ const BuyCard = ({ games, total }: Props) => {
           style={{
             background: "transparent",
           }}
+          onClick={() => Navigate("/explore")}
         >
           <ArrowIcon style={{ transform: "rotate(180deg)" }} size={25} />
           Continue Exploring

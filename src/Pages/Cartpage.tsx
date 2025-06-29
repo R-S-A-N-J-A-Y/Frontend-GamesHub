@@ -6,6 +6,7 @@ import styled from "styled-components";
 import UndoSection from "../Components/UndoSection";
 import { useAppContext } from "../Context/AppContext";
 import BuyCard from "../Components/buyCard";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   min-height: 75vh;
@@ -30,6 +31,7 @@ const Cartpage = () => {
   } = useAuth();
   const { theme, themeColor } = useAppContext();
   const CurrTheme = themeColor[theme];
+  const Navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [cartArray, setCartArray] = useState<CartData[]>([]);
@@ -160,7 +162,24 @@ const Cartpage = () => {
           </div>
         </div>
       ) : cartArray.length === 0 ? (
-        <p>Your cart is Empty.</p>
+        <div className="p-4 d-flex flex-column align-items-center">
+          <h2 className="fs-3 fw-bolder mb-3">
+            Your Cart Is{" "}
+            <span style={{ color: `${CurrTheme.highLight}` }}>Empty.</span>
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4 text-center">
+            Found something exciting? Add it to your Cart before it’s gone!
+          </p>
+          <div>
+            <button
+              className="btn fw-bold w-100"
+              style={{ background: `${CurrTheme.highLight}` }}
+              onClick={() => Navigate("/explore")}
+            >
+              Browse Games
+            </button>
+          </div>
+        </div>
       ) : (
         <div className="d-flex flex-column gap-5">
           {cartArray.map((data, idx) => (
@@ -173,13 +192,15 @@ const Cartpage = () => {
           ))}
         </div>
       )}
-      <BuyCard
-        games={cartArray.length}
-        total={cartArray.reduce(
-          (acc, cart) => acc + cart.game.price * cart.quantity,
-          0
-        )}
-      />
+      {cartArray.length > 0 && (
+        <BuyCard
+          games={cartArray.length}
+          total={cartArray.reduce(
+            (acc, cart) => acc + cart.game.price * cart.quantity,
+            0
+          )}
+        />
+      )}
     </Wrapper>
   );
 };
