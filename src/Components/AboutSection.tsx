@@ -5,10 +5,32 @@ import { HeaderIconShadowEffect } from "./Header";
 import { CardHoverAnimation } from "./GameCard";
 import { ArrowIcon } from "./LibrarySection";
 
-const Wrapper = styled.div<{ theme: ThemeObj }>`
+const AboutLayoutGrid = styled.section`
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+
+  @media (min-width: 580px) {
+    grid-template-columns: 7fr 5fr;
+  }
+`;
+
+const ThemedCard = styled.section<{ theme: ThemeObj }>`
   background: ${({ theme }) => theme.boxColor};
   ${HeaderIconShadowEffect}
   ${CardHoverAnimation}
+`;
+
+const ResponsiveField = styled.section`
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-direction: column;
+
+  @media (min-width: 580px) {
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 const AboutSection = ({ profile }: { profile: ProfileData }) => {
@@ -18,85 +40,105 @@ const AboutSection = ({ profile }: { profile: ProfileData }) => {
   return (
     <>
       {/* Credential Section  */}
-      <div>
+      <section>
         <h3 className="fw-bold mb-3">Credentials</h3>
-        <Wrapper
+        <ThemedCard
           theme={curr}
-          className="border border-2 rounded-4 d-flex flex-column gap-3 p-5"
+          className="border border-2 rounded-4 d-flex flex-column gap-3 p-4"
         >
-          <div
-            className="d-flex justify-content-center align-items-center"
-            style={{ gap: "62px" }}
-          >
-            <label className="p-0 m-0 fw-bold fs-5">Email: </label>
+          <ResponsiveField>
+            <label
+              className="p-0 m-0 fw-bold fs-5"
+              style={{ minWidth: "100px" }}
+            >
+              Email:{" "}
+            </label>
             <input
               type="text"
               className="form-control"
               value={profile.email}
               disabled
             />
-          </div>
-          <div className="d-flex justify-content-center align-items-center gap-4">
-            <label className="p-0 m-0 fw-bold fs-5">Password: </label>
+          </ResponsiveField>
+          <ResponsiveField>
+            <label
+              className="p-0 m-0 fw-bold fs-5"
+              style={{ minWidth: "100px" }}
+            >
+              Password:{" "}
+            </label>
             <input
               type="password"
               className="form-control"
               value={profile.email}
               disabled
             />
-          </div>
-        </Wrapper>
-      </div>
+          </ResponsiveField>
+        </ThemedCard>
+      </section>
       {/* About and Activity Section  */}
-      <div className="row row-cols-2 gx-5">
-        <div className="col-lg-7">
+      <AboutLayoutGrid>
+        {/* About Section */}
+        <section>
           <h3 className="fw-bold mb-3">About</h3>
-          <Wrapper
+          <ThemedCard
             theme={curr}
-            className="border border-2 rounded-4 d-flex flex-column gap-3 px-5"
-            style={{ paddingTop: "30px", paddingBottom: "30px" }}
+            className="border border-2 rounded-4 d-flex flex-column gap-3 p-4"
           >
-            <div className="d-flex justify-content-center align-items-center gap-5">
-              <label className="p-0 m-0 fw-bold fs-5">DOB: </label>
+            <ResponsiveField>
+              <label
+                className="p-0 m-0 fw-bold fs-5"
+                style={{ minWidth: "100px" }}
+              >
+                DOB:
+              </label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control flex-grow-1"
                 value={profile.dob}
                 disabled
               />
-            </div>
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{ gap: "32px" }}
-            >
-              <label className="p-0 m-0 fw-bold fs-5">Phone: </label>
+            </ResponsiveField>
+
+            <ResponsiveField>
+              <label
+                className="p-0 m-0 fw-bold fs-5"
+                style={{ minWidth: "100px" }}
+              >
+                Phone:
+              </label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control flex-grow-1"
                 value={profile.phone}
                 disabled
               />
-            </div>
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{ gap: "22px" }}
-            >
-              <label className="p-0 m-0 fw-bold fs-5">Gender: </label>
+            </ResponsiveField>
+
+            <ResponsiveField>
+              <label
+                className="p-0 m-0 fw-bold fs-5"
+                style={{ minWidth: "100px" }}
+              >
+                Gender:
+              </label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control flex-grow-1"
                 value={profile.gender}
                 disabled
               />
-            </div>
-          </Wrapper>
-        </div>
-        <div className="col-lg-5">
+            </ResponsiveField>
+          </ThemedCard>
+        </section>
+
+        {/* Activity Log */}
+        <section>
           <h3 className="fw-bold mb-3">Activity Log</h3>
-          <Wrapper
+          <ThemedCard
             theme={curr}
             className="border border-2 rounded-4 p-3 position-relative"
-            style={{ height: "210px" }}
+            style={{ height: "200px" }}
           >
             <ArrowIcon
               size={25}
@@ -104,15 +146,14 @@ const AboutSection = ({ profile }: { profile: ProfileData }) => {
               className="position-absolute"
               style={{ right: "20px" }}
             />
-
             <img
               src="/UserActivity.png"
-              alt=""
+              alt="activity"
               style={{ height: "100%", width: "100%", objectFit: "fill" }}
             />
-          </Wrapper>
-        </div>
-      </div>
+          </ThemedCard>
+        </section>
+      </AboutLayoutGrid>
     </>
   );
 };
