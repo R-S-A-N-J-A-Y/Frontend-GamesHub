@@ -75,7 +75,7 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
         newQuantity - data.quantity
       );
       if (!result) setLocalQuantity(data.quantity);
-    }, 3000);
+    }, 800);
   };
 
   return (

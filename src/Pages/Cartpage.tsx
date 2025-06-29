@@ -5,6 +5,7 @@ import CartCard from "../Components/CartCard";
 import styled from "styled-components";
 import UndoSection from "../Components/UndoSection";
 import { useAppContext } from "../Context/AppContext";
+import BuyCard from "../Components/buyCard";
 
 const Wrapper = styled.div`
   min-height: 75vh;
@@ -103,6 +104,13 @@ const Cartpage = () => {
           { cartId, isInc, value },
           { headers: { "x-auth-token": token } }
         );
+        setCartArray((prev) =>
+          prev.map((cart) =>
+            cart._id === cartId
+              ? { ...cart, quantity: cart.quantity + value }
+              : cart
+          )
+        );
         return true;
       } catch (err) {
         console.log(err);
@@ -165,6 +173,13 @@ const Cartpage = () => {
           ))}
         </div>
       )}
+      <BuyCard
+        games={cartArray.length}
+        total={cartArray.reduce(
+          (acc, cart) => acc + cart.game.price * cart.quantity,
+          0
+        )}
+      />
     </Wrapper>
   );
 };
