@@ -85,7 +85,9 @@ export const MobileNav = styled.div<{ theme: ThemeObj }>`
 `;
 
 const Header = () => {
-  const { state } = useAuth();
+  const {
+    state: { isLogged },
+  } = useAuth();
   const { theme, themeColor, toggleTheme } = useAppContext();
   const currentTheme = themeColor[theme];
 
@@ -97,7 +99,7 @@ const Header = () => {
   const HandleNavigate = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
-    if (!state.isLogged) {
+    if (!isLogged) {
       e.preventDefault();
 
       const target = e.currentTarget as HTMLElement;
@@ -138,69 +140,94 @@ const Header = () => {
           >
             <RxCross1 size={25} onClick={() => setShowMobileMenu(false)} />
           </div>
-          <div
-            className="d-flex flex-column align-items-start"
-            style={{ gap: "2rem" }}
-          >
-            <div className="d-flex align-items-center gap-3">
+
+          {isLogged ? (
+            <div
+              className="d-flex flex-column align-items-start"
+              style={{ gap: "2rem" }}
+            >
+              <div className="d-flex align-items-center gap-3">
+                <Link
+                  theme={currentTheme}
+                  to="/notifications"
+                  data-name="notifications"
+                  onClick={(e) => {
+                    HandleNavigate(e);
+                    setShowMobileMenu(false);
+                  }}
+                  className="p-2 rounded-3 me-1"
+                >
+                  <IoNotifications
+                    size={24}
+                    color={theme === "dark" ? "white" : "black"}
+                  />
+                </Link>
+                <p className="p-0 m-0 fw-bold">Notifications</p>
+              </div>
+              <div className="d-flex align-items-center gap-3">
+                <Link
+                  theme={currentTheme}
+                  to="/cart"
+                  data-name="cart"
+                  onClick={(e) => {
+                    HandleNavigate(e);
+                    setShowMobileMenu(false);
+                  }}
+                  className="p-2 rounded-3"
+                >
+                  <FaShoppingCart
+                    size={24}
+                    color={theme === "dark" ? "white" : "black"}
+                  />
+                </Link>
+                <p className="p-0 m-0 fw-bold">Cart</p>
+              </div>
+              <div className="d-flex align-items-center gap-3">
+                <Link
+                  theme={currentTheme}
+                  to="/profile"
+                  data-name="profile"
+                  onClick={(e) => {
+                    HandleNavigate(e);
+                    setShowMobileMenu(false);
+                  }}
+                  className="p-2 rounded-3"
+                >
+                  <MdAccountCircle
+                    size={25}
+                    color={theme === "dark" ? "white" : "black"}
+                  />
+                </Link>
+                <p className="p-0 m-0 fw-bold">Profile</p>
+              </div>
+            </div>
+          ) : (
+            <div className="d-flex flex-column gap-5 align-items-center">
               <Link
                 theme={currentTheme}
-                to="/notifications"
-                data-name="notifications"
-                onClick={(e) => {
-                  HandleNavigate(e);
-                  setShowMobileMenu(false);
-                }}
-                className="p-2 rounded-3 me-1"
+                to="/auth/login"
+                className={`px-4 py-3 rounded-3 fw-bold text-${
+                  currentTheme.name === "dark" ? "white" : "dark"
+                }`}
               >
-                <IoNotifications
-                  size={24}
-                  color={theme === "dark" ? "white" : "black"}
-                />
+                Sign In
               </Link>
-              <p className="p-0 m-0 fw-bold">Notifications</p>
-            </div>
-            <div className="d-flex align-items-center gap-3">
               <Link
                 theme={currentTheme}
-                to="/cart"
-                data-name="cart"
-                onClick={(e) => {
-                  HandleNavigate(e);
-                  setShowMobileMenu(false);
-                }}
-                className="p-2 rounded-3"
+                to="/auth/register"
+                className={`px-4 py-3 mb-3 rounded-3 fw-bold text-${
+                  currentTheme.name === "dark" ? "white" : "dark"
+                }`}
               >
-                <FaShoppingCart
-                  size={24}
-                  color={theme === "dark" ? "white" : "black"}
-                />
+                Sign Up
               </Link>
-              <p className="p-0 m-0 fw-bold">Cart</p>
             </div>
-            <div className="d-flex align-items-center gap-3">
-              <Link
-                theme={currentTheme}
-                to="/profile"
-                data-name="profile"
-                onClick={(e) => {
-                  HandleNavigate(e);
-                  setShowMobileMenu(false);
-                }}
-                className="p-2 rounded-3"
-              >
-                <MdAccountCircle
-                  size={25}
-                  color={theme === "dark" ? "white" : "black"}
-                />
-              </Link>
-              <p className="p-0 m-0 fw-bold">Profile</p>
-            </div>
-          </div>
+          )}
+
           <button
             className={`rounded-4 px-3 py-2 
-        bg-${theme === "dark" ? "light" : "dark"} 
-        text-${theme}`}
+      bg-${theme === "dark" ? "light" : "dark"} 
+      text-${theme}`}
             onClick={() => {
               toggleTheme();
               setShowMobileMenu(false);
@@ -212,42 +239,72 @@ const Header = () => {
       )}
 
       <Links className="d-flex justify-content-between align-items-center align-center px-4">
-        <Link
-          theme={currentTheme}
-          to="/notifications"
-          data-name="notifications"
-          className="p-2 rounded-3"
-          onClick={HandleNavigate}
-        >
-          <IoNotifications
-            color={theme === "dark" ? "white" : "black"}
-            size={"24px"}
-          />
-        </Link>
-        <Link
-          theme={currentTheme}
-          to="/cart"
-          data-name="cart"
-          className="p-2 rounded-3"
-          onClick={HandleNavigate}
-        >
-          <FaShoppingCart
-            color={theme === "dark" ? "white" : "black"}
-            size={"24px"}
-          />
-        </Link>
-        <Link
-          theme={currentTheme}
-          to="/profile"
-          data-name="profile"
-          className="p-2 rounded-3"
-          onClick={HandleNavigate}
-        >
-          <MdAccountCircle
-            color={theme === "dark" ? "white" : "black"}
-            size={"25px"}
-          />
-        </Link>
+        {isLogged && (
+          <>
+            <Link
+              theme={currentTheme}
+              to="/notifications"
+              data-name="notifications"
+              className="p-2 rounded-3"
+              onClick={HandleNavigate}
+            >
+              <IoNotifications
+                color={theme === "dark" ? "white" : "black"}
+                size={"24px"}
+              />
+            </Link>
+            <Link
+              theme={currentTheme}
+              to="/cart"
+              data-name="cart"
+              className="p-2 rounded-3"
+              onClick={HandleNavigate}
+            >
+              <FaShoppingCart
+                color={theme === "dark" ? "white" : "black"}
+                size={"24px"}
+              />
+            </Link>
+            <Link
+              theme={currentTheme}
+              to="/profile"
+              data-name="profile"
+              className="p-2 rounded-3"
+              onClick={HandleNavigate}
+            >
+              <MdAccountCircle
+                color={theme === "dark" ? "white" : "black"}
+                size={"25px"}
+              />
+            </Link>
+          </>
+        )}
+        {!isLogged && (
+          <>
+            <Link
+              theme={currentTheme}
+              to="/auth/login"
+              data-name="profile"
+              className={`px-3 py-2 rounded-3 fw-bold text-${
+                currentTheme.name === "dark" ? "white" : "dark"
+              }`}
+              style={{ textDecoration: "none" }}
+            >
+              Sign In
+            </Link>
+            <Link
+              theme={currentTheme}
+              to="/auth/register"
+              data-name="profile"
+              className={`px-3 py-2 rounded-3 fw-bold text-${
+                currentTheme.name === "dark" ? "white" : "dark"
+              }`}
+              style={{ textDecoration: "none" }}
+            >
+              Sign Up
+            </Link>
+          </>
+        )}
         <button
           className={`rounded-4 px-3 py-2 
             bg-${theme === "dark" ? "light" : "dark"} 
