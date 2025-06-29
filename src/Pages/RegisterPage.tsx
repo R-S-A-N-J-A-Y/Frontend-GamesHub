@@ -14,6 +14,12 @@ const FormContainer = styled.div<{ theme: ThemeObj }>`
     theme.name === "dark"
       ? "0px 0px 30px rgba(255, 255, 255, 0.57);"
       : "0px 0px 30px rgba(0, 0, 0, 0.53);"};
+  width: 50%;
+  padding: 3rem;
+  @media (max-width: 730px) {
+    width: 85%;
+    padding: 1.5rem;
+  }
 `;
 
 const RegisterPage = () => {
@@ -24,7 +30,7 @@ const RegisterPage = () => {
       theme={currTheme}
       className="d-flex flex-column justify-content-center align-items-center"
     >
-      <FormContainer theme={currTheme} className="border rounded-4 p-5 w-50">
+      <FormContainer theme={currTheme} className="border rounded-4">
         <RegisterForm />
       </FormContainer>
     </Wrapper>

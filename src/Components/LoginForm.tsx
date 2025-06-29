@@ -69,7 +69,7 @@ const LoginForm = () => {
       <div className="d-flex justify-content-between mb-4">
         <h3 className="fw-bold">Login Form</h3>
         <button
-          className={` rounded-4 px-3 py-1 
+          className={` rounded-3 px-3 py-1 
             bg-${currTheme.name === "dark" ? "light" : "dark"} 
             text-${currTheme.name}`}
           onClick={toggleTheme}
