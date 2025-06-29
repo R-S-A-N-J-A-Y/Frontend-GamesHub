@@ -153,7 +153,9 @@ const Sidebar = () => {
           className="p-4 pb-5 d-flex flex-column justify-content-between align-items-center"
           style={{ zIndex: 1 }}
         >
-          <div className="navbar-brand fw-bolder fs-3">GameX</div>
+          <NavLink to="/" className="navbar-brand fw-bolder fs-3">
+            GameX
+          </NavLink>
           <Links className="py-4 d-flex flex-column justify-content-around align-items-center align-center">
             <Link theme={currentTheme} to="/" className="p-3 rounded-4">
               <GrHomeRounded

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useAppContext } from "../Context/AppContext";
+import { useAuth } from "../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const ProfileImage = styled.section<{ $theme: string }>`
   width: 320px;
@@ -19,11 +21,27 @@ const ProfileImage = styled.section<{ $theme: string }>`
 const ProfileSection = ({ name, role }: { name: string; role: string }) => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
+
+  const { Logout } = useAuth();
+  const Navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      Navigate("/");
+      setTimeout(() => {
+        Logout();
+      }, 100);
+    } catch (err) {
+      console.log(err);
+      alert("Error Logging Out...");
+    }
+  };
+
   return (
     <>
       <ProfileImage $theme={curr.name} className="rounded-circle">
         <img
-          src="/DaysGone.jpg"
+          src="/image.png"
           alt="Profile-Image"
           className="rounded-circle"
           style={{ height: "100%", width: "100%", objectFit: "fill" }}
@@ -37,6 +55,13 @@ const ProfileSection = ({ name, role }: { name: string; role: string }) => {
           </span>{" "}
           {role.charAt(0).toUpperCase() + role.slice(1)}
         </p>
+        <button
+          className="border border-2 border-danger rounded-3 px-3 py-2 text-danger fw-bold"
+          style={{ all: "unset", cursor: "pointer" }}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
       </div>
     </>
   );
