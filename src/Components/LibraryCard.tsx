@@ -8,11 +8,33 @@ interface Props {
 
 const Wrapper = styled.div`
   padding: 0 30px;
-  gap: 10px;
 
-  @media (max-width: 590px) {
+  display: grid;
+  grid-template-columns: 2.7fr 1.2fr 100px;
+  align-items: center;
+  grid-template-areas: "col1 col2 col3";
+  gap: 30px;
+
+  @media (max-width: 620px) {
     padding: 0;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "col1 col1"
+      "col2 col3";
+    row-gap: 20px;
   }
+`;
+
+const Col1 = styled.div`
+  grid-area: col1;
+`;
+
+const Col2 = styled.div`
+  grid-area: col2;
+`;
+
+const Col3 = styled.div`
+  grid-area: col3;
 `;
 
 const LibraryCard = ({ game, onClick }: Props) => {
@@ -25,8 +47,8 @@ const LibraryCard = ({ game, onClick }: Props) => {
   );
 
   return (
-    <Wrapper className="d-flex align-items-center justify-content-between w-100 flex-wrap mb-2">
-      <div className="d-flex gap-3 align-items-center">
+    <Wrapper className="w-100">
+      <Col1 className="d-flex gap-3 align-items-center">
         <img
           src={game.coverImageUrl}
           alt=""
@@ -44,21 +66,28 @@ const LibraryCard = ({ game, onClick }: Props) => {
             </p>
           )}
         </div>
-      </div>
+      </Col1>
 
-      <div style={{ color: "rgba(255, 255, 255, 0.78)", fontSize: "13px" }}>
+      <Col2
+        style={{
+          color: "rgba(255, 255, 255, 0.78)",
+          fontSize: "13px",
+        }}
+      >
         <p className="fs-6 fw-bold m-0">
           {day} {MonthName}
         </p>
         <p className="fw-bold m-0">{year}</p>
-      </div>
+      </Col2>
 
-      <button
-        className="btn btn-outline-danger border-2 fw-bold"
-        onClick={() => onClick(game._id)}
-      >
-        Remove
-      </button>
+      <Col3 className="d-inline-block">
+        <button
+          className="btn btn-outline-danger border-2 fw-bold"
+          onClick={() => onClick(game._id)}
+        >
+          Remove
+        </button>
+      </Col3>
     </Wrapper>
   );
 };

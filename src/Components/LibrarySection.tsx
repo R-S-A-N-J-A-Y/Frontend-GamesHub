@@ -78,7 +78,7 @@ const LibrarySection = () => {
   return (
     <Wrapper
       theme={currTheme}
-      className="flex-fill border rounded-4 d-flex flex-column gap-3 w-100"
+      className="flex-fill border rounded-4 d-flex flex-column gap-4 w-100"
     >
       <div className="d-flex justify-content-between align-items-center pe-2">
         <p className="fw-bold fs-4 m-0">Library</p>
@@ -107,11 +107,11 @@ const LibrarySection = () => {
           </div>
         </div>
       ) : (
-        watchList.map((data, index) => (
-          <div key={index} className="d-flex gap-5">
-            <LibraryCard game={data} onClick={handleRemove} />
-          </div>
-        ))
+        <div className="d-flex flex-column gap-5 px-2">
+          {watchList.map((data, index) => (
+            <LibraryCard game={data} key={index} onClick={handleRemove} />
+          ))}
+        </div>
       )}
     </Wrapper>
   );
