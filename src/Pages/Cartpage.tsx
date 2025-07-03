@@ -5,7 +5,7 @@ import CartCard from "../Components/CartCard";
 import styled from "styled-components";
 import UndoSection from "../Components/UndoSection";
 import { useAppContext } from "../Context/AppContext";
-import BuyCard from "../Components/buyCard";
+import BuyCard from "../Components/BuyCard";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -152,15 +152,18 @@ const Cartpage = () => {
         </p>
       </div>
       {isLoading ? (
-        <div className="text-center">
-          <div
+        <section
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "35vh" }}
+        >
+          <section
             className="spinner-border"
             role="status"
             style={{ width: "3rem", height: "3rem", borderWidth: "8px" }}
           >
             <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
+          </section>
+        </section>
       ) : cartArray.length === 0 ? (
         <div className="p-4 d-flex flex-column align-items-center">
           <h2 className="fs-3 fw-bolder mb-3">

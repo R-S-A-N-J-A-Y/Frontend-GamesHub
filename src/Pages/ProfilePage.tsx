@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AboutSection from "../Components/AboutSection";
 import ProfileSection from "../Components/ProfileSection";
 import { useAuth } from "../Context/AuthContext";
@@ -42,7 +42,10 @@ const ProfilePage = () => {
     UserProfile,
   } = useAuth();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
+    setIsLoading(true);
     const fetch = async () => {
       const headers = { "x-auth-token": token };
       try {
@@ -55,11 +58,25 @@ const ProfilePage = () => {
         UserProfile(data.data);
       } catch (err) {
         alert(err);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetch();
   }, [token, UserProfile]);
-
+  if (isLoading)
+    return (
+      <section
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "75vh" }}
+      >
+        <section
+          role="status"
+          className="spinner-border"
+          style={{ width: "3rem", height: "3rem", borderWidth: "8px" }}
+        ></section>
+      </section>
+    );
   return (
     <Wrapper className="d-flex">
       <ProfileWrapper className="p-5">
