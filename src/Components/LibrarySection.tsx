@@ -3,11 +3,12 @@ import { useAppContext, type ThemeObj } from "../Context/AppContext";
 import { MdDoubleArrow } from "react-icons/md";
 import styled from "styled-components";
 import { CardHoverAnimation } from "./GameCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../Context/AuthContext";
 import { useGameContext } from "../Context/GameContext";
 import { useNavigate } from "react-router-dom";
+import UndoSection from "./UndoSection";
 
 export const ArrowIcon = styled(MdDoubleArrow)`
   transition: transform 0.2s ease;
@@ -51,10 +52,33 @@ const LibrarySection = () => {
   const currTheme = themeColor[theme];
 
   const [watchList, setWatchList] = useState<WatchListDataType[]>([]);
+  const [showUndo, setShowUndo] = useState<boolean>(false);
+  const isUndoRef = useRef<boolean | null>(null);
+  const deletedItemRef = useRef<WatchListDataType | null>(null);
 
   const handleRemove = (id: string) => {
+    setShowUndo(true);
+    const deletedItem = watchList.find((game) => game._id == id);
+    if (!deletedItem) return;
+    deletedItemRef.current = deletedItem;
     setWatchList(watchList.filter((game) => game._id !== id));
-    ToggleWatchList(id, true);
+
+    setTimeout(() => {
+      if (isUndoRef.current) return;
+      ToggleWatchList(id, true);
+      setShowUndo(false);
+    }, 5000);
+  };
+
+  const handleUndo = () => {
+    isUndoRef.current = true;
+    if (deletedItemRef.current)
+      setWatchList((prev) => [...prev, deletedItemRef.current!]);
+    setShowUndo(false);
+  };
+
+  const cancelShowUndo = () => {
+    setShowUndo(false);
   };
 
   useEffect(() => {
@@ -80,11 +104,18 @@ const LibrarySection = () => {
       theme={currTheme}
       className="flex-fill border rounded-4 d-flex flex-column gap-4 w-100"
     >
+      {" "}
+      {showUndo && (
+        <UndoSection
+          handleUndo={handleUndo}
+          cancelShowUndo={cancelShowUndo}
+          message={`Oops! You just removed an item.\nWant to Undo that?`}
+        />
+      )}
       <div className="d-flex justify-content-between align-items-center pe-2">
         <p className="fw-bold fs-4 m-0">Library</p>
         <ArrowIcon size={25} color={`${currTheme.highLight}`} />
       </div>
-
       {watchList.length === 0 ? (
         <div className="d-flex flex-column align-items-center">
           <h2 className="fs-3 font-bolder mb-2">
