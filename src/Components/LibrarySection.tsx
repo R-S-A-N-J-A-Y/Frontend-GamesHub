@@ -24,7 +24,7 @@ const Wrapper = styled.div<{ theme: ThemeObj }>`
   ${CardHoverAnimation};
 
   @media (max-width: 450px) {
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
   }
 `;
 

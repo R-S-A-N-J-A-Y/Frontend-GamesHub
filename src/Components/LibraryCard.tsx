@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   padding: 0 30px;
 
   display: grid;
-  grid-template-columns: 2.7fr 1.2fr 100px;
+  grid-template-columns: minmax(210px, 2.7fr) minmax(50px, 1.2fr) 100px;
   align-items: center;
   grid-template-areas: "col1 col2 col3";
   gap: 30px;
