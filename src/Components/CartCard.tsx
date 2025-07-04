@@ -23,7 +23,8 @@ const CardWrapper = styled.div<{
   background: ${({ $background_color }) => $background_color};
   border-left: 8px solid ${({ $highlight }) => $highlight};
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr 90px;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 0.5fr;
+  grid-template-areas: "col1 col2 col3 col4 col5";
   align-items: center;
   gap: 1rem;
   padding: 1.5rem 2rem;
@@ -31,9 +32,40 @@ const CardWrapper = styled.div<{
   font-weight: bold;
   font-size: 1.2rem;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+  @media (min-width: 600px) and (max-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+      "col1 col1 col1 col1"
+      "col2 col3 col4 col5";
     text-align: center;
+  }
+
+  @media (min-width: 350px) and (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "col1 col1"
+      "col2 col3"
+      "col4 col5";
+    text-align: center;
+  }
+
+  @media (max-width: 350px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "col1"
+      "col2"
+      "col3"
+      "col4"
+      "col5";
+    gap: 1.5rem;
+    text-align: center;
+  }
+`;
+
+const CartGameInfoWrapper = styled.div`
+  grid-area: col1;
+  @media (max-width: 600px) {
+    flex-direction: column;
   }
 `;
 
@@ -44,6 +76,12 @@ const ImageWrapper = styled.div<{ $image_url: string }>`
   background-size: 100% 100%;
   background-image: url(${({ $image_url }) => $image_url});
   border-radius: 8px;
+`;
+
+const CartGameInfo = styled.div`
+  @media (max-width: 600px) {
+    align-items: center;
+  }
 `;
 
 const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
@@ -81,9 +119,9 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
   return (
     <CardWrapper $background_color={curr.boxColor} $highlight={curr.highLight}>
       {/* Game Details */}
-      <div className="d-flex align-items-center gap-4">
+      <CartGameInfoWrapper className="d-flex align-items-center gap-4">
         <ImageWrapper $image_url={data.game.coverImageUrl} />
-        <div className="d-flex flex-column gap-2 fs-5">
+        <CartGameInfo className="d-flex flex-column gap-2 fs-5">
           <div>
             <p className="m-0 fw-bolder">{data.game.name}</p>
             <p className="fs-6 m-0 text-secondary">
@@ -94,16 +132,19 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
             <MdCurrencyRupee size={23} />
             <p className="m-0">{data.game.price}</p>
           </div>
-        </div>
-      </div>
+        </CartGameInfo>
+      </CartGameInfoWrapper>
 
       {/* Date Added */}
-      <div className="text-center">
+      <div style={{ gridArea: "col2" }} className="text-center">
         {day} {MonthName} {year}
       </div>
 
       {/* Quantity */}
-      <div className="d-flex gap-2 align-items-center justify-content-center">
+      <div
+        style={{ gridArea: "col3" }}
+        className="d-flex gap-2 align-items-center justify-content-center"
+      >
         {localQuantity === 1 ? (
           <FaArrowDown color="grey" size={25} />
         ) : (
@@ -126,14 +167,17 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
       </div>
 
       {/* Total Price */}
-      <div className="d-flex align-items-center justify-content-center">
+      <div
+        style={{ gridArea: "col4" }}
+        className="d-flex align-items-center justify-content-center"
+      >
         <MdCurrencyRupee size={23} />
         <p className="m-0">{data.game.price * localQuantity}</p>
       </div>
 
       {/* Delete Button */}
       <button
-        style={{ background: "none", border: "none" }}
+        style={{ gridArea: "col5", background: "none", border: "none" }}
         onClick={() => deleteCart(data._id)}
       >
         <ImCross color="red" size={20} />
