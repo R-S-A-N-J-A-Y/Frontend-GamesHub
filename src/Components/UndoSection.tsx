@@ -11,7 +11,13 @@ const UndoSection = ({ message, handleUndo, cancelShowUndo }: Props) => {
   return (
     <motion.div
       className="position-fixed bg-danger p-3 rounded-3 text-white fw-bold d-flex gap-3"
-      style={{ right: "20px" }}
+      style={{
+        position: "fixed",
+        bottom: "40px",
+        right: "30px",
+        maxWidth: "90vw",
+        zIndex: 1,
+      }}
       initial={{ x: 300, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 300, opacity: 0 }}
