@@ -14,6 +14,7 @@ import RegisterPage from "../Pages/RegisterPage";
 import GameLayout from "../Layouts/GameLayout";
 import GameDetailsPage from "../Pages/GameDetailsPage";
 import ScrollToTop from "../Components/ScrollToTop";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
@@ -28,9 +29,11 @@ const AppRoutes = () => {
             <Route path="/explore/:type" element={<ExploreCategoryPage />} />
             <Route path="/explore/:type/:id" element={<CategoryGameList />} />
             <Route path="/community" element={<CommunityPage />} />
-            <Route path="/notifications" element={<NotificationPage />} />
-            <Route path="/cart" element={<Cartpage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/notifications" element={<NotificationPage />} />
+              <Route path="/cart" element={<Cartpage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
           </Route>
 
           {/* AuthLayout Routes  */}
