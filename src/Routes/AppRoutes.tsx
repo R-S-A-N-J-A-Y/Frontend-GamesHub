@@ -15,6 +15,7 @@ import GameLayout from "../Layouts/GameLayout";
 import GameDetailsPage from "../Pages/GameDetailsPage";
 import ScrollToTop from "../Components/ScrollToTop";
 import ProtectedRoute from "./ProtectedRoute";
+import LibraryPage from "../Pages/LibraryPage";
 
 const AppRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
               <Route path="/notifications" element={<NotificationPage />} />
               <Route path="/cart" element={<Cartpage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/library" element={<LibraryPage />} />
             </Route>
           </Route>
 

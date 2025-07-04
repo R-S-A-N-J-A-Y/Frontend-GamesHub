@@ -121,7 +121,11 @@ const LibrarySection = () => {
       >
         <div className="d-flex justify-content-between align-items-center pe-2">
           <p className="fw-bold fs-4 m-0">Library</p>
-          <ArrowIcon size={25} color={`${currTheme.highLight}`} />
+          <ArrowIcon
+            size={25}
+            color={`${currTheme.highLight}`}
+            onClick={() => Navigate("/library")}
+          />
         </div>
         {watchList.length === 0 ? (
           <div className="d-flex flex-column align-items-center">
