@@ -89,12 +89,11 @@ const LibrarySection = () => {
   const fetchData = useCallback(async () => {
     try {
       const result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/user/watchListPreview`,
+        `${import.meta.env.VITE_BACKEND_URL}/user/watchListPreview?isTop3=true`,
         {
           headers: { "x-auth-token": token },
         }
       );
-      console.log(result.data.data);
       setWatchList(result.data.data);
     } catch (err) {
       console.log(err);
