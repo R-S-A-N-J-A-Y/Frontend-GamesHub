@@ -15,6 +15,7 @@ type GameData = {
   likes: number;
   platforms: Platform[];
   price: number;
+  liked: boolean;
 };
 
 const LibraryPage = () => {
@@ -85,7 +86,7 @@ const LibraryPage = () => {
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
           {games.map((game, key) => (
             <div key={key} className="col">
-              <GameCard game={{ ...game, liked: true, watched: true }} />
+              <GameCard game={{ ...game, watched: true }} />
             </div>
           ))}
         </div>
