@@ -6,6 +6,7 @@ import axios from "axios";
 import { useAuth } from "../Context/AuthContext";
 import GameCard from "../Components/GameCard";
 import Loader from "../Components/Loader";
+import { ToggleLikeApi, ToggleWatchListApi } from "../api/userGameActions";
 
 type GameData = {
   _id: string;
@@ -52,6 +53,16 @@ const LibraryPage = () => {
     fetch();
   }, [token]);
 
+  const ToggleLike = async (id: string, currStatus: boolean) => {
+    await ToggleLikeApi(id, currStatus, token);
+  };
+
+  const ToggleWatchList = async (id: string, currStatus: boolean) => {
+    if (!games) return;
+    setGames(games.filter((game) => game._id != id));
+    await ToggleWatchListApi(id, currStatus, token);
+  };
+
   if (isLoding) return <Loader />;
 
   return (
@@ -93,7 +104,11 @@ const LibraryPage = () => {
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
           {games.map((game, key) => (
             <div key={key} className="col">
-              <GameCard game={{ ...game, watched: true }} />
+              <GameCard
+                ToggleLike={ToggleLike}
+                ToggleWatchList={ToggleWatchList}
+                game={{ ...game, watched: true }}
+              />
             </div>
           ))}
         </div>

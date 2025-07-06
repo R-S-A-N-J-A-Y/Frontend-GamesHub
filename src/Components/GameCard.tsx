@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { useAppContext } from "../Context/AppContext";
 import { MdAddToPhotos } from "react-icons/md";
 import { GoHeartFill, GoHeart } from "react-icons/go";
-import { useGameContext, type Gamedata } from "../Context/GameContext";
+import { type Gamedata } from "../Context/GameContext";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { PiFilmSlate } from "react-icons/pi";
@@ -66,15 +66,16 @@ const GameName = styled.p`
 interface Props {
   game: Gamedata;
   cardWidth?: string;
+  ToggleLike: (id: string, liked: boolean) => void;
+  ToggleWatchList: (id: string, watched: boolean) => void;
 }
 
-const GameCard = ({ game, cardWidth }: Props) => {
+const GameCard = ({ game, cardWidth, ToggleLike, ToggleWatchList }: Props) => {
   const Navigate = useNavigate();
   const {
     state: { isLogged },
   } = useAuth();
 
-  const { ToggleLike, ToggleWatchList } = useGameContext();
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
 

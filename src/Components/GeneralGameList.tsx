@@ -20,6 +20,8 @@ const GeneralGameList = ({ orderBy, platform }: Props) => {
     state: { token },
   } = useAuth();
 
+  const { ToggleLike, ToggleWatchList } = useGameContext();
+
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -73,7 +75,11 @@ const GeneralGameList = ({ orderBy, platform }: Props) => {
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gy-4">
           {genralGames.map((data, key) => (
             <div key={key} className="col">
-              <GameCard game={data} />
+              <GameCard
+                game={data}
+                ToggleLike={ToggleLike}
+                ToggleWatchList={ToggleWatchList}
+              />
             </div>
           ))}
         </div>
