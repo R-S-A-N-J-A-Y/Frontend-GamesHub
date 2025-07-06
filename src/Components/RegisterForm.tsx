@@ -8,6 +8,7 @@ import { Schema, type FormData } from "../Validation/RegisterForm";
 import { useAppContext } from "../Context/AppContext";
 import { useState } from "react";
 import OverlayLoader from "./OverLayLodder";
+import { RegisterApi } from "../api/auth";
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,13 +45,7 @@ const RegisterForm = () => {
       setIsLoading(true);
       const { confirmPassword, ...user } = data;
       console.log(confirmPassword);
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
-        {
-          countryCode: "IN",
-          ...user,
-        }
-      );
+      const res = await RegisterApi(user);
       const token = res.headers["x-auth-token"];
       return { result: res.data, token };
     } catch (err) {

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 import CartCard from "../Components/CartCard";
@@ -7,6 +6,7 @@ import UndoSection from "../Components/UndoSection";
 import { useAppContext } from "../Context/AppContext";
 import BuyCard from "../Components/BuyCard";
 import { useNavigate } from "react-router-dom";
+import { deleteCart, getCart, updateCart } from "../api/userGameActions";
 
 const Wrapper = styled.div`
   min-height: 75vh;
@@ -43,12 +43,7 @@ const Cartpage = () => {
     setIsLoading(true);
     const fetch = async () => {
       try {
-        const result = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/cart`,
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        const result = await getCart(token);
         setCartArray(result.data.data);
       } catch (err) {
         alert(err);
@@ -60,7 +55,7 @@ const Cartpage = () => {
     fetch();
   }, [token]);
 
-  const deleteCart = async (id: string) => {
+  const DeleteCart = async (id: string) => {
     setShowUndo(true);
 
     const itemToDelete = cartArray.find((cart) => cart._id === id);
@@ -72,12 +67,7 @@ const Cartpage = () => {
 
     const fetch = async () => {
       try {
-        await axios.delete(
-          `${import.meta.env.VITE_BACKEND_URL}/user/cart/${id}`,
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        await deleteCart(token, id);
       } catch (err) {
         console.log(err);
         alert("Error");
@@ -94,18 +84,10 @@ const Cartpage = () => {
     }, 5000);
   };
 
-  const UpdateQuantity = async (
-    cartId: string,
-    isInc: boolean,
-    value: number
-  ) => {
+  const UpdateQuantity = async (cartId: string, value: number) => {
     const fetch = async () => {
       try {
-        await axios.patch(
-          `${import.meta.env.VITE_BACKEND_URL}/user/updateCart`,
-          { cartId, isInc, value },
-          { headers: { "x-auth-token": token } }
-        );
+        await updateCart(token, cartId, value);
         setCartArray((prev) =>
           prev.map((cart) =>
             cart._id === cartId
@@ -189,7 +171,7 @@ const Cartpage = () => {
             <CartCard
               key={idx}
               data={data}
-              deleteCart={deleteCart}
+              deleteCart={DeleteCart}
               UpdateQuantity={UpdateQuantity}
             />
           ))}

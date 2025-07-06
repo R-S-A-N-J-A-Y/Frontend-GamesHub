@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { type FormData, Schema } from "../Validation/LoginForm";
 import { useAppContext } from "../Context/AppContext";
 import OverlayLoader from "./OverLayLodder";
+import { loginApi } from "../api/auth";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,7 @@ const LoginForm = () => {
   } = useForm<FormData>({ resolver: zodResolver(Schema) });
 
   const onSubmit = async (data: FieldValues) => {
+    console.log(data);
     const { result, token } = await CallBackend(data);
     if (result?.success) {
       Navigate("/");
@@ -41,13 +43,7 @@ const LoginForm = () => {
   const CallBackend = async (userData: FieldValues) => {
     try {
       setIsLoading(true);
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
-        {
-          countryCode: "IN",
-          ...userData,
-        }
-      );
+      const res = await loginApi(userData);
       const token = res.headers["x-auth-token"];
       return { result: res.data, token };
     } catch (err) {

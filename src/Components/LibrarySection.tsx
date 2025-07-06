@@ -1,14 +1,17 @@
-import LibraryCard from "./LibraryCard";
-import { useAppContext, type ThemeObj } from "../Context/AppContext";
-import { MdDoubleArrow } from "react-icons/md";
-import styled from "styled-components";
-import { CardHoverAnimation } from "./GameCard";
 import { useCallback, useEffect, useRef, useState } from "react";
-import axios from "axios";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+
+import { useAppContext, type ThemeObj } from "../Context/AppContext";
 import { useAuth } from "../Context/AuthContext";
 import { useGameContext } from "../Context/GameContext";
-import { useNavigate } from "react-router-dom";
+
+import { CardHoverAnimation } from "./GameCard";
+import LibraryCard from "./LibraryCard";
+import { MdDoubleArrow } from "react-icons/md";
 import UndoSection from "./UndoSection";
+
+import { getUserAddedItems } from "../api/userGameActions";
 
 export const ArrowIcon = styled(MdDoubleArrow)`
   transition: transform 0.2s ease;
@@ -88,12 +91,7 @@ const LibrarySection = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const result = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/user/watchListPreview?isTop3=true`,
-        {
-          headers: { "x-auth-token": token },
-        }
-      );
+      const result = await getUserAddedItems(token, true);
       setWatchList(result.data.data);
     } catch (err) {
       console.log(err);

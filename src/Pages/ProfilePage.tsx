@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+import { useAuth } from "../Context/AuthContext";
+
 import AboutSection from "../Components/AboutSection";
 import ProfileSection from "../Components/ProfileSection";
-import { useAuth } from "../Context/AuthContext";
-import axios from "axios";
-import styled from "styled-components";
+
+import { getProfile } from "../api/userGameActions";
 
 const Wrapper = styled.section`
   min-height: 78vh;
@@ -47,14 +50,8 @@ const ProfilePage = () => {
   useEffect(() => {
     setIsLoading(true);
     const fetch = async () => {
-      const headers = { "x-auth-token": token };
       try {
-        const data = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/profile`,
-          {
-            headers: headers,
-          }
-        );
+        const data = await getProfile(token);
         UserProfile(data.data);
       } catch (err) {
         alert(err);

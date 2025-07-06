@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
-import ExploreCategoryCard from "../Components/ExploreCategoryCard";
-import { useGameContext } from "../Context/GameContext";
-
-import axios from "axios";
 import { useEffect, useState } from "react";
-import ExploreCategorySkeletonCard from "../Components/ExploreCategoryCardSkeleton";
+
+import { useGameContext } from "../Context/GameContext";
 import { useAppContext } from "../Context/AppContext";
+
+import ExploreCategoryCard from "../Components/ExploreCategoryCard";
+import ExploreCategorySkeletonCard from "../Components/ExploreCategoryCardSkeleton";
+
+import { fetchCategories } from "../api/GameApi";
 
 const ExploreCategoryPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,16 +18,13 @@ const ExploreCategoryPage = () => {
   const currTheme = themeColor[theme];
 
   useEffect(() => {
+    if (!type) return;
     setIsLoading(true);
     const fetchData = async () => {
       try {
         // Call To Backend .
-        let url = type;
-        if (type === "platforms") url = "platformsv";
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/${url}/`,
-          {}
-        );
+        const category = type === "platforms" ? "platformsv" : type;
+        const res = await fetchCategories(category);
 
         // Data Retrival from result.
         const data = res.data.data || [];

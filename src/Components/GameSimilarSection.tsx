@@ -2,9 +2,8 @@ import { motion } from "framer-motion";
 import GameCard from "./GameCard";
 import { useEffect, useRef, useState } from "react";
 import { type ThemeObj } from "../Context/AppContext";
-import axios from "axios";
-import qs from "qs";
 import type { Gamedata } from "../Context/GameContext";
+import { getSimilarGenreGames } from "../api/GameApi";
 
 interface Props {
   theme: ThemeObj;
@@ -38,14 +37,7 @@ const GameSimilarSection = ({ theme, genres }: Props) => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const result = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/games/genres`,
-          {
-            params: { genres },
-            paramsSerializer: (genres) =>
-              qs.stringify(genres, { arrayFormat: "repeat" }),
-          }
-        );
+        const result = await getSimilarGenreGames(genres);
         setSimilarGenre(result.data.data);
       } catch (err) {
         console.log(err);

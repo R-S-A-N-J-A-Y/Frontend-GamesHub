@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import type { Platform } from "../Context/GameContext";
 import { useAppContext } from "../Context/AppContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useAuth } from "../Context/AuthContext";
+
 import GameCard from "../Components/GameCard";
 import Loader from "../Components/Loader";
-import { ToggleLikeApi, ToggleWatchListApi } from "../api/userGameActions";
+
+import {
+  getUserAddedItems,
+  ToggleLikeApi,
+  ToggleWatchListApi,
+} from "../api/userGameActions";
 
 type GameData = {
   _id: string;
@@ -36,12 +42,7 @@ const LibraryPage = () => {
     setIsloading(true);
     const fetch = async () => {
       try {
-        const result = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/watchListPreview`,
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        const result = await getUserAddedItems(token, false);
         setGames(result.data.data);
       } catch (err) {
         console.log(err);

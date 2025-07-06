@@ -2,12 +2,12 @@ import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import GameCard from "./GameCard";
 import { useAuth } from "../Context/AuthContext";
-import axios from "axios";
-import type { Gamedata } from "../Context/GameContext";
+import { useGameContext, type Gamedata } from "../Context/GameContext";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { useAppContext } from "../Context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { ArrowIcon } from "./LibrarySection";
+import { getRecentlyWatched } from "../api/userGameActions";
 
 const ContinueSection = () => {
   const carouselRef = useRef<HTMLDivElement | null>(null);
@@ -22,6 +22,8 @@ const ContinueSection = () => {
   const { theme, themeColor } = useAppContext();
   const curr = themeColor[theme];
   const Navigate = useNavigate();
+
+  const { ToggleLike, ToggleWatchList } = useGameContext();
 
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -44,12 +46,7 @@ const ContinueSection = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const result = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/recentlyWatched/`,
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        const result = await getRecentlyWatched(token);
         setGameData(result.data.data);
       } catch (err) {
         console.log(err);
@@ -110,7 +107,12 @@ const ContinueSection = () => {
           {!isLoading &&
             gameData.map((game, index) => (
               <motion.div key={index} style={{ flex: "0 0 auto" }}>
-                <GameCard game={game} cardWidth="300px" />
+                <GameCard
+                  game={game}
+                  cardWidth="300px"
+                  ToggleLike={ToggleLike}
+                  ToggleWatchList={ToggleWatchList}
+                />
               </motion.div>
             ))}
 

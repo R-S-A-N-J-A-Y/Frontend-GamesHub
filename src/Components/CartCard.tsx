@@ -9,11 +9,7 @@ import { useRef, useState } from "react";
 interface Props {
   data: CartData;
   deleteCart: (id: string) => void;
-  UpdateQuantity: (
-    cartId: string,
-    isInc: boolean,
-    value: number
-  ) => Promise<boolean>;
+  UpdateQuantity: (cartId: string, value: number) => Promise<boolean>;
 }
 
 const CardWrapper = styled.div<{
@@ -109,7 +105,6 @@ const CartCard = ({ data, deleteCart, UpdateQuantity }: Props) => {
     timeoutRef.current = setTimeout(async () => {
       const result = await UpdateQuantity(
         data._id,
-        newQuantity > data.quantity,
         newQuantity - data.quantity
       );
       if (!result) setLocalQuantity(data.quantity);

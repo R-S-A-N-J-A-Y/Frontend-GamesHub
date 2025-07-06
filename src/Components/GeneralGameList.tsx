@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useGameContext } from "../Context/GameContext";
-import axios from "axios";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { useAuth } from "../Context/AuthContext";
-import qs from "qs";
+import { fetchGames } from "../api/GameApi";
 
 interface Props {
   orderBy: string;
@@ -27,24 +26,12 @@ const GeneralGameList = ({ orderBy, platform }: Props) => {
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
-      let url = `${import.meta.env.VITE_BACKEND_URL}/user/games/`;
-
-      const params: { sortBy?: string; order: string; platforms?: string[] } = {
-        sortBy: orderBy.toLowerCase(),
-        order: "asc",
-      };
-
-      if (platform && platform.length > 0) {
-        params.platforms = platform;
-        url += "filter";
-      }
-
       try {
-        const res = await axios.get(url, {
-          params,
-          headers: { "x-auth-token": token },
-          paramsSerializer: (params) =>
-            qs.stringify(params, { arrayFormat: "repeat" }),
+        const res = await fetchGames({
+          sortBy: orderBy.toLowerCase(),
+          order: "asc",
+          platforms: platform,
+          token,
         });
         UpdateGenralGames(res.data.data);
       } catch (err) {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useGameContext } from "../Context/GameContext";
 import GameCard from "./GameCard";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { useAppContext } from "../Context/AppContext";
 import { useAuth } from "../Context/AuthContext";
+import { fetchSelectedCategoryGames } from "../api/GameApi";
 
 const CategoryGameList = () => {
   const {
@@ -25,16 +25,11 @@ const CategoryGameList = () => {
   const currTheme = themeColor[theme];
 
   useEffect(() => {
+    if (!type || !id) return;
     const fetch = async () => {
       try {
-        let url = type;
-        if (type === "platforms") url = "platformsv";
-        const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/${url}/${id}`,
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        const category = type === "platforms" ? "platformsv" : type;
+        const res = await fetchSelectedCategoryGames(category, id, token);
         updateSelectedCategory(res.data.data);
       } catch (err) {
         alert(err);

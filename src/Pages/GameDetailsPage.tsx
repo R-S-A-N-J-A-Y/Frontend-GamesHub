@@ -1,15 +1,18 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import { useAppContext } from "../Context/AppContext";
+import { useAuth } from "../Context/AuthContext";
+import type { Platform } from "../Context/GameContext";
 
 import GameHeroCard from "../Components/GameHeroCard";
 import GameGallery from "../Components/GameGallery";
 import GameFeatureList from "../Components/GameFeatureList";
 import GameSimilarSection from "../Components/GameSimilarSection";
-import { useAppContext } from "../Context/AppContext";
-import { useAuth } from "../Context/AuthContext";
-import type { Platform } from "../Context/GameContext";
 import Loader from "../Components/Loader";
+
+import { fetchGame } from "../api/GameApi";
+import { createCart } from "../api/userGameActions";
 
 export interface featureType {
   imageUrl: string;
@@ -56,15 +59,11 @@ const GameDetailsPage = () => {
   } = useAuth();
 
   useEffect(() => {
+    if (!id) return;
     setIsLoading(true);
     const fetch = async () => {
       try {
-        const result = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/user/games/${id}`,
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        const result = await fetchGame(token, id);
         setGame(result.data.data);
       } catch (err) {
         console.log(err);
@@ -80,13 +79,7 @@ const GameDetailsPage = () => {
 
     const fetch = async () => {
       try {
-        await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/user/cart`,
-          { gameId: id },
-          {
-            headers: { "x-auth-token": token },
-          }
-        );
+        await createCart(token, id);
       } catch (err) {
         console.log(err);
       }
