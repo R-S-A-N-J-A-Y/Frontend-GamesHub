@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Context/AuthContext";
 import GameCard from "../Components/GameCard";
+import Loader from "../Components/Loader";
 
 type GameData = {
   _id: string;
@@ -51,7 +52,7 @@ const LibraryPage = () => {
     fetch();
   }, [token]);
 
-  if (isLoding) return <div>Loading...</div>;
+  if (isLoding) return <Loader />;
 
   return (
     <div>
