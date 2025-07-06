@@ -9,6 +9,7 @@ import GameSimilarSection from "../Components/GameSimilarSection";
 import { useAppContext } from "../Context/AppContext";
 import { useAuth } from "../Context/AuthContext";
 import type { Platform } from "../Context/GameContext";
+import Loader from "../Components/Loader";
 
 export interface featureType {
   imageUrl: string;
@@ -48,12 +49,14 @@ const GameDetailsPage = () => {
 
   const { id } = useParams<{ id: string }>();
   const [game, setGame] = useState<gameData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     state: { token },
   } = useAuth();
 
   useEffect(() => {
+    setIsLoading(true);
     const fetch = async () => {
       try {
         const result = await axios.get(
@@ -65,6 +68,8 @@ const GameDetailsPage = () => {
         setGame(result.data.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetch();
@@ -90,8 +95,8 @@ const GameDetailsPage = () => {
     setGame({ ...game, isInCart: true });
     fetch();
   };
-
-  if (!game) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
+  if (!game) return <div>Game Not Found...</div>;
   return (
     <div className="d-flex flex-column gap-5">
       <GameHeroCard game={game} ToggleAddtoCart={ToggleAddtoCart} />
