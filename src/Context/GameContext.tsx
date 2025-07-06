@@ -7,8 +7,8 @@ import {
 } from "react";
 
 import gameReducer from "../Reducers/GameReducer";
-import axios from "axios";
 import { useAuth } from "./AuthContext";
+import { ToggleLikeApi, ToggleWatchListApi } from "../api/userGameActions";
 
 interface Props {
   children: ReactNode;
@@ -127,32 +127,12 @@ export const GameContextProvider = ({ children }: Props) => {
   // Toggle Like of particular Game and update at backend
   const ToggleLike = async (id: string, currStatus: boolean) => {
     dispatch({ type: "TOGGLE_LIKE", payload: { id } });
-
-    try {
-      const config = { headers: { "x-auth-token": token } };
-      await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/user/toggleLike`,
-        { gameId: id, liked: !currStatus },
-        config
-      );
-    } catch (err) {
-      alert(err);
-    }
+    await ToggleLikeApi(id, currStatus, token);
   };
 
   const ToggleWatchList = async (id: string, currStatus: boolean) => {
     dispatch({ type: "TOGGLE_WATCHLIST", payload: { id } });
-
-    try {
-      const config = { headers: { "x-auth-token": token } };
-      await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/user/toggleWatchList`,
-        { gameId: id, watched: !currStatus },
-        config
-      );
-    } catch (err) {
-      alert(err);
-    }
+    await ToggleWatchListApi(id, currStatus, token);
   };
 
   return (
