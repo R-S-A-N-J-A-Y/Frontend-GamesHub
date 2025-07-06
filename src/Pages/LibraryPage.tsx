@@ -24,12 +24,14 @@ const LibraryPage = () => {
   const {
     state: { token },
   } = useAuth();
+  const [isLoding, setIsloading] = useState<boolean>(false);
 
   const Navigate = useNavigate();
 
   const [games, setGames] = useState<GameData[] | null>(null);
 
   useEffect(() => {
+    setIsloading(true);
     const fetch = async () => {
       try {
         const result = await axios.get(
@@ -42,10 +44,14 @@ const LibraryPage = () => {
       } catch (err) {
         console.log(err);
         alert(err);
+      } finally {
+        setIsloading(false);
       }
     };
     fetch();
   }, [token]);
+
+  if (isLoding) return <div>Loading...</div>;
 
   return (
     <div>
